@@ -14,7 +14,8 @@ namespace Sitecore.Rocks.Templates.Tests
         {
             var expectedResult = @"
     [SitecoreField(""Field Name"")]
-    public string FieldName { get; set; }";
+    public string FieldName { get; set; }
+";
 
             var fieldMock = new Mock<ISitecoreField>();
             fieldMock.Setup(f => f.Name).Returns("Field Name");

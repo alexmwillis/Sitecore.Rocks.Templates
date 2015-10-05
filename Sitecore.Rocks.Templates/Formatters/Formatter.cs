@@ -24,14 +24,16 @@ namespace Sitecore.Rocks.Templates.Formatters
             var templateKey = item.TemplateId;
 
             var fields = item.Fields
-                .Where(f => !f.IsStandardField)
+                .Where(f => !f.IsStandardField);
+
+            var fieldSource = fields
                 .Select(GetFieldSource)
                 .Aggregate((i, j) => $"{i}{j}");
 
             return $@"
 [SitecoreTemplate({templateKey})]
 public class {itemName}Model : SitecoreItemModel
-{{{fields}}}";
+{{{fieldSource}}}";
         }
     }
 }

@@ -2,7 +2,7 @@
 using Moq;
 using NUnit.Framework;
 using Sitecore.Rocks.Templates.Data;
-using Sitecore.Rocks.Templates.Formatters;
+using Sitecore.Rocks.Templates.Formatting;
 
 namespace Sitecore.Rocks.Templates.Tests
 {
@@ -27,8 +27,8 @@ namespace Sitecore.Rocks.Templates.Tests
         {
             var itemId = Guid.NewGuid();
 
-            var expectedResult = $@"
-[SitecoreTemplate({itemId})]
+            var expectedResult = 
+$@"[SitecoreTemplate({itemId})]
 public class ItemNameModel : SitecoreItemModel
 {{
     [SitecoreField(""Field Name 1"")]

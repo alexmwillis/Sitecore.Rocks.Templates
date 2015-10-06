@@ -1,5 +1,5 @@
 ﻿using Sitecore.Rocks.Templates.Data;
-using Sitecore.Rocks.Templates.Formatters;
+using Sitecore.Rocks.Templates.Formatting;
 
 namespace Sitecore.Rocks.Templates.Commands
 {

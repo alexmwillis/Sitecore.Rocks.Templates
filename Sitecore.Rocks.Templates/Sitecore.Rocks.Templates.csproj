@@ -57,12 +57,17 @@
     <Compile Include="Data\SitecoreItem.cs" />
     <Compile Include="Extensions\ContentTreeContextExtensions.cs" />
     <Compile Include="Extensions\FieldExtensions.cs" />
-    <Compile Include="Formatters\Formatter.cs" />
+    <Compile Include="Formatting\Formatter.cs" />
     <Compile Include="Commands\SingleTreeItemCommand.cs" />
+    <Compile Include="Formatting\TemplateManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagDefinitions\RemoveWhiteSpaceDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Minq.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

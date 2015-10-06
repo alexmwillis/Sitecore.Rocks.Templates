@@ -11,19 +11,8 @@ namespace Sitecore.Rocks.Templates.Formatting
 {
     public static class Formatter
     {
-        public static string GetFieldSource(ISitecoreField field)
+        public static string RenderItemTemplate(string template, ISitecoreItem item)
         {
-            var template = @"{{#newline}}
-    [SitecoreField(""{{Name}}"")]{{#newline}}
-    public string {{#removeWhiteSpace Name}} { get; set; }{{#newline}}";
-
-            return GetCompiler().Compile(template).Render(field);
-        }
-
-        public static string GetModelSource(ISitecoreItem item)
-        {
-            var template = TemplateManager.GetTemplate("Minq");
-
             return GetCompiler().Compile(template).Render(item);
         }
 

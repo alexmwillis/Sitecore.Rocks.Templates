@@ -10,25 +10,14 @@ namespace Sitecore.Rocks.Templates.Tests
     public class ToMinqCommandTest
     {
         [Test]
-        public void TestFieldIsCorrectlyFormatted()
-        {
-            var expectedResult = @"
-    [SitecoreField(""Field Name"")]
-    public string FieldName { get; set; }
-";
-
-            var fieldMock = new Mock<ISitecoreField>();
-            fieldMock.Setup(f => f.Name).Returns("Field Name");
-            Assert.That(Formatter.GetFieldSource(fieldMock.Object), Is.EqualTo(expectedResult));
-        }
-
-        [Test]
         public void TestModelIsCorrectlyFormatted()
         {
             var itemId = Guid.NewGuid();
 
+            var template = TemplateManager.GetTemplate("Minq");
+
             var expectedResult = 
-$@"[SitecoreTemplate({itemId})]
+$@"[SitecoreTemplate(""{itemId}"")]
 public class ItemNameModel : SitecoreItemModel
 {{
     [SitecoreField(""Field Name 1"")]
@@ -53,7 +42,7 @@ public class ItemNameModel : SitecoreItemModel
             itemMock.Setup(i => i.TemplateId).Returns(itemId.ToString());
             itemMock.Setup(i => i.Fields).Returns(new[] {fieldMock1.Object, fieldMock2.Object, fieldMock3.Object});
 
-            Assert.That(Formatter.GetModelSource(itemMock.Object), Is.EqualTo(expectedResult));
+            Assert.That(Formatter.RenderItemTemplate(template, itemMock.Object), Is.EqualTo(expectedResult));
         }
     }
 }

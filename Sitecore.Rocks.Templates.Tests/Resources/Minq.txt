@@ -1,12 +1,11 @@
-﻿[SitecoreTemplate("{{TemplateId}}")]{{#newline}}
+﻿{{#if Fields}}
+[SitecoreTemplate("{{TemplateId}}")]{{#newline}}
 public class {{#removeWhiteSpace Name}}Model : SitecoreItemModel{{#newline}}
 {
 {{#each Fields}}
-{{#if IsStandardField}}
-{{#else}}
 {{#newline}}
     [SitecoreField("{{Name}}")]{{#newline}}
     public string {{#removeWhiteSpace Name}} { get; set; }{{#newline}}
-{{/if}}
 {{/each}}
 }
+{{/if}}

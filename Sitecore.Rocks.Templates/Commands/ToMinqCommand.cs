@@ -8,14 +8,14 @@ namespace Sitecore.Rocks.Templates.Commands
         protected override void Execute(ISitecoreItem item)
         {
             var template = TemplateManager.GetTemplate("Minq");
-
+            
             AppHost.Clipboard.SetText(Formatter.RenderItemTemplate(template, item));
         }
 
         public ToMinqCommand()
         {
-            this.Text = "Copy to Minq...";
-            this.SortingValue = 1000;
+            Text = "Copy to Minq...";
+            SortingValue = 1000;
         }
     }
 }

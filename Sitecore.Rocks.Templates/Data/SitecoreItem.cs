@@ -13,7 +13,9 @@ namespace Sitecore.Rocks.Templates.Data
             _innerItem = innerItem;
         }
 
-        public IEnumerable<ISitecoreField> Fields => _innerItem.Fields.Select(f => new SitecoreField(f));
+        public IEnumerable<ISitecoreField> Fields => _innerItem.Fields.Select(f => new SitecoreField(f)).Where(f => !f.IsStandardField);
+
+        public IEnumerable<ISitecoreField> StandardFields => _innerItem.Fields.Select(f => new SitecoreField(f)).Where(f => f.IsStandardField);
 
         public string TemplateId => _innerItem.TemplateId.ToString();
 
@@ -23,6 +25,8 @@ namespace Sitecore.Rocks.Templates.Data
     public interface ISitecoreItem
     {
         IEnumerable<ISitecoreField> Fields { get; }
+
+        IEnumerable<ISitecoreField> StandardFields { get; }
 
         string TemplateId { get; }
 

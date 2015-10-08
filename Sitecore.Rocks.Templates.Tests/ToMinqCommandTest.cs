@@ -9,16 +9,39 @@ namespace Sitecore.Rocks.Templates.Tests
     [TestFixture]
     public class ToMinqCommandTest
     {
+        private Mock<ISitecoreItem> _itemWithFieldsMock;
+        private Mock<ISitecoreItem> _itemWithNoFieldsMock;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var templateId = Guid.NewGuid();
+
+            var fieldMock1 = new Mock<ISitecoreField>();
+            fieldMock1.Setup(f => f.Name).Returns("Field Name 1");
+
+            var fieldMock2 = new Mock<ISitecoreField>();
+            fieldMock2.Setup(f => f.Name).Returns("Field Name 2");
+
+            _itemWithFieldsMock = new Mock<ISitecoreItem>();
+            _itemWithFieldsMock.Setup(i => i.Name).Returns("Item With Fields");
+            _itemWithFieldsMock.Setup(i => i.TemplateId).Returns(templateId.ToString());
+            _itemWithFieldsMock.Setup(i => i.Fields).Returns(new[] { fieldMock1.Object, fieldMock2.Object });
+
+            _itemWithNoFieldsMock = new Mock<ISitecoreItem>();
+            _itemWithNoFieldsMock.Setup(i => i.Name).Returns("Item With No Fields");
+            _itemWithNoFieldsMock.Setup(i => i.TemplateId).Returns(templateId.ToString());
+        }
+
         [Test]
         public void TestModelIsCorrectlyFormatted()
         {
-            var itemId = Guid.NewGuid();
-
             var template = TemplateManager.GetTemplate("Minq");
 
-            var expectedResult = 
-$@"[SitecoreTemplate(""{itemId}"")]
-public class ItemNameModel : SitecoreItemModel
+            var expectedResult =
+                $@"[SitecoreTemplate(""{_itemWithFieldsMock.Object.TemplateId
+                    }"")]
+public class ItemWithFieldsModel : SitecoreItemModel
 {{
     [SitecoreField(""Field Name 1"")]
     public string FieldName1 {{ get; set; }}
@@ -27,22 +50,17 @@ public class ItemNameModel : SitecoreItemModel
     public string FieldName2 {{ get; set; }}
 }}";
 
-            var fieldMock1 = new Mock<ISitecoreField>();
-            fieldMock1.Setup(f => f.Name).Returns("Field Name 1");
+            Assert.That(Formatter.RenderItemTemplate(template, _itemWithFieldsMock.Object),
+                Is.EqualTo(expectedResult));
+        }
 
-            var fieldMock2 = new Mock<ISitecoreField>();
-            fieldMock2.Setup(f => f.Name).Returns("Field Name 2");
-
-            var fieldMock3 = new Mock<ISitecoreField>();
-            fieldMock3.Setup(f => f.Name).Returns("Ignore Field");
-            fieldMock3.Setup(f => f.IsStandardField).Returns(true);
-
-            var itemMock = new Mock<ISitecoreItem>();
-            itemMock.Setup(i => i.Name).Returns("Item Name");
-            itemMock.Setup(i => i.TemplateId).Returns(itemId.ToString());
-            itemMock.Setup(i => i.Fields).Returns(new[] {fieldMock1.Object, fieldMock2.Object, fieldMock3.Object});
-
-            Assert.That(Formatter.RenderItemTemplate(template, itemMock.Object), Is.EqualTo(expectedResult));
+        [Test]
+        public void TestNothingIsReturnedWhenTheItemHasNoFields()
+        {
+            var template = TemplateManager.GetTemplate("Minq");
+            
+            Assert.That(Formatter.RenderItemTemplate(template, _itemWithNoFieldsMock.Object),
+                Is.EqualTo(string.Empty));
         }
     }
 }

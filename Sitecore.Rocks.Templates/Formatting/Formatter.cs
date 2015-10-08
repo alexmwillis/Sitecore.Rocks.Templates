@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Mustache;
+﻿using Mustache;
 using Sitecore.Rocks.Templates.Data;
 using Sitecore.Rocks.Templates.TagDefinitions;
 

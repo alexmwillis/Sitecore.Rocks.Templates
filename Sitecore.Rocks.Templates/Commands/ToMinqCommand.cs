@@ -8,7 +8,7 @@ namespace Sitecore.Rocks.Templates.Commands
         protected override void Execute(ISitecoreItem item)
         {
             var template = TemplateManager.GetTemplate("Minq");
-            
+
             AppHost.Clipboard.SetText(Formatter.RenderItemTemplate(template, item));
         }
 

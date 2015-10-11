@@ -1,13 +1,16 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using Moq;
 using NUnit.Framework;
 using Sitecore.Rocks.Templates.Data;
-using Sitecore.Rocks.Templates.Formatting;
+using Sitecore.Rocks.Templates.Engine;
+using Sitecore.Rocks.Templates.Service;
 
 namespace Sitecore.Rocks.Templates.Tests
 {
     [TestFixture]
-    public class ToMinqCommandTest
+    public class ToMinqTests
     {
         private Mock<ISitecoreItem> _itemWithFieldsMock;
         private Mock<ISitecoreItem> _itemWithNoFieldsMock;
@@ -36,7 +39,7 @@ namespace Sitecore.Rocks.Templates.Tests
         [Test]
         public void TestModelIsCorrectlyFormatted()
         {
-            var template = TemplateManager.GetTemplate("Minq");
+            var template = File.ReadAllText("..//..//Resources//Minq.txt");
 
             var expectedResult =
                 $@"[SitecoreTemplate(""{_itemWithFieldsMock.Object.TemplateId
@@ -50,16 +53,16 @@ public class ItemWithFieldsModel : SitecoreItemModel
     public string FieldName2 {{ get; set; }}
 }}";
 
-            Assert.That(Formatter.RenderItemTemplate(template, _itemWithFieldsMock.Object),
+            Assert.That(new TemplateEngine().Render(template, _itemWithFieldsMock.Object),
                 Is.EqualTo(expectedResult));
         }
 
         [Test]
         public void TestNothingIsReturnedWhenTheItemHasNoFields()
         {
-            var template = TemplateManager.GetTemplate("Minq");
+            var template = File.ReadAllText("..//..//Resources//Minq.txt");
             
-            Assert.That(Formatter.RenderItemTemplate(template, _itemWithNoFieldsMock.Object),
+            Assert.That(new TemplateEngine().Render(template, _itemWithNoFieldsMock.Object),
                 Is.EqualTo(string.Empty));
         }
     }

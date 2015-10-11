@@ -2,7 +2,7 @@
 using System.IO;
 using Mustache;
 
-namespace Sitecore.Rocks.Templates.TagDefinitions
+namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
 {
     public class RemoveWhiteSpaceDefinition : InlineTagDefinition
     {

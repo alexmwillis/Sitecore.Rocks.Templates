@@ -74,22 +74,36 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChooseTemplateForm.cs" />
     <Compile Include="Commands\ContentTreeCommand.cs" />
-    <Compile Include="Commands\ToMinqCommand.cs" />
+    <Compile Include="Commands\ItemToTemplateCommand.cs" />
     <Compile Include="Data\SitecoreField.cs" />
     <Compile Include="Data\SitecoreItem.cs" />
+    <Compile Include="Engine\ITemplateEngine.cs" />
+    <Compile Include="Service\ITemplateMetaData.cs" />
+    <Compile Include="Service\ITemplateService.cs" />
+    <Compile Include="Service\TemplateMetaData.cs" />
+    <Compile Include="UI\SelectTemplateViewModel.cs" />
+    <Compile Include="UI\SelectTemplateWindow.xaml.cs">
+      <DependentUpon>SelectTemplateWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\TemplateViewModel.cs" />
     <None Include="Deploy\deploy.bat" />
     <Compile Include="Extensions\ContentTreeContextExtensions.cs" />
     <Compile Include="Extensions\FieldExtensions.cs" />
-    <Compile Include="Formatting\Formatter.cs" />
+    <Compile Include="Engine\TemplateEngine.cs" />
     <Compile Include="Commands\SingleTreeItemCommand.cs" />
-    <Compile Include="Formatting\TemplateManager.cs" />
+    <Compile Include="Service\TemplateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TagDefinitions\RemoveWhiteSpaceDefinition.cs" />
+    <Compile Include="Engine\TagDefinitions\RemoveWhiteSpaceDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="UI\SelectTemplateWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

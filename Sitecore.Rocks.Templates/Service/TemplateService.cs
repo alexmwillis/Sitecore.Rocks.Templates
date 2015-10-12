@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Sitecore.Rocks.Templates.Engine;
 
 namespace Sitecore.Rocks.Templates.Service
 {
-    public class TemplateService: ITemplateService
+    public class TemplateService : ITemplateService
     {
         private readonly ITemplateEngine _engine;
 
-        public TemplateService(ITemplateEngine engine) 
+        public TemplateService(ITemplateEngine engine)
         {
             _engine = engine;
         }
@@ -23,17 +22,17 @@ namespace Sitecore.Rocks.Templates.Service
         public IEnumerable<ITemplateMetaData> GetTemplates()
         {
             var files = Directory.GetFiles(".//Item Templates").Select(f => new FileInfo(f));
-            
+
             return files.Select(i => new TemplateMetaData
             {
                 FullName = i.FullName,
                 Name = i.Name
             });
-        }        
+        }
 
         private static string GetTemplate(ITemplateMetaData template)
         {
-            return File.ReadAllText(template.FullName);         
+            return File.ReadAllText(template.FullName);
         }
     }
 }

@@ -8,8 +8,8 @@ namespace Sitecore.Rocks.Templates.Commands
 {
     public class ItemToTemplateCommand : SingleTreeItemCommand
     {
-        private ITemplateService _service;
-        private SelectTemplateViewModel _selectTemplate;
+        private readonly ITemplateService _service;
+        private readonly SelectTemplateViewModel _selectTemplate;
 
         public ItemToTemplateCommand() 
         {
@@ -23,14 +23,14 @@ namespace Sitecore.Rocks.Templates.Commands
         protected override void Execute(ISitecoreItem item)
         {
             ITemplateMetaData template;
-            var templates = _service.GetTemplates();
-            if (templates.Count() == 1)
+            var templates = _service.GetTemplates().ToList();
+            if (templates.Count == 1)
             {
                 template = _service.GetTemplates().First();
             }
             else
             {
-                if (!ShowUIAndValidate()) return;
+                if (!ShowUiAndValidate()) return;
 
                 template = templates.First(t => t.FullName == _selectTemplate.SelectedTemplate.FullName);
                 
@@ -38,11 +38,11 @@ namespace Sitecore.Rocks.Templates.Commands
             AppHost.Clipboard.SetText(_service.Render(template, item));
         }
 
-        public bool ShowUIAndValidate()
+        public bool ShowUiAndValidate()
         {
-            SelectTemplateWindow window = new SelectTemplateWindow(_selectTemplate);
+            var window = new SelectTemplateWindow(_selectTemplate);
 
-            bool? showDialog = window.ShowDialog();
+            var showDialog = window.ShowDialog();
             return showDialog ?? false;
         }
     }

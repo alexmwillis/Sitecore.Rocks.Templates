@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <RunPostBuildEvent>Always</RunPostBuildEvent>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mustache-sharp, Version=0.2.8.1, Culture=neutral, processorArchitecture=MSIL">
@@ -87,7 +87,6 @@
       <DependentUpon>SelectTemplateWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\TemplateViewModel.cs" />
-    <None Include="Deploy\deploy.bat" />
     <Compile Include="Extensions\ContentTreeContextExtensions.cs" />
     <Compile Include="Extensions\FieldExtensions.cs" />
     <Compile Include="Engine\TemplateEngine.cs" />
@@ -107,7 +106,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>$(ProjectDir)Deploy\deploy.bat $(TargetName) $(TargetDir)</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y "$(TargetDir)*" "%25localappdata%25\Sitecore\Sitecore.Rocks\Plugins\"</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

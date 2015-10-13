@@ -4,6 +4,7 @@ using Sitecore.VisualStudio.ContentTrees;
 using Sitecore.VisualStudio.Data;
 using Sitecore.Rocks.Templates.Data;
 using Sitecore.Rocks.Templates.Extensions;
+using Sitecore.VisualStudio.Extensions.DataServiceExtensions;
 
 namespace Sitecore.Rocks.Templates.Commands
 {
@@ -21,11 +22,16 @@ namespace Sitecore.Rocks.Templates.Commands
         {
             var itemTree = context.GetSelectedAsItemTree();
 
+            var item = GetItem(itemTree.ItemUri, context);
+            var template = GetItem(new ItemUri(item.ItemUri.DatabaseUri, item.TemplateId), context);
+
+            Execute(new SitecoreItem(item, template, Language.Current));
+        }
+
+        private static Item GetItem(ItemUri uri, IItemSelectionContext context)
+        {
             var dataService = context.GetSite().DataService;
-
-            var item = dataService.GetItemFields(new ItemVersionUri(itemTree.ItemUri, Language.Current, Version.Latest));
-
-            Execute(new SitecoreItem(item));
+            return dataService.GetItemFields(new ItemVersionUri(uri, Language.Current, Version.Latest));
         }
     }
 }

@@ -7,29 +7,33 @@ namespace Sitecore.Rocks.Templates.Data
 {
     public class SitecoreItem : ISitecoreItem
     {
-        private readonly Item _innerItem;
+        private readonly Language _language;
+        private readonly Item _item;
+        private readonly Item _template;
 
-        public SitecoreItem(Item innerItem)
+        public SitecoreItem(Item item, Item template, Language language)
         {
-            _innerItem = innerItem;
+            _item = item;
+            _template = template;
+            _language = language;
         }
 
-        public string Id => _innerItem.ItemUri.ItemId.ToString();
+        public string Id => _item.ItemUri.ItemId.ToString();
 
-        public string Name => _innerItem.Name;
+        public string Name => _item.Name;
 
-        public string ItemPath => _innerItem.Path.ToString();
+        public string ItemPath => _item.GetPath();
 
-        public string Language => "TODO";
+        public string Language => _language.ToString();
 
-        public string TemplateId => _innerItem.TemplateId.ToString();
+        public string TemplateId => _item.TemplateId.ToString();
 
-        public string TemplateName => _innerItem.TemplateName;
+        public string TemplateName => _item.TemplateName;
 
-        public string TemplatePath => "TODO";
+        public string TemplatePath => _template.GetPath();
 
-        public IEnumerable<ISitecoreField> Fields => _innerItem.Fields.Select(f => new SitecoreField(f));
+        public IEnumerable<ISitecoreField> Fields => _item.Fields.Select(f => new SitecoreField(f));
 
-        public IEnumerable<ISitecoreField> StandardFields => _innerItem.Fields.Select(f => new SitecoreField(f)).Where(f => f.IsStandardField);
+        public IEnumerable<ISitecoreField> StandardFields => _item.Fields.Select(f => new SitecoreField(f)).Where(f => f.IsStandardField);
     }
 }

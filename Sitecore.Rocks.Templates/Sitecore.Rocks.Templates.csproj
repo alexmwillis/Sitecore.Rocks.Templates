@@ -77,6 +77,8 @@
     <Compile Include="Commands\ContentTreeCommand.cs" />
     <Compile Include="Commands\ItemToTemplateCommand.cs" />
     <Compile Include="Data\ISitecoreItem.cs" />
+    <Compile Include="Data\ISitecoreField.cs" />
+    <Compile Include="Data\ISitecoreSection.cs" />
     <Compile Include="Data\ISitecoreTemplate.cs" />
     <Compile Include="Data\SitecoreField.cs" />
     <Compile Include="Data\SitecoreItem.cs" />
@@ -109,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Minq.txt" />
+    <Content Include="Resources\Sinj-Template.txt" />
     <Content Include="Resources\Sinj.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

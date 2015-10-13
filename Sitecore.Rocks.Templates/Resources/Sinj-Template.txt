@@ -1,0 +1,34 @@
+﻿var {{#removeWhiteSpace Name}}Template = {
+    id: "{{Id}}",{{#newline}}
+    name: "{{Name}}",{{#newline}}
+    template: "{{TemplatePath}}",{{#newline}}
+    parent: "{{ItemPath}}",{{#newline}}
+    language: "en",{{#newline}}
+    fields: {
+{{#each Fields}}
+{{#if Value}}
+{{#ifNotFirst ','}}
+{{#newline}}
+        "{{Name}}": "{{Value}}"
+{{/if}}
+{{/each}}{{#newline}}
+    }{{#newline}},
+    sections: [
+{{#each Sections}}
+{{#ifNotFirst ','}}
+            name: {{Name}},
+            id: {{Id}},
+            fields: [
+              {{#each Fields}}
+              {{#ifNotFirst ','}}
+              {{#newline}}
+                {
+                    id: {{Id}},
+                    name: {{Name}},
+                    type: {{Type}}
+                    sortorder
+              {{/if}}
+              {{/each}}{{#newline}}
+            ]
+{{#newline}}
+{{/each}}

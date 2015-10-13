@@ -1,11 +1,25 @@
-﻿namespace Sitecore.Rocks.Templates.Data
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Sitecore.Rocks.Templates.Data
 {
-    public interface ISitecoreField
+    interface ISitecoreTemplate: ISitecoreItem
     {
+        string Id { get; }
+
         string Name { get; }
 
-        string Value { get; }
+        string ItemPath { get; }
 
-        bool IsStandardField { get; }
+        string Language { get; }
+
+        IEnumerable<ISitecoreField> Fields { get; }
+
+        IEnumerable<ISitecoreSection> Sections { get; }
+
+        ISitecoreItem StandardFields { get; }
     }
 }

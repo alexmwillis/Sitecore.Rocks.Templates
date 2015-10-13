@@ -3,12 +3,6 @@ using Sitecore.Rocks.Templates.Extensions;
 
 namespace Sitecore.Rocks.Templates.Data
 {
-    public interface ISitecoreField
-    {
-        string Name { get; }
-        bool IsStandardField { get; }
-    }
-
     public class SitecoreField : ISitecoreField
     {
         private readonly Field _innerField;
@@ -19,6 +13,8 @@ namespace Sitecore.Rocks.Templates.Data
         }
 
         public string Name => _innerField.Name;
+
+        public string Value => _innerField.Value;
 
         public bool IsStandardField => this.IsStandardField();
     }

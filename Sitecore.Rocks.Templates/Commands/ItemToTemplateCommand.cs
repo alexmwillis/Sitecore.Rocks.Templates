@@ -24,16 +24,19 @@ namespace Sitecore.Rocks.Templates.Commands
         {
             ITemplateMetaData template;
             var templates = _service.GetTemplates().ToList();
-            if (templates.Count == 1)
-            {
-                template = _service.GetTemplates().First();
-            }
-            else
-            {
-                if (!ShowUiAndValidate()) return;
 
-                template = templates.First(t => t.FullName == _selectTemplate.SelectedTemplate.FullName);
-                
+            switch (templates.Count)
+            {
+                case 0:
+                    return;
+                case 1:
+                    template = _service.GetTemplates().First();
+                    break;
+                default:
+                    if (!ShowUiAndValidate()) return;
+
+                    template = templates.First(t => t.FullName == _selectTemplate.SelectedTemplate.FullName);
+                    break;
             }
             AppHost.Clipboard.SetText(_service.Render(template, item));
         }

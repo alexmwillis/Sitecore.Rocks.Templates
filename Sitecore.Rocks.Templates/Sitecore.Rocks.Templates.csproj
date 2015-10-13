@@ -76,9 +76,12 @@
   <ItemGroup>
     <Compile Include="Commands\ContentTreeCommand.cs" />
     <Compile Include="Commands\ItemToTemplateCommand.cs" />
+    <Compile Include="Data\ISitecoreItem.cs" />
+    <Compile Include="Data\ISitecoreTemplate.cs" />
     <Compile Include="Data\SitecoreField.cs" />
     <Compile Include="Data\SitecoreItem.cs" />
     <Compile Include="Engine\ITemplateEngine.cs" />
+    <Compile Include="Engine\TagDefinitions\IfNotFirstTag.cs" />
     <Compile Include="Service\ITemplateMetaData.cs" />
     <Compile Include="Service\ITemplateService.cs" />
     <Compile Include="Service\TemplateMetaData.cs" />
@@ -93,7 +96,7 @@
     <Compile Include="Commands\SingleTreeItemCommand.cs" />
     <Compile Include="Service\TemplateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Engine\TagDefinitions\RemoveWhiteSpaceDefinition.cs" />
+    <Compile Include="Engine\TagDefinitions\RemoveWhiteSpaceTag.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -104,9 +107,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Minq.txt" />
+    <Content Include="Resources\Sinj.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetDir)*" "%25localappdata%25\Sitecore\Sitecore.Rocks\Plugins\"</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y "$(TargetDir)*" "%25localappdata%25\Sitecore\Sitecore.Rocks\Plugins\"
+xcopy /Y "$(ProjectDir)Resources\*" "%25localappdata%25\Sitecore\Sitecore.Rocks\Plugins\Item Templates\"</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

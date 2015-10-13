@@ -4,22 +4,25 @@ using Mustache;
 
 namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
 {
-    public class RemoveWhiteSpaceDefinition : InlineTagDefinition
+    public class RemoveWhiteSpaceTag : InlineTagDefinition
     {
-        public RemoveWhiteSpaceDefinition()
+        public RemoveWhiteSpaceTag()
             : base("removeWhiteSpace")
         {
         }
 
         protected override IEnumerable<TagParameter> GetParameters()
         {
-            return new[] { new TagParameter("string") };
+            yield return new TagParameter("string") {IsRequired = true};
         }
 
         public override void GetText(TextWriter writer, Dictionary<string, object> arguments, Scope context)
         {
-            var str = (string)arguments["string"];
-            writer.Write(str.Replace(" ", string.Empty));
+            var str = (string) arguments["string"];
+            if (!string.IsNullOrWhiteSpace(str))
+            {
+                writer.Write(str.Replace(" ", string.Empty));
+            }
         }
     }
 }

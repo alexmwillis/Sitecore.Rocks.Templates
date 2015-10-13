@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Sitecore.Rocks.Templates.Engine;
@@ -7,6 +8,9 @@ namespace Sitecore.Rocks.Templates.Service
 {
     public class TemplateService : ITemplateService
     {
+        private readonly string _itemTemplateLocation =
+            $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\Sitecore\\Sitecore.Rocks\\Plugins\\Item Templates";
+
         private readonly ITemplateEngine _engine;
 
         public TemplateService(ITemplateEngine engine)
@@ -21,13 +25,20 @@ namespace Sitecore.Rocks.Templates.Service
 
         public IEnumerable<ITemplateMetaData> GetTemplates()
         {
-            var files = Directory.GetFiles(".//Item Templates").Select(f => new FileInfo(f));
+            var files = TryGetFiles(_itemTemplateLocation);
 
             return files.Select(i => new TemplateMetaData
             {
                 FullName = i.FullName,
                 Name = i.Name
             });
+        }
+
+        private static IEnumerable<FileInfo> TryGetFiles(string directory)
+        {
+            return Directory.Exists(directory) 
+                ? Directory.GetFiles(directory).Select(f => new FileInfo(f)) 
+                : Enumerable.Empty<FileInfo>();
         }
 
         private static string GetTemplate(ITemplateMetaData template)

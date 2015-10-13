@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sitecore.VisualStudio.Data;
 
@@ -13,23 +14,22 @@ namespace Sitecore.Rocks.Templates.Data
             _innerItem = innerItem;
         }
 
-        public IEnumerable<ISitecoreField> Fields => _innerItem.Fields.Select(f => new SitecoreField(f)).Where(f => !f.IsStandardField);
+        public string Id => _innerItem.ItemUri.ItemId.ToString();
 
-        public IEnumerable<ISitecoreField> StandardFields => _innerItem.Fields.Select(f => new SitecoreField(f)).Where(f => f.IsStandardField);
+        public string Name => _innerItem.Name;
+
+        public string ItemPath => _innerItem.Path.ToString();
+
+        public string Language => "TODO";
 
         public string TemplateId => _innerItem.TemplateId.ToString();
 
-        public string Name => _innerItem.Name;
-    }
+        public string TemplateName => _innerItem.TemplateName;
 
-    public interface ISitecoreItem
-    {
-        IEnumerable<ISitecoreField> Fields { get; }
+        public string TemplatePath => "TODO";
 
-        IEnumerable<ISitecoreField> StandardFields { get; }
+        public IEnumerable<ISitecoreField> Fields => _innerItem.Fields.Select(f => new SitecoreField(f));
 
-        string TemplateId { get; }
-
-        string Name { get; }
+        public IEnumerable<ISitecoreField> StandardFields => _innerItem.Fields.Select(f => new SitecoreField(f)).Where(f => f.IsStandardField);
     }
 }

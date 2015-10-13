@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToSinjTests.cs" />
     <Compile Include="ToMinqTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,10 +62,6 @@
       <Project>{d60d5c62-4637-4e03-8239-4ac4698df8a2}</Project>
       <Name>Sitecore.Rocks.Templates</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\Sinj.txt" />
-    <Content Include="Resources\Minq.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Service\" />

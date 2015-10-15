@@ -31,8 +31,8 @@ namespace Sitecore.Rocks.Templates.Tests
         public void GivenInvalidWhereTagThenReturnsEmpty()
         {
             var expectedResult = string.Empty;
-            
-            var template = File.ReadAllText("..//..//Resources//Where-Invalid.txt");
+
+            var template = File.ReadAllText("..//..//Resources//Where-Invalid.hbs");
             
             Assert.That(new TemplateEngine().Render(template, _collection),
                 Is.EqualTo(expectedResult));
@@ -43,7 +43,7 @@ namespace Sitecore.Rocks.Templates.Tests
         {
             var expectedResult = "N:Key 1 V:Value 1 N:Key 2 V:Value 2 ";
 
-            var template = File.ReadAllText("..//..//Resources//Where-Value.txt");
+            var template = File.ReadAllText("..//..//Resources//Where-Value.hbs");
 
             Assert.That(new TemplateEngine().Render(template, _collection),
                 Is.EqualTo(expectedResult));
@@ -54,7 +54,7 @@ namespace Sitecore.Rocks.Templates.Tests
         {
             var expectedResult = "N:Key 2 V:Value 2 ";
 
-            var template = File.ReadAllText("..//..//Resources//Where-Match-Key.txt");
+            var template = File.ReadAllText("..//..//Resources//Where-Match-Key.hbs");
 
             Assert.That(new TemplateEngine().Render(template, _collection),
                 Is.EqualTo(expectedResult));

@@ -84,6 +84,7 @@
     <Compile Include="Data\SitecoreItem.cs" />
     <Compile Include="Engine\ITemplateEngine.cs" />
     <Compile Include="Engine\TagDefinitions\IfNotFirstTag.cs" />
+    <Compile Include="Engine\TagDefinitions\WhereTag.cs" />
     <Compile Include="Service\ITemplateMetaData.cs" />
     <Compile Include="Service\ITemplateService.cs" />
     <Compile Include="Service\TemplateMetaData.cs" />

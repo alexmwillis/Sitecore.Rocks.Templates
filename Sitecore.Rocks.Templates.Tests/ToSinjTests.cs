@@ -64,7 +64,7 @@ namespace Sitecore.Rocks.Templates.Tests
         [Test]
         public void TestNoFieldsItemIsCorrectlyFormatted()
         {
-            var template = File.ReadAllText("../..//..//Sitecore.Rocks.Templates//Resources//Sinj.txt");
+            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Sinj.txt");
 
             var expectedResult = $@"var ItemWithNoFieldsTemplate: SinjItemDto = {{
     id: ""{_itemId}"",
@@ -82,7 +82,7 @@ namespace Sitecore.Rocks.Templates.Tests
         [Test]
         public void TestNothingIsReturnedWhenTheItemHasNoFields()
         {
-            var template = File.ReadAllText("../..//..//Sitecore.Rocks.Templates//Resources//Sinj.txt");
+            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Sinj.txt");
 
             var expectedResult = $@"var ItemWithFieldsTemplate: SinjItemDto = {{
     id: ""{_itemId}"",

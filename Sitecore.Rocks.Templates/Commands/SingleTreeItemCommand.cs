@@ -4,7 +4,6 @@ using Sitecore.VisualStudio.ContentTrees;
 using Sitecore.VisualStudio.Data;
 using Sitecore.Rocks.Templates.Data;
 using Sitecore.Rocks.Templates.Extensions;
-using Sitecore.VisualStudio.Extensions.DataServiceExtensions;
 
 namespace Sitecore.Rocks.Templates.Commands
 {

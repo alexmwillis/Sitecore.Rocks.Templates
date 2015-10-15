@@ -12,6 +12,7 @@ namespace Sitecore.Rocks.Templates.Engine
             _compiler = new FormatCompiler();
             _compiler.RegisterTag(new RemoveWhiteSpaceTag(), false);
             _compiler.RegisterTag(new IfNotFirstTag(), false);
+            _compiler.RegisterTag(new WhereTag(), false);
         }
 
         public string Render(string template, object source)

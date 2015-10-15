@@ -1,0 +1,7 @@
+﻿{{#with Fields}}
+{{#where 'Name' 'Field Name'}}
+{{#each this}}
+'{{Name}}'{{#newline}}
+{{/each}}
+{{/where}}
+{{/with}}

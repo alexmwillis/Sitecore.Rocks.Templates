@@ -29,7 +29,7 @@ namespace Sitecore.Rocks.Templates.Tests
             _itemWithFieldsMock.Setup(i => i.Name).Returns("Item With Fields");
             _itemWithFieldsMock.Setup(i => i.TemplateId).Returns(_templateId);
             _itemWithFieldsMock.Setup(i => i.Fields).Returns(new[] { fieldMock1.Object, fieldMock2.Object });
-
+            
             _itemWithNoFieldsMock = new Mock<ISitecoreItem>();
             _itemWithNoFieldsMock.Setup(i => i.Name).Returns("Item With No Fields");
             _itemWithNoFieldsMock.Setup(i => i.TemplateId).Returns(_templateId);
@@ -38,7 +38,7 @@ namespace Sitecore.Rocks.Templates.Tests
         [Test]
         public void TestModelIsCorrectlyFormatted()
         {
-            var template = File.ReadAllText("../..//..//Sitecore.Rocks.Templates//Resources//Minq.txt");
+            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Minq.txt");
 
             var expectedResult =
                 $@"[SitecoreTemplate(""{_templateId}"")]
@@ -58,7 +58,7 @@ public class ItemWithFieldsModel : SitecoreItemModel
         [Test]
         public void TestNothingIsReturnedWhenTheItemHasNoFields()
         {
-            var template = File.ReadAllText(".../..//..//Sitecore.Rocks.Templates//Resources//Minq.txt");
+            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Minq.txt");
             
             Assert.That(new TemplateEngine().Render(template, _itemWithNoFieldsMock.Object),
                 Is.EqualTo(string.Empty));

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Mustache;
+using System.Text.RegularExpressions;
 
 namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
 {
@@ -36,11 +38,20 @@ namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
             Dictionary<string, object> arguments,
             Scope contextScope)
         {
-            var collection = GetCurrentAsType<IEnumerable<object>>(keyScope);
+            var collection = GetCurrentAsEnumerable(keyScope);
             var filterKey1 = arguments["filterKey1"] as string;
             var filterValue1 = arguments["filterValue1"] as string;
 
-            IEnumerable<object> filteredCollection = FilterCollectionBy(collection, filterKey1, filterValue1);
+            IEnumerable<object> filteredCollection;
+
+            if (filterValue1 != null) 
+            {
+                filteredCollection = FilterCollectionBy(collection, filterKey1, new Regex(filterValue1));
+            }
+            else 
+            {
+                filteredCollection = FilterCollectionBy(collection, filterKey1, null);
+            }
 
             NestedContext context = new NestedContext()
             {
@@ -51,21 +62,47 @@ namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
             yield return context;
         }
 
-        private static T GetCurrentAsType<T>(Scope contextScope) where T : class
+        private static IEnumerable<object> GetCurrentAsEnumerable(Scope contextScope)
+        {
+            var enumerable = GetCurrentAsType<IEnumerable>(contextScope);
+            if (enumerable != null) {
+                foreach (var item in enumerable)
+                {
+                    yield return (object)item;
+                }
+            }
+        }
+
+        private static T GetCurrentAsType<T>(Scope contextScope) where T: class
         {
             object @this;
             contextScope.TryFind("this", out @this);
             return @this as T;
         }
 
-        private static IEnumerable<object> FilterCollectionBy(IEnumerable<object> collection, string key, string value)
+        private static IEnumerable<object> FilterCollectionBy(IEnumerable<object> collection, string property, Regex match = null)
         {
-            return collection.Where(Filter(key));
+            return (match != null) 
+                ? collection.Where(RegexFilter(property, match))
+                : collection.Where(IsNullOrWhiteSpaceFilter(property));
         }
 
-        private static Func<object, bool> Filter(string key)
+        private static Func<object, bool> RegexFilter(string key, Regex match)
         {
-            return (o) => o.GetType().GetProperty(key)?.GetValue(o) != null;
+            return (o) => 
+            {                
+                var propertyValue = o.GetType().GetProperty(key)?.GetValue(o) as string;
+                return IsNullOrWhiteSpaceFilter(key)(o) && match.IsMatch(propertyValue);
+            };
+        }        
+
+        private static Func<object, bool> IsNullOrWhiteSpaceFilter(string key)
+        {
+            return (o) => 
+            {
+                var propertyValue = o.GetType().GetProperty(key)?.GetValue(o) as string;
+                return !string.IsNullOrWhiteSpace(propertyValue);
+            };
         }
     }
 }

@@ -68,7 +68,9 @@
     <Folder Include="Service\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Where.txt" />
+    <Content Include="Resources\Where-Invalid.txt" />
+    <Content Include="Resources\Where-Match-Key.txt" />
+    <Content Include="Resources\Where-Value.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

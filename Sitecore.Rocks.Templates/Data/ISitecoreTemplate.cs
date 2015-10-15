@@ -8,16 +8,6 @@ namespace Sitecore.Rocks.Templates.Data
 {
     interface ISitecoreTemplate: ISitecoreItem
     {
-        string Id { get; }
-
-        string Name { get; }
-
-        string ItemPath { get; }
-
-        string Language { get; }
-
-        IEnumerable<ISitecoreField> Fields { get; }
-
         IEnumerable<ISitecoreSection> Sections { get; }
 
         ISitecoreItem StandardFields { get; }

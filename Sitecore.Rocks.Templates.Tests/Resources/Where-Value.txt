@@ -1,0 +1,7 @@
+﻿{{#with this}}
+{{#where 'Value'}}
+{{#each this}}
+N:{{Key}} V:{{Value}} 
+{{/each}}
+{{/where}}
+{{/with}}

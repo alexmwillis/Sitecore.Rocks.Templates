@@ -14,32 +14,49 @@ namespace Sitecore.Rocks.Templates.Tests
     [TestFixture]
     public class WhereTagTests
     {
-        private string _templateId;
-        private Mock<ISitecoreItem> _itemWithFieldsMock;
+        private KeyValuePair<string, string>[] _collection;
+
+        [SetUp]
+        public void SetUp() 
+        {
+            _collection = new[]
+            {
+                new KeyValuePair<string,string>("Key 1","Value 1"),
+                new KeyValuePair<string,string>("Key 2","Value 2"),
+                new KeyValuePair<string,string>("Key 3","")            
+            };
+        }
 
         [Test]
-        public void TestThat()
+        public void GivenInvalidWhereTagThenReturnsEmpty()
         {
-            var expectedResult = "'Field Name 1'\r\n'Field Name 2'\r\n";
+            var expectedResult = string.Empty;
+            
+            var template = File.ReadAllText("..//..//Resources//Where-Invalid.txt");
+            
+            Assert.That(new TemplateEngine().Render(template, _collection),
+                Is.EqualTo(expectedResult));
+        }
 
-            _templateId = Guid.NewGuid().ToString();
+        [Test]
+        public void GivenWhereTagFiltersEmptyValuesThenReturnsOnlyNonEmpty()
+        {
+            var expectedResult = "N:Key 1 V:Value 1 N:Key 2 V:Value 2 ";
 
-            var fieldMock1 = new Mock<ISitecoreField>();
-            fieldMock1.Setup(f => f.Name).Returns("Field Name 1");
-            fieldMock1.Setup(f => f.Value).Returns("Field Value 1");
+            var template = File.ReadAllText("..//..//Resources//Where-Value.txt");
 
-            var fieldMock2 = new Mock<ISitecoreField>();
-            fieldMock2.Setup(f => f.Name).Returns("Field Name 2");
-            fieldMock2.Setup(f => f.Value).Returns("Field Value 2");
+            Assert.That(new TemplateEngine().Render(template, _collection),
+                Is.EqualTo(expectedResult));
+        }
 
-            _itemWithFieldsMock = new Mock<ISitecoreItem>();
-            _itemWithFieldsMock.Setup(i => i.Name).Returns("Item With Fields");
-            _itemWithFieldsMock.Setup(i => i.TemplateId).Returns(_templateId);
-            _itemWithFieldsMock.Setup(i => i.Fields).Returns(new[] { fieldMock1.Object, fieldMock2.Object });
+        [Test]
+        public void GivenWhereTagMatches3RdKeyThenReturnsOnly3RdKeyReturned()
+        {
+            var expectedResult = "N:Key 2 V:Value 2 ";
 
-            var template = File.ReadAllText("..//..//Resources//Where.txt");
+            var template = File.ReadAllText("..//..//Resources//Where-Match-Key.txt");
 
-            Assert.That(new TemplateEngine().Render(template, _itemWithFieldsMock.Object),
+            Assert.That(new TemplateEngine().Render(template, _collection),
                 Is.EqualTo(expectedResult));
         }
     }

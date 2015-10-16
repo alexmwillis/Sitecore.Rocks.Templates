@@ -83,6 +83,7 @@
     <Compile Include="Data\SitecoreField.cs" />
     <Compile Include="Data\SitecoreItem.cs" />
     <Compile Include="Engine\ITemplateEngine.cs" />
+    <Compile Include="Engine\TagDefinitions\PascelCaseTag.cs" />
     <Compile Include="Engine\TagDefinitions\IfNotFirstTag.cs" />
     <Compile Include="Engine\TagDefinitions\WhereTag.cs" />
     <Compile Include="Service\ITemplateMetaData.cs" />
@@ -99,7 +100,7 @@
     <Compile Include="Commands\SingleTreeItemCommand.cs" />
     <Compile Include="Service\TemplateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Engine\TagDefinitions\RemoveWhiteSpaceTag.cs" />
+    <Compile Include="Engine\TagDefinitions\CamelCaseTag.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

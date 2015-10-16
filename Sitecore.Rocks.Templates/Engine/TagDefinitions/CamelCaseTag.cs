@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Mustache;
 
 namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
 {
-    public class RemoveWhiteSpaceTag : InlineTagDefinition
+    public class CamelCaseTag : InlineTagDefinition
     {
-        public RemoveWhiteSpaceTag()
-            : base("removeWhiteSpace")
+        public CamelCaseTag()
+            : base("camelCase")
         {
         }
 
@@ -21,7 +22,11 @@ namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
             var str = (string) arguments["string"];
             if (!string.IsNullOrWhiteSpace(str))
             {
-                writer.Write(str.Replace(" ", string.Empty));
+                var words = str.Split(' ');
+                
+                var camel = string.Concat(words.First().ToLowerInvariant(), string.Join("", words.Skip(1)));              
+                
+                writer.Write(camel);
             }
         }
     }

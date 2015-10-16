@@ -5,20 +5,21 @@
     parent: "{{ItemPath}}",{{#newline}}
     language: "en",{{#newline}}
     fields: {
-{{#each Fields}}
-{{#if Value}}
-{{#ifNotFirst ','}}
-{{#newline}}
+{{#with Fields}}
+{{#where 'Value'}}
+{{#each this}}
+{{#ifNotFirst ','}}{{#newline}}
         "{{Name}}": "{{Value}}"
-{{/if}}
-{{/each}}{{#newline}}
+{{/each}}
+{{/where}}
+{{/with}}{{#newline}}
     }{{#newline}},
     sections: [
 {{#each Sections}}
 {{#ifNotFirst ','}}
-            name: {{Name}},
-            id: {{Id}},
-            fields: [
+        name: {{Name}},
+        id: {{Id}},
+        fields: [
               {{#each Fields}}
               {{#ifNotFirst ','}}
               {{#newline}}

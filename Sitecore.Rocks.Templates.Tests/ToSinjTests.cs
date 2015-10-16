@@ -66,7 +66,7 @@ namespace Sitecore.Rocks.Templates.Tests
         {
             var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Sinj.hbs");
 
-            var expectedResult = $@"var ItemWithNoFieldsTemplate: SinjItemDto = {{ 
+            var expectedResult = $@"var itemWithNoFieldsTemplate: SinjItemDto = {{ 
     id: ""{_itemId}"",
     name: ""Item With No Fields"",
     template: ""{_templatePath}"",
@@ -84,7 +84,7 @@ namespace Sitecore.Rocks.Templates.Tests
         {
             var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Sinj.hbs");
 
-            var expectedResult = $@"var ItemWithFieldsTemplate: SinjItemDto = {{ 
+            var expectedResult = $@"var itemWithFieldsTemplate: SinjItemDto = {{ 
     id: ""{_itemId}"",
     name: ""Item With Fields"",
     template: ""{_templatePath}"",

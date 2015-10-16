@@ -1,39 +1,33 @@
-﻿var {{#removeWhiteSpace Name}}Template = {
+﻿var {{#removeWhiteSpace Name}}Template: SinjTemplateDto = {
     id: "{{Id}}",{{#newline}}
     name: "{{Name}}",{{#newline}}
     template: "{{TemplatePath}}",{{#newline}}
     parent: "{{ItemPath}}",{{#newline}}
     language: "en",{{#newline}}
     fields: {
-{{#with Fields}}
-{{#where 'Value'}}
-{{#each this}}
-{{#ifNotFirst ','}}{{#newline}}
-        "{{Name}}": "{{Value}}"
-{{/each}}
-{{/where}}
-{{/with}}{{#newline}}
-    }{{#newline}},
+        "Icon": {{Icon}},{{#newline}}
+        "Base template": {{BaseTemplateList}}{{#newline}}
+    },{{#newline}}
     sections: [
 {{#each Sections}}
+        {
 {{#ifNotFirst ','}}
-        name: {{Name}},
-        id: {{Id}},
-        fields: [
-              {{#each Fields}}
-              {{#ifNotFirst ','}}
-              {{#newline}}
-                {
-                    id: {{Id}},
-                    name: {{Name}},
-                    type: {{Type}}
-                    sortorder
-              {{/if}}
-              {{/each}}{{#newline}}
-            ]
-{{#newline}}
-{{/each}}
-
-{{#where Fields Name 'regex'}}
-{{#where Fields Name 'regex' Value}}
-
+            name: {{Name}},
+            id: {{Id}},
+            sectionFields: {
+                "Icon": {{Icon}},{{#newline}}
+            }
+            fields: [
+{{#each Fields}}
+{{#ifNotFirst ','}}{{#newline}}
+            {
+                id: {{Id}},{{#newline}}
+                name: {{Name}},{{#newline}}
+                type: {{Type}},{{#newline}}
+                sortorder: {{SortOrder}},{{#newline}}
+            }
+{{/each}}{{#newline}}
+        }
+    ],{{#newline}}
+    standardValues: TODO
+{{/each}}{{#newline}}

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Mustache;
 using System.Text.RegularExpressions;
 
@@ -65,11 +64,10 @@ namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
         private static IEnumerable<object> GetCurrentAsEnumerable(Scope contextScope)
         {
             var enumerable = GetCurrentAsType<IEnumerable>(contextScope);
-            if (enumerable != null) {
-                foreach (var item in enumerable)
-                {
-                    yield return (object)item;
-                }
+            if (enumerable == null) yield break;
+            foreach (var item in enumerable)
+            {
+                yield return item;
             }
         }
 

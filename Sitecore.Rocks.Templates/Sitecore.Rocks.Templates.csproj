@@ -78,10 +78,11 @@
     <Compile Include="Commands\ItemToTemplateCommand.cs" />
     <Compile Include="Data\ISitecoreItem.cs" />
     <Compile Include="Data\ISitecoreField.cs" />
-    <Compile Include="Data\ISitecoreSection.cs" />
-    <Compile Include="Data\ISitecoreTemplate.cs" />
+    <Compile Include="Data\Template\ISitecoreSection.cs" />
+    <Compile Include="Data\Template\ISitecoreTemplate.cs" />
     <Compile Include="Data\SitecoreField.cs" />
     <Compile Include="Data\SitecoreItem.cs" />
+    <Compile Include="Data\Template\ISitecoreTemplateField.cs" />
     <Compile Include="Engine\ITemplateEngine.cs" />
     <Compile Include="Engine\TagDefinitions\PascelCaseTag.cs" />
     <Compile Include="Engine\TagDefinitions\IfNotFirstTag.cs" />

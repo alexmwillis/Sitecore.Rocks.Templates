@@ -10,7 +10,7 @@ namespace Sitecore.Rocks.Templates.Tests
     [TestFixture]
     public class ToMinqTests
     {
-        private Mock<ISitecoreItem> _itemWithFieldsMock;
+        private Mock<ISitecoreTemplate> _itemWithFieldsMock;
         private Mock<ISitecoreItem> _itemWithNoFieldsMock;
         private string _templateId;
 

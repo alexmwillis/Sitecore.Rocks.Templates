@@ -15,22 +15,21 @@ namespace Sitecore.Rocks.Templates.Commands
             return context.OneItemSelected() && context.GetSelectedAsItemTree() != null;
         }
 
-        protected abstract void Execute(ISitecoreItem item);
+        protected abstract void Execute(SitecoreItem item);
 
         protected override void Execute(ContentTreeContext context)
         {
             var itemTree = context.GetSelectedAsItemTree();
 
-            var item = GetItem(itemTree.ItemUri, context);
-            var template = GetItem(new ItemUri(item.ItemUri.DatabaseUri, item.TemplateId), context);
+            if (itemTree.IsTemplate)
+            { 
 
-            Execute(new SitecoreItem(item, template, Language.Current));
-        }
-
-        private static Item GetItem(ItemUri uri, IItemSelectionContext context)
-        {
-            var dataService = context.GetSite().DataService;
-            return dataService.GetItemFields(new ItemVersionUri(uri, Language.Current, Version.Latest));
-        }
+            }
+            else
+            {
+                Execute(new SitecoreItemBuilder(context.GetSite().DataService).Build(itemTree.ItemUri));
+            }
+            
+        }        
     }
 }

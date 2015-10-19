@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Moq;
 using NUnit.Framework;
 using Sitecore.Rocks.Templates.Data;
 using Sitecore.Rocks.Templates.Engine;
@@ -10,29 +9,34 @@ namespace Sitecore.Rocks.Templates.Tests
     [TestFixture]
     public class MinqTests
     {
-        private Mock<ISitecoreItem> _itemWithFieldsMock;
-        private Mock<ISitecoreItem> _itemWithNoFieldsMock;
-        private string _templateId;
+        private SitecoreItem _itemWithFields;
+        private SitecoreItem _itemWithNoFields;
 
         [SetUp]
         public void SetUp()
         {
-            _templateId = Guid.NewGuid().ToString();
+            var templateId = Guid.NewGuid().ToString();
 
-            var fieldMock1 = new Mock<ISitecoreField>();
-            fieldMock1.Setup(f => f.Name).Returns("Field Name 1");
-
-            var fieldMock2 = new Mock<ISitecoreField>();
-            fieldMock2.Setup(f => f.Name).Returns("Field Name 2");
-
-            _itemWithFieldsMock = new Mock<ISitecoreItem>();
-            _itemWithFieldsMock.Setup(i => i.Name).Returns("Item With Fields");
-            _itemWithFieldsMock.Setup(i => i.TemplateId).Returns(_templateId);
-            _itemWithFieldsMock.Setup(i => i.Fields).Returns(new[] { fieldMock1.Object, fieldMock2.Object });
+            var itemId = Guid.NewGuid().ToString();
+                                    
+            _itemWithFields = new SitecoreItem 
+            {
+                Id = itemId,
+                Name = "Item With Fields",
+                TemplateId = templateId,
+                Fields = new[] 
+                {
+                    new SitecoreField { Name = "Field Name 1", Value = "Field Value 1" },
+                    new SitecoreField { Name = "Field Name 2", Value = "Field Value 2" },
+                }
+            };
             
-            _itemWithNoFieldsMock = new Mock<ISitecoreItem>();
-            _itemWithNoFieldsMock.Setup(i => i.Name).Returns("Item With No Fields");
-            _itemWithNoFieldsMock.Setup(i => i.TemplateId).Returns(_templateId);
+            _itemWithNoFields = new SitecoreItem 
+            {
+                Id = itemId,
+                Name = "Item With No Fields",
+                TemplateId = templateId
+            };
         }
 
         [Test]
@@ -41,7 +45,7 @@ namespace Sitecore.Rocks.Templates.Tests
             var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Minq.hbs");
 
             var expectedResult =
-                $@"[SitecoreTemplate(""{_templateId}"")]
+                $@"[SitecoreTemplate(""{_itemWithFields.TemplateId}"")]
 public class ItemWithFieldsModel : SitecoreItemModel
 {{
     [SitecoreField(""Field Name 1"")]
@@ -51,7 +55,7 @@ public class ItemWithFieldsModel : SitecoreItemModel
     public string FieldName2 {{ get; set; }}
 }}";
 
-            Assert.That(new TemplateEngine().Render(template, _itemWithFieldsMock.Object),
+            Assert.That(new TemplateEngine().Render(template, _itemWithFields),
                 Is.EqualTo(expectedResult));
         }
 
@@ -60,7 +64,7 @@ public class ItemWithFieldsModel : SitecoreItemModel
         {
             var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Minq.hbs");
             
-            Assert.That(new TemplateEngine().Render(template, _itemWithNoFieldsMock.Object),
+            Assert.That(new TemplateEngine().Render(template, _itemWithNoFields),
                 Is.EqualTo(string.Empty));
         }
     }

@@ -20,7 +20,7 @@ namespace Sitecore.Rocks.Templates.Commands
             _selectTemplate = new SelectTemplateViewModel(_service);
         }
 
-        protected override void Execute(ISitecoreItem item)
+        protected override void Execute(SitecoreItem item)
         {
             ITemplateMetaData template;
             var templates = _service.GetTemplates().ToList();

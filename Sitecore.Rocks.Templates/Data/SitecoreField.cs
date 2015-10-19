@@ -1,21 +1,11 @@
-﻿using Sitecore.VisualStudio.Data;
-using Sitecore.Rocks.Templates.Extensions;
-
-namespace Sitecore.Rocks.Templates.Data
+﻿namespace Sitecore.Rocks.Templates.Data
 {
-    public class SitecoreField : ISitecoreField
+    public class SitecoreField
     {
-        private readonly Field _innerField;
+        public string Name { get; set; }
 
-        public SitecoreField(Field innerField)
-        {
-            _innerField = innerField;
-        }
+        public string Value { get; set; }
 
-        public string Name => _innerField.Name;
-
-        public string Value => _innerField.Value;
-
-        public bool IsStandardField => this.IsStandardField();
+        public bool IsStandardField { get; set; }
     }
 }

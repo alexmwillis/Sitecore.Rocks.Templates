@@ -33,11 +33,11 @@
     standardValues: { {{#newline}}
         id: "{{Id}}",{{#newline}}
         languages: ["en"],{{#newline}}
-        fields: { {{#newline}}
+        fields: { 
 {{#each Fields}}
 {{#ifNotFirst ','}}{{#newline}}
             "{{Name}}": "{{Value}}"
-{{/each}}
+{{/each}}{{#newline}}
         }{{#newline}}
     }{{#newline}}
 {{/with}}

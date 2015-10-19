@@ -1,33 +1,44 @@
-﻿var {{#removeWhiteSpace Name}}Template: SinjTemplateDto = {
+﻿var {{#camelCase Name}}Template: SinjTemplateDto = { {{#newline}}
     id: "{{Id}}",{{#newline}}
     name: "{{Name}}",{{#newline}}
-    template: "{{TemplatePath}}",{{#newline}}
-    parent: "{{ItemPath}}",{{#newline}}
-    language: "en",{{#newline}}
-    fields: {
-        "Icon": {{Icon}},{{#newline}}
-        "Base template": {{BaseTemplateList}}{{#newline}}
+    parent: "{{ParentPath}}",{{#newline}}
+    fields: { {{#newline}}
+        icon: "{{Icon}}",{{#newline}}
+        "Base template": "{{BaseTemplateList}}"{{#newline}}
     },{{#newline}}
     sections: [
 {{#each Sections}}
-        {
-{{#ifNotFirst ','}}
-            name: {{Name}},
-            id: {{Id}},
-            sectionFields: {
-                "Icon": {{Icon}},{{#newline}}
-            }
+{{#ifNotFirst ','}}{{#newline}}
+        { {{#newline}}
+            name: "{{Name}}",{{#newline}}
+            id: "{{Id}}",{{#newline}}
+            sectionFields: { {{#newline}}
+                icon: "{{Icon}}"{{#newline}}
+            },{{#newline}}
             fields: [
 {{#each Fields}}
 {{#ifNotFirst ','}}{{#newline}}
-            {
-                id: {{Id}},{{#newline}}
-                name: {{Name}},{{#newline}}
-                type: {{Type}},{{#newline}}
-                sortorder: {{SortOrder}},{{#newline}}
-            }
+                { {{#newline}}
+                    id: "{{Id}}",{{#newline}}
+                    name: "{{Name}}",{{#newline}}
+                    type: {{Type}},{{#newline}}
+                    sortorder: {{SortOrder}}{{#newline}}
+                }
 {{/each}}{{#newline}}
+            ]{{#newline}}
         }
-    ],{{#newline}}
-    standardValues: TODO
 {{/each}}{{#newline}}
+    ],{{#newline}}
+{{#with StandardValues}}
+    standardValues: { {{#newline}}
+        id: "{{Id}}",{{#newline}}
+        languages: ["en"],{{#newline}}
+        fields: { {{#newline}}
+{{#each Fields}}
+{{#ifNotFirst ','}}{{#newline}}
+            "{{Name}}": "{{Value}}"
+{{/each}}
+        }{{#newline}}
+    }{{#newline}}
+{{/with}}
+}

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Sitecore.Rocks.Templates.Data
+namespace Sitecore.Rocks.Templates.Data.Template
 {
     public interface ISitecoreTemplate
     {
@@ -8,16 +8,14 @@ namespace Sitecore.Rocks.Templates.Data
 
         string Name { get; }
 
-        string ItemPath { get; }
-
-        string TemplatePath { get; }
+        string ParentPath { get; }
 
         string Icon { get; }
 
         string BaseTemplateList { get; }
 
-        IEnumerable<ISitecoreSection> Sections { get; }
+        IEnumerable<ISitecoreTemplateSection> Sections { get; }
 
-        ISitecoreItem StandardFields { get; }
+        ISitecoreItem StandardValues { get; }
     }
 }

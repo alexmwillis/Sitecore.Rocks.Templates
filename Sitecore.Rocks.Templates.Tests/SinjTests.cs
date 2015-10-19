@@ -8,9 +8,10 @@ using Sitecore.Rocks.Templates.Engine;
 namespace Sitecore.Rocks.Templates.Tests
 {
     [TestFixture]
-    public class ToTemplateSinjTests
+    public class SinjTests
     {
-        private Mock<ISitecoreTemplate> _templateMock;
+        private Mock<ISitecoreItem> _itemWithFieldsMock;
+        private Mock<ISitecoreItem> _itemWithNoFieldsMock;
         private string _templatePath;
         private string _itemId;
         private string _itemPath;
@@ -38,18 +39,26 @@ namespace Sitecore.Rocks.Templates.Tests
             emptyFieldMock.Setup(f => f.Name).Returns("Field Name 3");
             emptyFieldMock.Setup(f => f.Value).Returns("");
             
-            _templateMock = new Mock<ISitecoreTemplate>();
-            _templateMock.Setup(i => i.Name).Returns("Item With Fields");
-            _templateMock.Setup(i => i.Id).Returns(_itemId);
-            _templateMock.Setup(i => i.ItemPath).Returns(_itemPath);
-            _templateMock.Setup(i => i.Language).Returns(_language);
-            _templateMock.Setup(i => i.TemplatePath).Returns(_templatePath);
-            _templateMock.Setup(i => i.TemplateName).Returns(_templateName);
-            _templateMock.Setup(i => i.Fields)
+            _itemWithFieldsMock = new Mock<ISitecoreItem>();
+            _itemWithFieldsMock.Setup(i => i.Name).Returns("Item With Fields");
+            _itemWithFieldsMock.Setup(i => i.Id).Returns(_itemId);
+            _itemWithFieldsMock.Setup(i => i.ItemPath).Returns(_itemPath);
+            _itemWithFieldsMock.Setup(i => i.Language).Returns(_language);
+            _itemWithFieldsMock.Setup(i => i.TemplatePath).Returns(_templatePath);
+            _itemWithFieldsMock.Setup(i => i.TemplateName).Returns(_templateName);
+            _itemWithFieldsMock.Setup(i => i.Fields)
                 .Returns(new[]
                 {
                     fieldMock1.Object, fieldMock2.Object, emptyFieldMock.Object
                 });
+
+            _itemWithNoFieldsMock = new Mock<ISitecoreItem>();
+            _itemWithNoFieldsMock.Setup(i => i.Name).Returns("Item With No Fields");
+            _itemWithNoFieldsMock.Setup(i => i.Id).Returns(_itemId);
+            _itemWithNoFieldsMock.Setup(i => i.ItemPath).Returns(_itemPath);
+            _itemWithNoFieldsMock.Setup(i => i.Language).Returns(_language);
+            _itemWithNoFieldsMock.Setup(i => i.TemplatePath).Returns(_templatePath);
+            _itemWithNoFieldsMock.Setup(i => i.TemplateName).Returns(_templateName);
         }
 
         [Test]
@@ -87,7 +96,7 @@ namespace Sitecore.Rocks.Templates.Tests
     }}
 }}";
 
-            Assert.That(new TemplateEngine().Render(template, _templateMock.Object),
+            Assert.That(new TemplateEngine().Render(template, _itemWithFieldsMock.Object),
                 Is.EqualTo(expectedResult));
         }
     }

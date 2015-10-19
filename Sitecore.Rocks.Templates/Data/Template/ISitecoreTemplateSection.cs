@@ -2,7 +2,7 @@
 
 namespace Sitecore.Rocks.Templates.Data.Template
 {
-    interface ISitecoreSection
+    public interface ISitecoreTemplateSection
     {
         string Id { get; }
 

@@ -78,7 +78,7 @@
     <Compile Include="Commands\ItemToTemplateCommand.cs" />
     <Compile Include="Data\ISitecoreItem.cs" />
     <Compile Include="Data\ISitecoreField.cs" />
-    <Compile Include="Data\Template\ISitecoreSection.cs" />
+    <Compile Include="Data\Template\ISitecoreTemplateSection.cs" />
     <Compile Include="Data\Template\ISitecoreTemplate.cs" />
     <Compile Include="Data\SitecoreField.cs" />
     <Compile Include="Data\SitecoreItem.cs" />

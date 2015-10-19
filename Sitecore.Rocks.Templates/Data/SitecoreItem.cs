@@ -34,6 +34,6 @@ namespace Sitecore.Rocks.Templates.Data
 
         public IEnumerable<ISitecoreField> Fields => _item.Fields.Select(f => new SitecoreField(f));
 
-        public IEnumerable<ISitecoreField> StandardFields => _item.Fields.Select(f => new SitecoreField(f)).Where(f => f.IsStandardField);
+        public IEnumerable<ISitecoreItem> Children { get { throw new NotImplementedException();} }
     }
 }

@@ -8,9 +8,9 @@ using Sitecore.Rocks.Templates.Engine;
 namespace Sitecore.Rocks.Templates.Tests
 {
     [TestFixture]
-    public class ToMinqTests
+    public class MinqTests
     {
-        private Mock<ISitecoreTemplate> _itemWithFieldsMock;
+        private Mock<ISitecoreItem> _itemWithFieldsMock;
         private Mock<ISitecoreItem> _itemWithNoFieldsMock;
         private string _templateId;
 

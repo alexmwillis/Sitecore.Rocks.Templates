@@ -2,5 +2,12 @@
 {
     public interface ISitecoreTemplateField
     {
+        string Id { get; }
+
+        string Name { get; }
+
+        string Type { get; }
+
+        string SortOrder { get; }
     }
 }

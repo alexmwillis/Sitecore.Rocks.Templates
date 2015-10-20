@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mustache-sharp, Version=0.2.8.1, Culture=neutral, processorArchitecture=MSIL">
@@ -114,14 +114,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Minq.hbs" />
-    <None Include="Resources\Sinj-Template.hbs" />
-    <None Include="Resources\Sinj.hbs" />
+    <None Include="Resources\Item Templates\Minq.hbs" />
+    <None Include="Resources\Template Templates\Sinj-Template.hbs" />
+    <None Include="Resources\Item Templates\Sinj.hbs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y "$(TargetDir)*" "%25localappdata%25\Sitecore\Sitecore.Rocks\Plugins\"
-xcopy /Y "$(ProjectDir)Resources\*" "%25localappdata%25\Sitecore\Sitecore.Rocks\Plugins\Item Templates\"</PostBuildEvent>
+xcopy /Y /s "$(ProjectDir)Resources\*" "%25localappdata%25\Sitecore\Sitecore.Rocks\Plugins\"</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -8,8 +8,11 @@ namespace Sitecore.Rocks.Templates.Service
 {
     public class TemplateService : ITemplateService
     {
-        private readonly string _itemTemplateLocation =
+        private static readonly string TtemTemplateLocation =
             $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\Sitecore\\Sitecore.Rocks\\Plugins\\Item Templates";
+
+        private static readonly string TemplateTemplateLocation =
+            $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\Sitecore\\Sitecore.Rocks\\Plugins\\Template Templates";
 
         private readonly ITemplateEngine _engine;
 
@@ -22,28 +25,39 @@ namespace Sitecore.Rocks.Templates.Service
         {
             return _engine.Render(GetTemplate(template), source);
         }
-
-        public IEnumerable<ITemplateMetaData> GetTemplates()
+        
+        public IEnumerable<ITemplateMetaData> GetTemplates(TemplateType type)
         {
-            var files = TryGetFiles(_itemTemplateLocation);
-
-            return files.Select(i => new TemplateMetaData
+            return GetFileInfos(type).Select(i => new TemplateMetaData
             {
                 FullName = i.FullName,
                 Name = i.Name
             });
         }
 
-        private static IEnumerable<FileInfo> TryGetFiles(string directory)
-        {
-            return Directory.Exists(directory) 
-                ? Directory.GetFiles(directory).Select(f => new FileInfo(f)) 
-                : Enumerable.Empty<FileInfo>();
-        }
-
         private static string GetTemplate(ITemplateMetaData template)
         {
             return File.ReadAllText(template.FullName);
+        }
+
+        private static IEnumerable<FileInfo> GetFileInfos(TemplateType type)
+        {
+            switch (type)
+            {
+                case TemplateType.SitecoreItem:
+                    return TryGetFiles(TtemTemplateLocation);
+
+                case TemplateType.SitecoreTemplate:
+                    return TryGetFiles(TemplateTemplateLocation);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        private static IEnumerable<FileInfo> TryGetFiles(string directory)
+        {
+            return Directory.Exists(directory) ? Directory.GetFiles(directory).Select(f => new FileInfo(f)) : Enumerable.Empty<FileInfo>();
         }
     }
 }

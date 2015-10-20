@@ -13,8 +13,7 @@ namespace Sitecore.Rocks.Templates.Commands
         protected abstract void ExecuteInner(SitecoreItem item);
 
         protected abstract void ExecuteInner(SitecoreTemplate item);
-
-
+        
         protected override bool CanExecuteInner(ContentTreeContext context)
         {
             return context.OneItemSelected() && context.GetSelectedAsItemTree() != null;

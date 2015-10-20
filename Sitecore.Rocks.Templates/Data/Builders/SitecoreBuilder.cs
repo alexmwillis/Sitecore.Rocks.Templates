@@ -1,4 +1,6 @@
-﻿using Sitecore.VisualStudio.Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Sitecore.VisualStudio.Data;
 
 namespace Sitecore.Rocks.Templates.Data.Builders
 {
@@ -14,6 +16,14 @@ namespace Sitecore.Rocks.Templates.Data.Builders
         protected Item GetItem(ItemUri uri)
         {
             return _dataService.GetItemFields(new ItemVersionUri(uri, Language.Current, Version.Latest));
+        }
+
+        protected static string GetParentPath(IEnumerable<ItemPath> path)
+        {
+            return path
+                .Skip(1)
+                .Reverse()
+                .Aggregate("", (s, a) => s + "/" + a.Name);
         }
     }
 }

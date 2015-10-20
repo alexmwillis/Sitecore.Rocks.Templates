@@ -14,7 +14,7 @@ namespace Sitecore.Rocks.Templates.Commands
         {
             var context = parameter as ContentTreeContext;
 
-            return context != null && CanExecute(context);
+            return context != null && CanExecuteInner(context);
         }
         
         public override void Execute(object parameter)

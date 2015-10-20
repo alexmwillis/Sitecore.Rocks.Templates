@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Sitecore.VisualStudio.Data;
 
 namespace Sitecore.Rocks.Templates.Data.Builders
@@ -18,12 +19,12 @@ namespace Sitecore.Rocks.Templates.Data.Builders
             {
                 Id = item.ItemUri.ItemId.ToString(),
                 Name = item.Name,
-                ParentPath = item.ItemUri.ToString(),
+                ParentPath = GetParentPath(item.Path),
                 Language = Language.Current.ToString(),
                 TemplateId = item.TemplateId.ToString(),
                 TemplateName = item.TemplateName,
                 TemplatePath = template.GetPath(),
-                Fields = item.Fields.Select(f => SitecoreFieldBuilder.Build(f))
+                Fields = item.Fields.Select(SitecoreFieldBuilder.Build)
             };
         }
     }

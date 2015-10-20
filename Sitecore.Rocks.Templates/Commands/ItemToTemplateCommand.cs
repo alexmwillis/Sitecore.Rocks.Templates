@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Sitecore.Rocks.Templates.Data;
 using Sitecore.Rocks.Templates.Engine;
 using Sitecore.Rocks.Templates.Service;
@@ -9,7 +10,6 @@ namespace Sitecore.Rocks.Templates.Commands
     public class ItemToTemplateCommand : SingleTreeItemCommand
     {
         private readonly ITemplateService _service;
-        private readonly SelectTemplateViewModel _selectTemplate;
 
         public ItemToTemplateCommand() 
         {
@@ -17,44 +17,45 @@ namespace Sitecore.Rocks.Templates.Commands
             SortingValue = 1000;
 
             _service = new TemplateService(new TemplateEngine());
-            _selectTemplate = new SelectTemplateViewModel(_service);
         }
 
         protected override void ExecuteInner(SitecoreTemplate item)
         {
-            throw new System.NotImplementedException();
+            var template = GetTemplate(TemplateType.SitecoreTemplate);
+            AppHost.Clipboard.SetText(_service.Render(template, item));
         }
 
         protected override void ExecuteInner(SitecoreItem item)
         {
-            var template = GetTemplate(item);
+            var template = GetTemplate(TemplateType.SitecoreItem);
             AppHost.Clipboard.SetText(_service.Render(template, item));
         }
 
-        private ITemplateMetaData GetTemplate(SitecoreItem item)
+        private ITemplateMetaData GetTemplate(TemplateType type)
         {
-            var templates = _service.GetTemplates().ToList();
+            var templates = _service.GetTemplates(type).ToArray();
 
-            switch (templates.Count)
+            switch (templates.Length)
             {
                 case 0:
                     return null;
                 case 1:
-                    return _service.GetTemplates().First();
+                    return templates.First();
 
                 default:
-                    return ShowUiAndValidate()
-                        ? templates.First(t => t.FullName == _selectTemplate.SelectedTemplate.FullName)
-                        : null;
+                    return ShowUiAndGetTemplate(templates);
             }
         }
 
-        public bool ShowUiAndValidate()
+        public ITemplateMetaData ShowUiAndGetTemplate(ITemplateMetaData[] templates)
         {
-            var window = new SelectTemplateWindow(_selectTemplate);
+            var templatesViewModel = new SelectTemplateViewModel(templates);
+            
+            var showDialogResult = new SelectTemplateWindow(templatesViewModel).ShowDialog();
 
-            var showDialog = window.ShowDialog();
-            return showDialog ?? false;
+            return (showDialogResult ?? false)
+                ? templates.First(t => t.FullName == templatesViewModel.SelectedTemplate.FullName)
+                : null;
         }
     }
 }

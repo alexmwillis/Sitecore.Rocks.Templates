@@ -18,7 +18,7 @@ namespace Sitecore.Rocks.Templates.Data.Builders
             {
                 Id = item.ItemUri.ItemId.ToString(),
                 Name = item.Name,
-                ParentPath = item.ItemUri.ToString(),
+                ParentPath = GetParentPath(item.Path),
                 BaseTemplateList = item.BaseTemplates.Aggregate("", (s, a) => s + "|" + a.ItemId.ToString()),
                 Icon = item.Icon.IconPath,
                 Sections = GetSections(item)

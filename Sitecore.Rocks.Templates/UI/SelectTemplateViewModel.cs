@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Rocks.Templates.Service;
 
@@ -7,9 +6,8 @@ namespace Sitecore.Rocks.Templates.UI
 {
     public class SelectTemplateViewModel
     {
-        public SelectTemplateViewModel(ITemplateService service)
+        public SelectTemplateViewModel(IEnumerable<ITemplateMetaData> templates)
         {
-            var templates = service.GetTemplates();
             Templates = templates.Select(t => new TemplateViewModel
             {
                 DisplayName = t.Name,

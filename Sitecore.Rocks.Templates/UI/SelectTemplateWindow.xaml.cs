@@ -18,7 +18,7 @@ namespace Sitecore.Rocks.Templates.UI
     /// <summary>
     /// Interaction logic for SelectTemplateWindow.xaml
     /// </summary>
-    public partial class SelectTemplateWindow : Window
+    public partial class SelectTemplateWindow
     {
         public SelectTemplateWindow(SelectTemplateViewModel viewModel)
         {

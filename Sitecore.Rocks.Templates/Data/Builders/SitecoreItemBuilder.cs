@@ -1,15 +1,12 @@
 ﻿using System.Linq;
 using Sitecore.VisualStudio.Data;
 
-namespace Sitecore.Rocks.Templates.Data
+namespace Sitecore.Rocks.Templates.Data.Builders
 {
-    public class SitecoreItemBuilder
+    public class SitecoreItemBuilder : SitecoreBuilder
     {
-        private readonly DataService _dataService;
-
-        public SitecoreItemBuilder(DataService dataService)
+        public SitecoreItemBuilder(DataService dataService) : base(dataService)
         {
-            _dataService = dataService;
         }
 
         public SitecoreItem Build(ItemUri itemUri)
@@ -28,11 +25,6 @@ namespace Sitecore.Rocks.Templates.Data
                 TemplatePath = template.GetPath(),
                 Fields = item.Fields.Select(f => SitecoreFieldBuilder.Build(f))
             };
-        }
-
-        private Item GetItem(ItemUri uri)
-        {
-            return _dataService.GetItemFields(new ItemVersionUri(uri, Language.Current, Version.Latest));
         }
     }
 }

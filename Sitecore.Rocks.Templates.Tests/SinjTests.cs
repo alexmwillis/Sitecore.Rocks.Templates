@@ -11,13 +11,13 @@ namespace Sitecore.Rocks.Templates.Tests
     {
         private SitecoreItem _itemWithFields;
         private SitecoreItem _itemWithNoFields;
-        
+
         [SetUp]
         public void SetUp()
         {
             var itemId = Guid.NewGuid().ToString();
-                                    
-            _itemWithFields = new SitecoreItem 
+
+            _itemWithFields = new SitecoreItem
             {
                 Id = itemId,
                 Name = "Item With Fields",
@@ -25,15 +25,15 @@ namespace Sitecore.Rocks.Templates.Tests
                 Language = "en",
                 TemplatePath = "/template/path/",
                 TemplateName = "Template",
-                Fields = new[] 
+                Fields = new[]
                 {
-                    new SitecoreField { Name = "Field Name 1", Value = "Field Value 1" },
-                    new SitecoreField { Name = "Field Name 2", Value = "Field Value 2" },
-                    new SitecoreField { Name = "Field Name 3", Value = "" }
+                    new SitecoreField {Name = "Field Name 1", Value = "Field Value 1"},
+                    new SitecoreField {Name = "Field Name 2", Value = "Field Value 2"},
+                    new SitecoreField {Name = "Field Name 3", Value = ""}
                 }
             };
-            
-            _itemWithNoFields = new SitecoreItem 
+
+            _itemWithNoFields = new SitecoreItem
             {
                 Id = itemId,
                 Name = "Item With No Fields",

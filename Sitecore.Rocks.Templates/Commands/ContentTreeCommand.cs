@@ -6,7 +6,9 @@ namespace Sitecore.Rocks.Templates.Commands
     [Command]
     public abstract class ContentTreeCommand : CommandBase
     {
-        protected abstract bool CanExecute(ContentTreeContext parameter);
+        protected abstract bool CanExecuteInner(ContentTreeContext parameter);
+
+        protected abstract void ExecuteInner(ContentTreeContext context);
 
         public override bool CanExecute(object parameter)
         {
@@ -14,14 +16,12 @@ namespace Sitecore.Rocks.Templates.Commands
 
             return context != null && CanExecute(context);
         }
-
-        protected abstract void Execute(ContentTreeContext context);
-
+        
         public override void Execute(object parameter)
         {
             var context = parameter as ContentTreeContext;
 
-            if (context != null) Execute(context);
+            if (context != null) ExecuteInner(context);
         }
     }
 }

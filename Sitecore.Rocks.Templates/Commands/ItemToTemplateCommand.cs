@@ -20,25 +20,33 @@ namespace Sitecore.Rocks.Templates.Commands
             _selectTemplate = new SelectTemplateViewModel(_service);
         }
 
-        protected override void Execute(SitecoreItem item)
+        protected override void ExecuteInner(SitecoreTemplate item)
         {
-            ITemplateMetaData template;
+            throw new System.NotImplementedException();
+        }
+
+        protected override void ExecuteInner(SitecoreItem item)
+        {
+            var template = GetTemplate(item);
+            AppHost.Clipboard.SetText(_service.Render(template, item));
+        }
+
+        private ITemplateMetaData GetTemplate(SitecoreItem item)
+        {
             var templates = _service.GetTemplates().ToList();
 
             switch (templates.Count)
             {
                 case 0:
-                    return;
+                    return null;
                 case 1:
-                    template = _service.GetTemplates().First();
-                    break;
-                default:
-                    if (!ShowUiAndValidate()) return;
+                    return _service.GetTemplates().First();
 
-                    template = templates.First(t => t.FullName == _selectTemplate.SelectedTemplate.FullName);
-                    break;
+                default:
+                    return ShowUiAndValidate()
+                        ? templates.First(t => t.FullName == _selectTemplate.SelectedTemplate.FullName)
+                        : null;
             }
-            AppHost.Clipboard.SetText(_service.Render(template, item));
         }
 
         public bool ShowUiAndValidate()

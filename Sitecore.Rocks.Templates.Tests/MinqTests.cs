@@ -17,23 +17,19 @@ namespace Sitecore.Rocks.Templates.Tests
         {
             var templateId = Guid.NewGuid().ToString();
 
-            var itemId = Guid.NewGuid().ToString();
-                                    
-            _itemWithFields = new SitecoreItem 
+            _itemWithFields = new SitecoreItem
             {
-                Id = itemId,
                 Name = "Item With Fields",
                 TemplateId = templateId,
-                Fields = new[] 
+                Fields = new[]
                 {
-                    new SitecoreField { Name = "Field Name 1", Value = "Field Value 1" },
-                    new SitecoreField { Name = "Field Name 2", Value = "Field Value 2" },
+                    new SitecoreField {Name = "Field Name 1", Value = "Field Value 1"},
+                    new SitecoreField {Name = "Field Name 2", Value = "Field Value 2"},
                 }
             };
-            
-            _itemWithNoFields = new SitecoreItem 
+
+            _itemWithNoFields = new SitecoreItem
             {
-                Id = itemId,
                 Name = "Item With No Fields",
                 TemplateId = templateId
             };

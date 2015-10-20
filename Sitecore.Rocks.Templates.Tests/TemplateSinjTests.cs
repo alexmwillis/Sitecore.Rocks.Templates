@@ -1,8 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using NUnit.Framework;
 using Sitecore.Rocks.Templates.Data;
-using Sitecore.Rocks.Templates.Data.Template;
 using Sitecore.Rocks.Templates.Engine;
 
 namespace Sitecore.Rocks.Templates.Tests
@@ -21,14 +19,15 @@ namespace Sitecore.Rocks.Templates.Tests
                 Name = "Template",
                 Icon = "icon",
                 ParentPath = "parentPath",
-                Sections = new[] 
+                Sections = new[]
                 {
                     new SitecoreTemplateSection
                     {
                         Id = "{0A4ED1F8-BC5C-4761-B712-F5D109BF84D1}",
                         Name = "Section 1",
                         Icon = "icon",
-                        Fields = new[] {
+                        Fields = new[]
+                        {
                             new SitecoreTemplateField
                             {
                                 Id = "{A6D93073-6EB4-4F43-A117-6CE1DA444371}",
@@ -42,7 +41,7 @@ namespace Sitecore.Rocks.Templates.Tests
                                 Name = "Field 2",
                                 Type = "scFieldTypes.text",
                                 SortOrder = "200"
-                            }                            
+                            }
                         }
                     },
                     new SitecoreTemplateSection
@@ -54,9 +53,10 @@ namespace Sitecore.Rocks.Templates.Tests
                 StandardValues = new SitecoreItem
                 {
                     Id = "{EB500643-2FA7-4F83-BCBA-4E623D1946F4}",
-                    Fields = new[] { 
-                        new SitecoreField { Name = "Field 1", Value = "Value 1" },
-                        new SitecoreField { Name = "Field 2", Value = "Value 2" }
+                    Fields = new[]
+                    {
+                        new SitecoreField {Name = "Field 1", Value = "Value 1"},
+                        new SitecoreField {Name = "Field 2", Value = "Value 2"}
                     }
                 }
             };

@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="Commands\ContentTreeCommand.cs" />
     <Compile Include="Commands\ItemToTemplateCommand.cs" />
+    <Compile Include="Data\Builders\SitecoreBuilder.cs" />
     <Compile Include="Data\Builders\SitecoreTemplateBuilder.cs" />
     <Compile Include="Data\SitecoreItem.cs" />
     <Compile Include="Data\SitecoreField.cs" />

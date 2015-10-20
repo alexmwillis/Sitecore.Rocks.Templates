@@ -7,21 +7,19 @@ namespace Sitecore.Rocks.Templates.UI
 {
     public class SelectTemplateViewModel
     {
-        private readonly Func<IEnumerable<ITemplateMetaData>> _getTemplates;
-
         public SelectTemplateViewModel(ITemplateService service)
         {
-            _getTemplates = service.GetTemplates;
-        }
-
-        public IEnumerable<TemplateViewModel> Templates =>
-
-            _getTemplates().Select(t => new TemplateViewModel
+            var templates = service.GetTemplates();
+            Templates = templates.Select(t => new TemplateViewModel
             {
                 DisplayName = t.Name,
                 FullName = t.FullName
             });
+            SelectedTemplate = Templates.First();
+        }
 
-        public TemplateViewModel SelectedTemplate { get; set; }
+        public IEnumerable<TemplateViewModel> Templates { get; }
+
+        public TemplateViewModel SelectedTemplate { get; }
     }
 }

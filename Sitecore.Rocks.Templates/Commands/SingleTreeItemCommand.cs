@@ -1,8 +1,8 @@
 ﻿using Sitecore.VisualStudio.Extensions.IItemSelectionContextExtensions;
 using Sitecore.VisualStudio.Commands;
 using Sitecore.VisualStudio.ContentTrees;
-using Sitecore.VisualStudio.Data;
 using Sitecore.Rocks.Templates.Data;
+using Sitecore.Rocks.Templates.Data.Builders;
 using Sitecore.Rocks.Templates.Extensions;
 
 namespace Sitecore.Rocks.Templates.Commands
@@ -10,24 +10,27 @@ namespace Sitecore.Rocks.Templates.Commands
     [Command]
     public abstract class SingleTreeItemCommand : ContentTreeCommand
     {
-        protected override bool CanExecute(ContentTreeContext context)
+        protected abstract void ExecuteInner(SitecoreItem item);
+
+        protected abstract void ExecuteInner(SitecoreTemplate item);
+
+
+        protected override bool CanExecuteInner(ContentTreeContext context)
         {
             return context.OneItemSelected() && context.GetSelectedAsItemTree() != null;
         }
-
-        protected abstract void Execute(SitecoreItem item);
-
-        protected override void Execute(ContentTreeContext context)
+        
+        protected override void ExecuteInner(ContentTreeContext context)
         {
             var itemTree = context.GetSelectedAsItemTree();
 
             if (itemTree.IsTemplate)
-            { 
-
+            {
+                ExecuteInner(new SitecoreTemplateBuilder(context.GetSite().DataService).Build(itemTree.ItemUri));
             }
             else
             {
-                Execute(new SitecoreItemBuilder(context.GetSite().DataService).Build(itemTree.ItemUri));
+                ExecuteInner(new SitecoreItemBuilder(context.GetSite().DataService).Build(itemTree.ItemUri));
             }
             
         }        

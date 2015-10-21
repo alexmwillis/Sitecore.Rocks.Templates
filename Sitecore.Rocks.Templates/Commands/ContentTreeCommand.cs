@@ -1,4 +1,6 @@
-﻿using Sitecore.VisualStudio.Commands;
+﻿using System;
+using System.Windows;
+using Sitecore.VisualStudio.Commands;
 using Sitecore.VisualStudio.ContentTrees;
 
 namespace Sitecore.Rocks.Templates.Commands
@@ -16,12 +18,19 @@ namespace Sitecore.Rocks.Templates.Commands
 
             return context != null && CanExecuteInner(context);
         }
-        
+
         public override void Execute(object parameter)
         {
-            var context = parameter as ContentTreeContext;
+            try
+            {
+                var context = parameter as ContentTreeContext;
 
-            if (context != null) ExecuteInner(context);
+                if (context != null) ExecuteInner(context);
+            }
+            catch (Exception e)
+            {
+                AppHost.MessageBox(e.Message, "Error executing command", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

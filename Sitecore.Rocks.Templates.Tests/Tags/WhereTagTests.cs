@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Moq;
 using NUnit.Framework;
-using Sitecore.Rocks.Templates.Data;
 using Sitecore.Rocks.Templates.Engine;
 
-namespace Sitecore.Rocks.Templates.Tests
+namespace Sitecore.Rocks.Templates.Tests.Tags
 {
     [TestFixture]
     public class WhereTagTests

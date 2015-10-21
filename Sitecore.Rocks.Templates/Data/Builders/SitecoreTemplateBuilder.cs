@@ -21,13 +21,32 @@ namespace Sitecore.Rocks.Templates.Data.Builders
                 ParentPath = GetParentPath(item.Path),
                 BaseTemplateList = item.BaseTemplates.Aggregate("", (s, a) => s + "|" + a.ItemId.ToString()),
                 Icon = item.Icon.IconPath,
-                Sections = GetSections(item)
+                Sections = GetSections(itemUri)
             };
         }
 
-        private IEnumerable<SitecoreTemplateSection> GetSections(Item item)
+        private IEnumerable<SitecoreTemplateSection> GetSections(ItemUri itemUri)
         {
-            return null;
+            var children = GetChildren(itemUri);
+            return children.Select(i => new SitecoreTemplateSection
+            {
+                Id = i.ItemId.ToString(),
+                Name = i.Name,
+                Icon = i.Icon.IconPath,
+                Fields = GetFields(i.ItemUri)
+            });
+        }
+
+        private IEnumerable<SitecoreTemplateField> GetFields(ItemUri itemUri)
+        {
+            var children = GetChildren(itemUri);
+            return children.Select(f => new SitecoreTemplateField
+            {
+                Id = f.ItemId.ToString(),
+                Name = f.Name,
+                SortOrder = f.SortOrder.ToString(),
+                Type = "TODO"
+            });
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Sitecore.Rocks.Templates.Commands
     {
         private readonly ITemplateService _service;
 
-        public ItemToTemplateCommand() 
+        public ItemToTemplateCommand()
         {
             Text = "Copy to template...";
             SortingValue = 1000;
@@ -22,12 +22,19 @@ namespace Sitecore.Rocks.Templates.Commands
         protected override void ExecuteInner(SitecoreTemplate item)
         {
             var template = GetTemplate(TemplateType.SitecoreTemplate);
-            AppHost.Clipboard.SetText(_service.Render(template, item));
+            CopyToClipboard(template, item);
         }
 
         protected override void ExecuteInner(SitecoreItem item)
         {
             var template = GetTemplate(TemplateType.SitecoreItem);
+            CopyToClipboard(template, item);
+        }
+
+        private void CopyToClipboard(ITemplateMetaData template, object item)
+        {
+            if (template == null || item == null) return;
+
             AppHost.Clipboard.SetText(_service.Render(template, item));
         }
 
@@ -49,12 +56,20 @@ namespace Sitecore.Rocks.Templates.Commands
 
         public ITemplateMetaData ShowUiAndGetTemplate(ITemplateMetaData[] templates)
         {
-            var templatesViewModel = new SelectTemplateViewModel(templates);
-            
-            var showDialogResult = new SelectTemplateWindow(templatesViewModel).ShowDialog();
+            var templatesViewModel = templates
+                .Select(t => new TemplateViewModel {DisplayName = t.Name, FullName = t.FullName})
+                .ToArray();
+
+            var selectTemplateViewModel = new SelectTemplateViewModel
+            {
+                Templates = templatesViewModel,
+                SelectedTemplate = templatesViewModel.First()
+            };
+
+            var showDialogResult = new SelectTemplateWindow(selectTemplateViewModel).ShowDialog();
 
             return (showDialogResult ?? false)
-                ? templates.First(t => t.FullName == templatesViewModel.SelectedTemplate.FullName)
+                ? templates.First(t => t.FullName == selectTemplateViewModel.SelectedTemplate.FullName)
                 : null;
         }
     }

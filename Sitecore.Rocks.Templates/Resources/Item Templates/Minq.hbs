@@ -2,10 +2,14 @@
 [SitecoreTemplate("{{TemplateId}}")]{{#newline}}
 public class {{#pascalCase Name}}Model : SitecoreItemModel{{#newline}}
 {
-{{#each Fields}}
+{{#with Fields}}
+{{#where 'Name' '^(?!__).+'}}
+{{#each this}}
 {{#newline}}
     [SitecoreField("{{Name}}")]{{#newline}}
     public string {{#pascalCase Name}} { get; set; }{{#newline}}
 {{/each}}
+{{/where}}
+{{/with}}
 }
 {{/if}}

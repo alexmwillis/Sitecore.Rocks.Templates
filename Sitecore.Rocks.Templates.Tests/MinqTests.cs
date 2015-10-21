@@ -38,7 +38,7 @@ namespace Sitecore.Rocks.Templates.Tests
         [Test]
         public void TestModelIsCorrectlyFormatted()
         {
-            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Minq.hbs");
+            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//Minq.hbs");
 
             var expectedResult =
                 $@"[SitecoreTemplate(""{_itemWithFields.TemplateId}"")]
@@ -58,7 +58,7 @@ public class ItemWithFieldsModel : SitecoreItemModel
         [Test]
         public void TestNothingIsReturnedWhenTheItemHasNoFields()
         {
-            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Minq.hbs");
+            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//Minq.hbs");
             
             Assert.That(new TemplateEngine().Render(template, _itemWithNoFields),
                 Is.EqualTo(string.Empty));

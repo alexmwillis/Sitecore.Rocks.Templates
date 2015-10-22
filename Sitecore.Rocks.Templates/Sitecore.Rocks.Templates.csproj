@@ -114,9 +114,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Item Templates\Minq.hbs" />
-    <None Include="Resources\Template Templates\Sinj-Template.hbs" />
-    <None Include="Resources\Item Templates\Sinj.hbs" />
+    <None Include="Resources\Item Templates\minq.hbs" />
+    <None Include="Resources\Item Templates\sinj-subitems.hbs" />
+    <None Include="Resources\Template Templates\sinj-template.hbs" />
+    <None Include="Resources\Item Templates\sinj.hbs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

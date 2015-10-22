@@ -1,0 +1,22 @@
+﻿{{#each Children}}
+
+var {{#camelCase Name}}{{#pascalCase TemplateName}}: SinjItemDto = { {{#newline}}
+    id: "{{Id}}",{{#newline}}
+    name: "{{Name}}",{{#newline}}
+    template: "{{TemplatePath}}",{{#newline}}
+    parent: "{{ParentPath}}",{{#newline}}
+    language: "en",{{#newline}}
+    fields: {
+{{#with Fields}}
+{{#where 'Value'}}
+{{#each this}}
+{{#ifNotFirst ','}}{{#newline}}
+        "{{Name}}": "{{Value}}"
+{{/each}}
+{{/where}}
+{{/with}}{{#newline}}
+    }{{#newline}}
+}{{#newline}}
+{{#newline}}
+
+{{/each}}

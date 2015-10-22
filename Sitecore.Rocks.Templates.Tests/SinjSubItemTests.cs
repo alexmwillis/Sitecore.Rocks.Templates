@@ -57,9 +57,9 @@ namespace Sitecore.Rocks.Templates.Tests
         [Test]
         public void TestSubItemsAreCorrectlyFormatted()
         {
-            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//sinj-subitems.hbs");
+            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//sinj-subitems.hbs");
 
-            var expectedResult = $@"var subItem2Template: SinjItemDto = {{ 
+            var expectedResult = $@"var subItem1Template: SinjItemDto = {{ 
     id: ""{_subItem1.Id}"",
     name: ""{_subItem1.Name}"",
     template: ""{_subItem1.TemplatePath}"",

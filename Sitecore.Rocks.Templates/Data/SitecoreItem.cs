@@ -19,7 +19,5 @@ namespace Sitecore.Rocks.Templates.Data
         public string Language { get; set; }
 
         public IEnumerable<SitecoreField> Fields { get; set; }
-
-        public IEnumerable<SitecoreItem> Children { get; set; }
     }
 }

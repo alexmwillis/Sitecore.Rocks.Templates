@@ -55,7 +55,7 @@
     <Compile Include="TemplateSinjTests.cs" />
     <Compile Include="SinjTests.cs" />
     <Compile Include="MinqTests.cs" />
-    <Compile Include="WhereTagTests.cs" />
+    <Compile Include="Tags\WhereTagTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -66,9 +66,7 @@
       <Name>Sitecore.Rocks.Templates</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Service\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\Where-Invalid.hbs" />
     <None Include="Resources\Where-Match-Key.hbs" />

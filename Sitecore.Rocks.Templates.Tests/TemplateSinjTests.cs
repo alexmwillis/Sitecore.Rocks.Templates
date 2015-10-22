@@ -65,7 +65,7 @@ namespace Sitecore.Rocks.Templates.Tests
         [Test]
         public void TemplateFormatedCorrectly()
         {
-            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Sinj-Template.hbs");
+            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Template Templates//Sinj.hbs");
 
             var expectedResult = File.ReadAllText("..//..//Resources//sinj-template.js");
 

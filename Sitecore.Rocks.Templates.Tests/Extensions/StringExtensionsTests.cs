@@ -1,0 +1,42 @@
+﻿using NUnit.Framework;
+using Sitecore.Rocks.Templates.Extensions;
+
+namespace Sitecore.Rocks.Templates.Tests.Extensions
+{
+    [TestFixture]
+    public class StringExtensionsTests
+    {
+        [TestCase("Pascal Case")]
+        [TestCase("Pascal  Case")]
+        [TestCase("pascal Case")]
+        [TestCase("Pascal  case")]
+        public void TestPascalCase(string stringToFormat)
+        {
+            var expectedResult = "PascalCase";
+
+            Assert.That(stringToFormat.PascalCase(), Is.EqualTo(expectedResult));
+        }
+
+        [TestCase("1 Test")]
+        [TestCase("1Test")]
+        [TestCase("2Test")]
+        [TestCase("10Test")]
+        public void TestSanitiseNumbers(string stringToFormat)
+        {
+            Assert.That(stringToFormat.PascalCase(), Is.EqualTo("Test"));
+        }
+
+        [TestCase("Camel Case")]
+        [TestCase("Camel  Case")]
+        [TestCase("camel Case")]
+        [TestCase("Camel  case")]
+        [TestCase("1 Camel  case")]
+        [TestCase("2Camel  case")]
+        public void TestCamelCase(string stringToFormat)
+        {
+            var expectedResult = "camelCase";
+
+            Assert.That(stringToFormat.CamelCase(), Is.EqualTo(expectedResult));
+        }
+    }
+}

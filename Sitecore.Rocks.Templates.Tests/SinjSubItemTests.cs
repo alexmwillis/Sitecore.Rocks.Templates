@@ -66,6 +66,8 @@ namespace Sitecore.Rocks.Templates.Tests
     parent: ""{_subItem1.ParentPath}"",
     language: ""{_subItem1.Language}"",
     fields: {{
+        ""Field Name 1"": ""Field Value 1"",
+        ""Field Name 2"": ""Field Value 2""
     }}
 }}
 
@@ -76,8 +78,12 @@ var subItem2Template: SinjItemDto = {{
     parent: ""{_subItem2.ParentPath}"",
     language: ""{_subItem2.Language}"",
     fields: {{
+        ""Field Name 1"": ""Field Value 1"",
+        ""Field Name 2"": ""Field Value 2""
     }}
-}}";
+}}
+
+";
             Assert.That(new TemplateEngine().Render(template, _itemWithSubItems),
                 Is.EqualTo(expectedResult));
         }

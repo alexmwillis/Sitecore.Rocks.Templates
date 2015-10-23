@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Mustache;
+using Sitecore.Rocks.Templates.Extensions;
 
 namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
 {
@@ -20,14 +20,10 @@ namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
         public override void GetText(TextWriter writer, Dictionary<string, object> arguments, Scope context)
         {
             var str = (string) arguments["string"];
-            if (!string.IsNullOrWhiteSpace(str))
-            {
-                var words = str.Split(' ');
-                
-                var camel = string.Concat(words.First().ToLowerInvariant(), string.Join("", words.Skip(1)));              
-                
-                writer.Write(camel);
-            }
+
+            if (string.IsNullOrWhiteSpace(str)) return;
+
+            writer.Write(str.CamelCase());
         }
     }
 }

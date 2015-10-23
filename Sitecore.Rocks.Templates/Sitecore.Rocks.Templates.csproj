@@ -89,6 +89,7 @@
     <Compile Include="Engine\TagDefinitions\PascelCaseTag.cs" />
     <Compile Include="Engine\TagDefinitions\IfNotFirstTag.cs" />
     <Compile Include="Engine\TagDefinitions\WhereTag.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Service\ITemplateMetaData.cs" />
     <Compile Include="Service\ITemplateService.cs" />
     <Compile Include="Service\TemplateMetaData.cs" />

@@ -25,13 +25,12 @@ namespace Sitecore.Rocks.Templates.Commands
 
             if (itemTree.IsTemplate)
             {
-                ExecuteInner(new SitecoreTemplateBuilder(context.GetSite().DataService).Build(itemTree.ItemUri));
+                ExecuteInner(new SitecoreTemplateBuilder(new SitecoreBuilder(context.GetSite().DataService)).Build(itemTree.ItemUri));
             }
             else
             {
-                ExecuteInner(new SitecoreItemBuilder(context.GetSite().DataService).Build(itemTree.ItemUri));
+                ExecuteInner(new SitecoreItemBuilder(new SitecoreBuilder(context.GetSite().DataService)).Build(itemTree.ItemUri));
             }
-            
         }        
     }
 }

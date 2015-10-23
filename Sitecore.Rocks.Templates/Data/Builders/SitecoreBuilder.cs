@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Sitecore.VisualStudio.Data;
-using Version = Sitecore.VisualStudio.Data.Version;
 
 namespace Sitecore.Rocks.Templates.Data.Builders
 {
@@ -17,12 +15,12 @@ namespace Sitecore.Rocks.Templates.Data.Builders
             _dataService = dataService;
         }
 
-        protected Item GetItem(ItemUri uri)
+        public Item GetItem(ItemUri uri)
         {
             return _dataService.GetItemFields(new ItemVersionUri(uri, Language.Current, Version.Latest));
         }
 
-        protected static string GetParentPath(IEnumerable<ItemPath> path)
+        public string GetParentPath(IEnumerable<ItemPath> path)
         {
             return path
                 .Skip(1)
@@ -30,22 +28,22 @@ namespace Sitecore.Rocks.Templates.Data.Builders
                 .Aggregate("", (s, a) => s + "/" + a.Name);
         }
 
-        protected IEnumerable<ItemHeader> GetChildren(ItemUri uri)
+        public IEnumerable<ItemHeader> GetChildHeaders(ItemUri uri)
         {
             AutoResetEvent stopWaitHandle = new AutoResetEvent(false);
 
             IEnumerable<ItemHeader> result = null;
 
-            GetItemsCompleted<ItemHeader> getChildrenCallback = (res) =>
+            GetItemsCompleted<ItemHeader> getChildrenCallback = (headers) =>
             {
-                result = res;
+                result = headers;
                 stopWaitHandle.Set();
             };
 
             new Task(() => _dataService.GetChildrenAsync(uri, getChildrenCallback)).Start();
 
             stopWaitHandle.WaitOne();
-           
+
             return result;
         }
     }

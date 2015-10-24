@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace Sitecore.Rocks.Templates.Extensions
+namespace Sitecore.Rocks.Templates.Utils
 {
     public static class StringExtensions
     {

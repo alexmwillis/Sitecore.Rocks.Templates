@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using Sitecore.Rocks.Templates.Extensions;
+using Sitecore.Rocks.Templates.Utils;
 
-namespace Sitecore.Rocks.Templates.Tests.Extensions
+namespace Sitecore.Rocks.Templates.Tests.Utils
 {
     [TestFixture]
     public class StringExtensionsTests

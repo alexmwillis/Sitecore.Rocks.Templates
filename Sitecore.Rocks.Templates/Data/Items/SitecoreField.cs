@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Rocks.Templates.Data
+﻿namespace Sitecore.Rocks.Templates.Data.Items
 {
     public class SitecoreField
     {

@@ -76,32 +76,31 @@
   <ItemGroup>
     <Compile Include="Commands\ContentTreeCommand.cs" />
     <Compile Include="Commands\ItemToTemplateCommand.cs" />
-    <Compile Include="Extensions\ScopeExtensions.cs" />
-    <Compile Include="Service\SitecoreDataService.cs" />
-    <Compile Include="Data\Builders\SitecoreTemplateBuilder.cs" />
-    <Compile Include="Data\SitecoreItem.cs" />
-    <Compile Include="Data\SitecoreField.cs" />
-    <Compile Include="Data\SitecoreTemplateSection.cs" />
-    <Compile Include="Data\SitecoreTemplate.cs" />
-    <Compile Include="Data\Builders\SitecoreItemBuilder.cs" />
-    <Compile Include="Data\SitecoreTemplateField.cs" />
+    <Compile Include="Engine\TagDefinitions\ScopeExtensions.cs" />
+    <Compile Include="IO\TemplateFileService.cs" />
+    <Compile Include="IO\ITemplateFileService.cs" />
+    <Compile Include="Data\SitecoreDataService.cs" />
+    <Compile Include="Data\SitecoreTemplateBuilder.cs" />
+    <Compile Include="Data\Items\SitecoreItem.cs" />
+    <Compile Include="Data\Items\SitecoreField.cs" />
+    <Compile Include="Data\Items\SitecoreTemplateSection.cs" />
+    <Compile Include="Data\Items\SitecoreTemplate.cs" />
+    <Compile Include="Data\SitecoreItemBuilder.cs" />
+    <Compile Include="Data\Items\SitecoreTemplateField.cs" />
     <Compile Include="Engine\ITemplateEngine.cs" />
     <Compile Include="Engine\TagDefinitions\PascelCaseTag.cs" />
     <Compile Include="Engine\TagDefinitions\NotFirstTag.cs" />
     <Compile Include="Engine\TagDefinitions\WhereTag.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Service\ITemplateMetaData.cs" />
-    <Compile Include="Service\ITemplateService.cs" />
-    <Compile Include="Service\TemplateMetaData.cs" />
+    <Compile Include="Utils\StringExtensions.cs" />
+    <Compile Include="IO\TemplateMetaData.cs" />
     <Compile Include="UI\SelectTemplateViewModel.cs" />
     <Compile Include="UI\SelectTemplateWindow.xaml.cs">
       <DependentUpon>SelectTemplateWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\TemplateViewModel.cs" />
-    <Compile Include="Extensions\ContentTreeContextExtensions.cs" />
+    <Compile Include="Commands\ContentTreeContextExtensions.cs" />
     <Compile Include="Engine\TemplateEngine.cs" />
     <Compile Include="Commands\SingleTreeItemCommand.cs" />
-    <Compile Include="Service\TemplateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Engine\TagDefinitions\CamelCaseTag.cs" />
   </ItemGroup>
@@ -120,6 +119,7 @@
     <None Include="Resources\Item Templates\sinj-subitems.hbs" />
     <None Include="Resources\Item Templates\sinj.hbs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y "$(TargetDir)*" "%25localappdata%25\Sitecore\Sitecore.Rocks\Plugins\"

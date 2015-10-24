@@ -1,6 +1,6 @@
-﻿namespace Sitecore.Rocks.Templates.Service
+﻿namespace Sitecore.Rocks.Templates.IO
 {
-    public class TemplateMetaData : ITemplateMetaData
+    public class TemplateMetaData
     {
         public string Name { get; set; }
 

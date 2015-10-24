@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Mustache;
-using Sitecore.Rocks.Templates.Extensions;
 
 namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
 {

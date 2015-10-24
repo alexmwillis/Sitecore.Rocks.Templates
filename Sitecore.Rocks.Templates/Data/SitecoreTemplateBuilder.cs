@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Sitecore.Rocks.Templates.Service;
+using Sitecore.Rocks.Templates.Data.Items;
 using Sitecore.VisualStudio.Data;
 
-namespace Sitecore.Rocks.Templates.Data.Builders
+namespace Sitecore.Rocks.Templates.Data
 {
     public class SitecoreTemplateBuilder
     {

@@ -1,4 +1,6 @@
-﻿namespace Sitecore.Rocks.Templates.Engine
+﻿using Sitecore.Rocks.Templates.IO;
+
+namespace Sitecore.Rocks.Templates.Engine
 {
     public interface ITemplateEngine
     {

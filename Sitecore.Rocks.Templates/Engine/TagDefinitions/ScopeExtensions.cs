@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Mustache;
 
-namespace Sitecore.Rocks.Templates.Extensions
+namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
 {
     public static class ScopeExtensions
     {

@@ -1,5 +1,6 @@
 ﻿using Mustache;
 using Sitecore.Rocks.Templates.Engine.TagDefinitions;
+using Sitecore.Rocks.Templates.IO;
 
 namespace Sitecore.Rocks.Templates.Engine
 {

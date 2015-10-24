@@ -1,22 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Sitecore.Rocks.Templates.Data;
+﻿using System.Linq;
+using Sitecore.Rocks.Templates.Data.Items;
 using Sitecore.Rocks.Templates.Engine;
-using Sitecore.Rocks.Templates.Service;
+using Sitecore.Rocks.Templates.IO;
 using Sitecore.Rocks.Templates.UI;
 
 namespace Sitecore.Rocks.Templates.Commands
 {
     public class ItemToTemplateCommand : SingleTreeItemCommand
     {
-        private readonly ITemplateService _service;
+        private readonly ITemplateFileService _fileService;
+        private readonly ITemplateEngine _engineService;
 
         public ItemToTemplateCommand()
         {
             Text = "Copy to template...";
             SortingValue = 1000;
 
-            _service = new TemplateService(new TemplateEngine());
+            _fileService = new TemplateFileService();
+            _engineService = new TemplateEngine();
         }
 
         protected override void ExecuteInner(SitecoreTemplate item)
@@ -31,16 +32,18 @@ namespace Sitecore.Rocks.Templates.Commands
             CopyToClipboard(template, item);
         }
 
-        private void CopyToClipboard(ITemplateMetaData template, object item)
+        private void CopyToClipboard(TemplateMetaData template, object item)
         {
             if (template == null || item == null) return;
 
-            AppHost.Clipboard.SetText(_service.Render(template, item));
+            var content = _fileService.GetTemplateContent(template);
+
+            AppHost.Clipboard.SetText(_engineService.Render(content, item));
         }
 
-        private ITemplateMetaData GetTemplate(TemplateType type)
+        private TemplateMetaData GetTemplate(TemplateType type)
         {
-            var templates = _service.GetTemplates(type).ToArray();
+            var templates = _fileService.GetTemplates(type).ToArray();
 
             switch (templates.Length)
             {
@@ -54,7 +57,7 @@ namespace Sitecore.Rocks.Templates.Commands
             }
         }
 
-        public ITemplateMetaData ShowUiAndGetTemplate(ITemplateMetaData[] templates)
+        public TemplateMetaData ShowUiAndGetTemplate(TemplateMetaData[] templates)
         {
             var templatesViewModel = templates
                 .Select(t => new TemplateViewModel {DisplayName = t.Name, FullName = t.FullName})

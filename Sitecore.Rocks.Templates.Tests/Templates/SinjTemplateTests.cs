@@ -1,12 +1,12 @@
 ﻿using System.IO;
 using NUnit.Framework;
-using Sitecore.Rocks.Templates.Data;
+using Sitecore.Rocks.Templates.Data.Items;
 using Sitecore.Rocks.Templates.Engine;
 
-namespace Sitecore.Rocks.Templates.Tests
+namespace Sitecore.Rocks.Templates.Tests.Templates
 {
     [TestFixture]
-    public class TemplateSinjTests
+    public class SinjTemplateTests
     {
         private SitecoreTemplate _template;
 

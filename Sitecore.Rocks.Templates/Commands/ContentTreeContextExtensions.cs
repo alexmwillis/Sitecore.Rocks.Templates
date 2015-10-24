@@ -2,7 +2,7 @@
 using Sitecore.VisualStudio.ContentTrees;
 using Sitecore.VisualStudio.ContentTrees.Items;
 
-namespace Sitecore.Rocks.Templates.Extensions
+namespace Sitecore.Rocks.Templates.Commands
 {
     public static class ContentTreeContextExtensions
     {

@@ -1,10 +1,8 @@
-﻿using Sitecore.VisualStudio.Extensions.IItemSelectionContextExtensions;
+﻿using Sitecore.Rocks.Templates.Data;
+using Sitecore.Rocks.Templates.Data.Items;
 using Sitecore.VisualStudio.Commands;
 using Sitecore.VisualStudio.ContentTrees;
-using Sitecore.Rocks.Templates.Data;
-using Sitecore.Rocks.Templates.Data.Builders;
-using Sitecore.Rocks.Templates.Extensions;
-using Sitecore.Rocks.Templates.Service;
+using Sitecore.VisualStudio.Extensions.IItemSelectionContextExtensions;
 
 namespace Sitecore.Rocks.Templates.Commands
 {

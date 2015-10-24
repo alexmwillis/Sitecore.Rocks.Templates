@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Sitecore.VisualStudio.Data;
 
-namespace Sitecore.Rocks.Templates.Service
+namespace Sitecore.Rocks.Templates.Data
 {
     public class SitecoreDataService
     {

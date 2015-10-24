@@ -4,13 +4,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Sitecore.VisualStudio.Data;
 
-namespace Sitecore.Rocks.Templates.Data.Builders
+namespace Sitecore.Rocks.Templates.Service
 {
-    public class SitecoreBuilder
+    public class SitecoreDataService
     {
         private readonly DataService _dataService;
 
-        public SitecoreBuilder(DataService dataService)
+        public SitecoreDataService(DataService dataService)
         {
             _dataService = dataService;
         }

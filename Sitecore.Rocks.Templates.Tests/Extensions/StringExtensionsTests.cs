@@ -26,6 +26,14 @@ namespace Sitecore.Rocks.Templates.Tests.Extensions
             Assert.That(stringToFormat.PascalCase(), Is.EqualTo("Test"));
         }
 
+        [TestCase("Test-Case")]
+        [TestCase("Test_Case")]
+        [TestCase("Test - Case")]
+        public void TestSanitiseSpecialCharacters(string stringToFormat)
+        {
+            Assert.That(stringToFormat.PascalCase(), Is.EqualTo("TestCase"));
+        }
+
         [TestCase("Camel Case")]
         [TestCase("Camel  Case")]
         [TestCase("camel Case")]

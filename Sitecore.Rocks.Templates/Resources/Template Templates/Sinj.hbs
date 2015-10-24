@@ -8,7 +8,7 @@
     },{{#newline}}
     sections: [
 {{#each Sections}}
-{{#ifNotFirst ','}}{{#newline}}
+{{#notFirst ','}}{{#newline}}
         { {{#newline}}
             name: "{{Name}}",{{#newline}}
             id: "{{Id}}",{{#newline}}
@@ -17,7 +17,7 @@
             },{{#newline}}
             fields: [
 {{#each Fields}}
-{{#ifNotFirst ','}}{{#newline}}
+{{#notFirst ','}}{{#newline}}
                 { {{#newline}}
                     id: "{{Id}}",{{#newline}}
                     name: "{{Name}}",{{#newline}}
@@ -35,7 +35,7 @@
         languages: ["en"],{{#newline}}
         fields: { 
 {{#each Fields}}
-{{#ifNotFirst ','}}{{#newline}}
+{{#notFirst ','}}{{#newline}}
             "{{Name}}": "{{Value}}"
 {{/each}}{{#newline}}
         }{{#newline}}

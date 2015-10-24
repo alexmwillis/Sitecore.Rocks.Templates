@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Sitecore.Rocks.Templates.Service;
 using Sitecore.VisualStudio.Data;
 
 namespace Sitecore.Rocks.Templates.Data.Builders
 {
     public class SitecoreItemBuilder
     {
-        private readonly SitecoreBuilder _builder;
+        private readonly SitecoreDataService _builder;
 
-        public SitecoreItemBuilder(SitecoreBuilder builder)
+        public SitecoreItemBuilder(SitecoreDataService builder)
         {
             _builder = builder;
         }
@@ -16,7 +17,7 @@ namespace Sitecore.Rocks.Templates.Data.Builders
         public SitecoreItem Build(ItemUri itemUri)
         {
             var item = GetItem(itemUri);
-            item.Children = _builder.GetChildHeaders(itemUri).Select(h => GetItem(h.ItemUri));
+            item.Children = GetChildren(itemUri);
             return item;
         }
 
@@ -34,7 +35,22 @@ namespace Sitecore.Rocks.Templates.Data.Builders
                 TemplateId = item.TemplateId.ToString(),
                 TemplateName = item.TemplateName,
                 TemplatePath = template.GetPath(),
-                Fields = item.Fields.Select(SitecoreFieldBuilder.Build)
+                Fields = item.Fields.Select(GetField)
+            };
+        }
+
+        private IEnumerable<SitecoreItem> GetChildren(ItemUri itemUri)
+        {
+            return _builder.GetChildHeaders(itemUri).Select(h => GetItem(h.ItemUri));
+        }
+
+        private static SitecoreField GetField(Field field)
+        {
+            return new SitecoreField
+            {
+                Name = field.Name,
+                Value = field.Value,
+                IsStandardField = field.Name.StartsWith("__")
             };
         }
     }

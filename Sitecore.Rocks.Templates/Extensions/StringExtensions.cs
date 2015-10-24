@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -9,19 +10,21 @@ namespace Sitecore.Rocks.Templates.Extensions
         public static string PascalCase(this string str)
         {
             return TitleCase(str)
-                .RemoveNumberFirst()
+                .RemoveSpecialCharacters()
+                .WithFirst(RemoveNumber)
                 .StringJoin("");
         }
 
         public static string CamelCase(this string str)
         {
             return TitleCase(str)
-                .RemoveNumberFirst()
-                .LowerCaseFirst()
+                .RemoveSpecialCharacters()
+                .WithFirst(RemoveNumber)
+                .WithFirst(LowerCase)
                 .StringJoin("");
         }
 
-        private static string[] TitleCase(string str)
+        private static IEnumerable<string> TitleCase(string str)
         {
             return CultureInfo.CurrentCulture.TextInfo
                 .ToTitleCase(str)
@@ -30,17 +33,25 @@ namespace Sitecore.Rocks.Templates.Extensions
                 .ToArray();
         }
 
-        private static string[] LowerCaseFirst(this string[] strs)
+        private static IEnumerable<string> RemoveSpecialCharacters(this IEnumerable<string> strs)
         {
-            return new[] {strs.First().ToLowerInvariant()}.Concat(strs.Skip(1)).ToArray();
+            return strs
+                .Select(s => s.Replace("-", "").Replace("_", ""))
+                .Where(s => !string.IsNullOrWhiteSpace(s));
         }
 
-        private static string[] RemoveNumberFirst(this string[] strs)
+        private static IEnumerable<string> WithFirst(this IEnumerable<string> strs, Func<string, string> withFirst)
         {
-            return new[] {RemoveNumber(strs.First())}
-                .Concat(strs.Skip(1))
-                .Where(s => !string.IsNullOrWhiteSpace(s))
-                .ToArray();
+            var strsArray = strs.ToArray();
+            var newFirst = withFirst(strsArray.First());
+            return string.IsNullOrWhiteSpace(newFirst)
+                ? strsArray.Skip(1)
+                : new[] {newFirst}.Concat(strsArray.Skip(1));
+        }
+
+        private static string LowerCase(string str)
+        {
+            return str.ToLowerInvariant();
         }
 
         private static string RemoveNumber(string str)

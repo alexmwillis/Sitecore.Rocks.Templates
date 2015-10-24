@@ -10,7 +10,7 @@ var {{#camelCase Name}}{{#pascalCase TemplateName}}: SinjItemDto = { {{#newline}
 {{#with Fields}}
 {{#where 'Value'}}
 {{#each this}}
-{{#ifNotFirst ','}}{{#newline}}
+{{#notFirst ','}}{{#newline}}
         "{{Name}}": "{{Value}}"
 {{/each}}
 {{/where}}

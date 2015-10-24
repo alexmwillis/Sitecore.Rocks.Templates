@@ -76,18 +76,18 @@
   <ItemGroup>
     <Compile Include="Commands\ContentTreeCommand.cs" />
     <Compile Include="Commands\ItemToTemplateCommand.cs" />
-    <Compile Include="Data\Builders\SitecoreBuilder.cs" />
+    <Compile Include="Extensions\ScopeExtensions.cs" />
+    <Compile Include="Service\SitecoreDataService.cs" />
     <Compile Include="Data\Builders\SitecoreTemplateBuilder.cs" />
     <Compile Include="Data\SitecoreItem.cs" />
     <Compile Include="Data\SitecoreField.cs" />
     <Compile Include="Data\SitecoreTemplateSection.cs" />
     <Compile Include="Data\SitecoreTemplate.cs" />
-    <Compile Include="Data\Builders\SitecoreFieldBuilder.cs" />
     <Compile Include="Data\Builders\SitecoreItemBuilder.cs" />
     <Compile Include="Data\SitecoreTemplateField.cs" />
     <Compile Include="Engine\ITemplateEngine.cs" />
     <Compile Include="Engine\TagDefinitions\PascelCaseTag.cs" />
-    <Compile Include="Engine\TagDefinitions\IfNotFirstTag.cs" />
+    <Compile Include="Engine\TagDefinitions\NotFirstTag.cs" />
     <Compile Include="Engine\TagDefinitions\WhereTag.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Service\ITemplateMetaData.cs" />

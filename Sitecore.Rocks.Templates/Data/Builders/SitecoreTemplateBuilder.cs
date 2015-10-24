@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Sitecore.Rocks.Templates.Service;
 using Sitecore.VisualStudio.Data;
 
 namespace Sitecore.Rocks.Templates.Data.Builders
 {
     public class SitecoreTemplateBuilder
     {
-        private readonly SitecoreBuilder _builder;
+        private readonly SitecoreDataService _builder;
 
-        public SitecoreTemplateBuilder(SitecoreBuilder builder)
+        public SitecoreTemplateBuilder(SitecoreDataService builder)
         {
             _builder = builder;
         }
 
-        public  SitecoreTemplate Build(ItemUri itemUri)
+        public SitecoreTemplate Build(ItemUri itemUri)
         {
             var item = _builder.GetItem(itemUri);
 

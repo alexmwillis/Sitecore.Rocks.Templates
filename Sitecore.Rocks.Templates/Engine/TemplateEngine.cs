@@ -12,7 +12,7 @@ namespace Sitecore.Rocks.Templates.Engine
             _compiler = new FormatCompiler();
             _compiler.RegisterTag(new CamelCaseTag(), false);
             _compiler.RegisterTag(new PascelCaseTag(), false);
-            _compiler.RegisterTag(new IfNotFirstTag(), false);
+            _compiler.RegisterTag(new NotFirstTag(), false);
             _compiler.RegisterTag(new WhereTag(), false);
         }
 

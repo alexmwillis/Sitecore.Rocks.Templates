@@ -4,6 +4,7 @@ using Sitecore.VisualStudio.ContentTrees;
 using Sitecore.Rocks.Templates.Data;
 using Sitecore.Rocks.Templates.Data.Builders;
 using Sitecore.Rocks.Templates.Extensions;
+using Sitecore.Rocks.Templates.Service;
 
 namespace Sitecore.Rocks.Templates.Commands
 {
@@ -25,11 +26,11 @@ namespace Sitecore.Rocks.Templates.Commands
 
             if (itemTree.IsTemplate)
             {
-                ExecuteInner(new SitecoreTemplateBuilder(new SitecoreBuilder(context.GetSite().DataService)).Build(itemTree.ItemUri));
+                ExecuteInner(new SitecoreTemplateBuilder(new SitecoreDataService(context.GetSite().DataService)).Build(itemTree.ItemUri));
             }
             else
             {
-                ExecuteInner(new SitecoreItemBuilder(new SitecoreBuilder(context.GetSite().DataService)).Build(itemTree.ItemUri));
+                ExecuteInner(new SitecoreItemBuilder(new SitecoreDataService(context.GetSite().DataService)).Build(itemTree.ItemUri));
             }
         }        
     }

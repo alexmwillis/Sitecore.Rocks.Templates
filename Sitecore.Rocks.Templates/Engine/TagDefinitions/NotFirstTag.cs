@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Mustache;
+using Sitecore.Rocks.Templates.Extensions;
 
 namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
 {
-    public class IfNotFirstTag : InlineTagDefinition
+    public class NotFirstTag : InlineTagDefinition
     {
-        public IfNotFirstTag()
-            : base("ifNotFirst")
+        public NotFirstTag()
+            : base("notFirst")
         {
         }
 
@@ -20,14 +22,14 @@ namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
         {
             var str = arguments["string"] as string;
 
+            if (str == null) return;
+
             object indexObj;
             if (!context.TryFind("index", out indexObj)) return;
-
-            if (indexObj == null || str == null) return;
-
+            
             var index = (int) indexObj;
 
-            if (index != 0)
+            if (index > 0)
             {
                 writer.Write(str);
             }

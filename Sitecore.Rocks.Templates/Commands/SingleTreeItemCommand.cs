@@ -24,7 +24,10 @@ namespace Sitecore.Rocks.Templates.Commands
 
             if (itemTree.IsTemplate)
             {
-                ExecuteInner(new SitecoreTemplateBuilder(new SitecoreDataService(context.GetSite().DataService)).Build(itemTree.ItemUri));
+                ExecuteInner(
+                    new SitecoreTemplateBuilder(
+                        new SitecoreDataService(context.GetSite().DataService),
+                        new SitecoreItemBuilder(new SitecoreDataService(context.GetSite().DataService))).Build(itemTree.ItemUri));
             }
             else
             {

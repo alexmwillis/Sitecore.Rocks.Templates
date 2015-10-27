@@ -29,7 +29,7 @@ namespace Sitecore.Rocks.Templates.Commands
             }
             catch (Exception e)
             {
-                AppHost.MessageBox(e.Message, "Error executing command", MessageBoxButton.OK, MessageBoxImage.Error);
+                AppHost.MessageBox($"{e.Message} \r\n\r\n{e.StackTrace}", "Error executing command", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

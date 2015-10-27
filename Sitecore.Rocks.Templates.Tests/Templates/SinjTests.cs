@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using NUnit.Framework;
 using Sitecore.Rocks.Templates.Data.Items;
 using Sitecore.Rocks.Templates.Engine;
@@ -30,7 +31,7 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
                     new SitecoreField {Name = "Field Name 1", Value = "Field Value 1"},
                     new SitecoreField {Name = "Field Name 2", Value = "Field Value 2"},
                     new SitecoreField {Name = "Field Name 3", Value = ""}
-                }
+                }.ToList()
             };
 
             _itemWithNoFields = new SitecoreItem

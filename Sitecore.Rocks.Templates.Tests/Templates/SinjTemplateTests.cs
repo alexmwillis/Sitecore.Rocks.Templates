@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using NUnit.Framework;
 using Sitecore.Rocks.Templates.Data.Items;
 using Sitecore.Rocks.Templates.Engine;
@@ -42,14 +43,14 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
                                 Type = "scFieldTypes.text",
                                 SortOrder = "200"
                             }
-                        }
+                        }.ToList()
                     },
                     new SitecoreTemplateSection
                     {
                         Id = "{25004c23-1056-420b-a97d-7e95241dfcf5}",
                         Name = "Section 2"
                     }
-                },
+                }.ToList(),
                 StandardValues = new SitecoreItem
                 {
                     Id = "{EB500643-2FA7-4F83-BCBA-4E623D1946F4}",
@@ -57,7 +58,7 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
                     {
                         new SitecoreField {Name = "Field 1", Value = "Value 1"},
                         new SitecoreField {Name = "Field 2", Value = "Value 2"}
-                    }
+                    }.ToList()
                 }
             };
         }

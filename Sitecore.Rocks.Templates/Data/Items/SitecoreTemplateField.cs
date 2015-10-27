@@ -1,5 +1,8 @@
-﻿namespace Sitecore.Rocks.Templates.Data.Items
+﻿using System;
+
+namespace Sitecore.Rocks.Templates.Data.Items
 {
+    [Serializable]
     public class SitecoreTemplateField
     {
         public string Id { get; set; }

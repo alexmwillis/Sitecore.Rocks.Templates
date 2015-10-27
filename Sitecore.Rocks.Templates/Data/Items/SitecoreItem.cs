@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Sitecore.Rocks.Templates.Data.Items
 {
+    [Serializable]
     public class SitecoreItem
     {
         public string Id { get; set; }
@@ -18,7 +20,7 @@ namespace Sitecore.Rocks.Templates.Data.Items
 
         public string Language { get; set; }
 
-        public IEnumerable<SitecoreField> Fields { get; set; }
+        public List<SitecoreField> Fields { get; set; }
 
         public IEnumerable<SitecoreItem> Children { get; set; }
     }

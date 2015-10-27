@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using NUnit.Framework;
 using Sitecore.Rocks.Templates.Data.Items;
 using Sitecore.Rocks.Templates.Engine;
@@ -30,7 +31,7 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
                 {
                     new SitecoreField {Name = "Field Name 1", Value = "Field Value 1"},
                     new SitecoreField {Name = "Field Name 2", Value = "Field Value 2"}
-                }
+                }.ToList()
             };
 
             _subItem2 = new SitecoreItem
@@ -45,12 +46,12 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
                 {
                     new SitecoreField {Name = "Field Name 1", Value = "Field Value 1"},
                     new SitecoreField {Name = "Field Name 2", Value = "Field Value 2"}
-                }
+                }.ToList()
             };
 
             _itemWithSubItems = new SitecoreItem
             {
-                Children = new[] { _subItem1, _subItem2 }
+                Children = new[] { _subItem1, _subItem2 }.ToList()
             };
         }
 

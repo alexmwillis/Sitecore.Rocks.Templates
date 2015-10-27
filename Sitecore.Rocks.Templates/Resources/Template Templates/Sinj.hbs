@@ -34,10 +34,16 @@
         id: "{{Id}}",{{#newline}}
         languages: ["en"],{{#newline}}
         fields: { 
-{{#each Fields}}
+{{#with Fields}}
+{{#where 'Value'}}
+{{#where 'Name' '^(?!__).+'}}
+{{#each this}}
 {{#notFirst ','}}{{#newline}}
             "{{Name}}": "{{Value}}"
-{{/each}}{{#newline}}
+{{/each}}
+{{/where}}
+{{/where}}
+{{/with}}{{#newline}}
         }{{#newline}}
     }{{#newline}}
 {{/with}}

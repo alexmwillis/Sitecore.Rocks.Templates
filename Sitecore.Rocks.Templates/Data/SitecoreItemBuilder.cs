@@ -35,7 +35,7 @@ namespace Sitecore.Rocks.Templates.Data
                 TemplateId = item.TemplateId.ToString(),
                 TemplateName = item.TemplateName,
                 TemplatePath = template.GetPath(),
-                Fields = item.Fields.Select(GetField)
+                Fields = item.Fields.Select(GetField).ToList()
             };
         }
 

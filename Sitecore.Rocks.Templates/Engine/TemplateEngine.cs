@@ -1,6 +1,5 @@
 ﻿using Mustache;
 using Sitecore.Rocks.Templates.Engine.TagDefinitions;
-using Sitecore.Rocks.Templates.IO;
 
 namespace Sitecore.Rocks.Templates.Engine
 {
@@ -15,6 +14,8 @@ namespace Sitecore.Rocks.Templates.Engine
             _compiler.RegisterTag(new PascelCaseTag(), false);
             _compiler.RegisterTag(new NotFirstTag(), false);
             _compiler.RegisterTag(new WhereTag(), false);
+            _compiler.RegisterTag(new WithFirstTag(), false);
+            _compiler.RegisterTag(new NewGuidTag(), false);
         }
 
         public string Render(string template, object source)

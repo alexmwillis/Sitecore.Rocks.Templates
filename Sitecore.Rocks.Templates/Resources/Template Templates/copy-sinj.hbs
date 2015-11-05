@@ -4,7 +4,7 @@
     parent: "{{ParentPath}}",{{#newline}}
     fields: { {{#newline}}
         icon: "{{Icon}}",{{#newline}}
-        "Base template": "{{BaseTemplateList}}"{{#newline}}
+        "Base template": "{{BaseTemplates}}"{{#newline}}
     },{{#newline}}
     sections: [
 {{#each Sections}}
@@ -21,14 +21,25 @@
                 { {{#newline}}
                     id: "{{Id}}",{{#newline}}
                     name: "{{Name}}",{{#newline}}
-                    type: {{Type}},{{#newline}}
-                    sortorder: {{SortOrder}}{{#newline}}
+                    type: "{{Type}}",{{#newline}}
+                    sortorder: {{SortOrder}},
+{{#with Fields}}
+{{#where 'Value'}}
+{{#where 'Name' '^((?!__Owner)(?!__Created)(?!__Updated)(?!__Revision)(?!__Ribbon)(?!__Lock).)*$'}}
+{{#each this}}
+{{#notFirst ','}}{{#newline}}
+                    "{{Name}}": "{{Value}}"
+{{/each}}
+{{/where}}
+{{/where}}
+{{/with}}{{#newline}}
                 }
 {{/each}}{{#newline}}
             ]{{#newline}}
         }
 {{/each}}{{#newline}}
-    ],{{#newline}}
+    ]
+{{#if StandardValues}},{{#newline}}
 {{#with StandardValues}}
     standardValues: { {{#newline}}
         id: "{{Id}}",{{#newline}}
@@ -36,7 +47,7 @@
         fields: { 
 {{#with Fields}}
 {{#where 'Value'}}
-{{#where 'Name' '^(?!__).+'}}
+{{#where 'Name' '^((?!__Owner)(?!__Created)(?!__Updated)(?!__Revision)(?!__Ribbon)(?!__Lock).)*$'}}
 {{#each this}}
 {{#notFirst ','}}{{#newline}}
             "{{Name}}": "{{Value}}"
@@ -47,4 +58,7 @@
         }{{#newline}}
     }{{#newline}}
 {{/with}}
+{{#else}}
+{{#newline}}
+{{/if}}
 }

@@ -14,9 +14,9 @@ namespace Sitecore.Rocks.Templates.Data.Items
 
         public string Icon { get; set; }
 
-        public string BaseTemplateList { get; set; }
+        public string BaseTemplates { get; set; }
 
-        public List<SitecoreTemplateSection> Sections { get; set; }
+        public IEnumerable<SitecoreTemplateSection> Sections { get; set; }
 
         public SitecoreItem StandardValues { get; set; }
     }

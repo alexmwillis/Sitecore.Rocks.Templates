@@ -1,8 +1,7 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace Sitecore.Rocks.Templates.Data.Items
 {
-    [Serializable]
     public class SitecoreTemplateField
     {
         public string Id { get; set; }
@@ -12,5 +11,7 @@ namespace Sitecore.Rocks.Templates.Data.Items
         public string Type { get; set; }
 
         public string SortOrder { get; set; }
+
+        public IEnumerable<SitecoreField> Fields { get; set; }
     }
 }

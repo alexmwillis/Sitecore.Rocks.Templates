@@ -7,6 +7,11 @@ namespace Sitecore.Rocks.Templates.Utils
 {
     public static class StringExtensions
     {
+        public static bool In(this string str, params string[] args)
+        {
+            return args.Contains(str);
+        }
+
         public static string PascalCase(this string str)
         {
             return TitleCase(str)

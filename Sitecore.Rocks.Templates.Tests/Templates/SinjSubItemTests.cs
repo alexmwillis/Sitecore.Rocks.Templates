@@ -31,7 +31,7 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
                 {
                     new SitecoreField {Name = "Field Name 1", Value = "Field Value 1"},
                     new SitecoreField {Name = "Field Name 2", Value = "Field Value 2"}
-                }.ToList()
+                }
             };
 
             _subItem2 = new SitecoreItem
@@ -46,7 +46,7 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
                 {
                     new SitecoreField {Name = "Field Name 1", Value = "Field Value 1"},
                     new SitecoreField {Name = "Field Name 2", Value = "Field Value 2"}
-                }.ToList()
+                }
             };
 
             _itemWithSubItems = new SitecoreItem

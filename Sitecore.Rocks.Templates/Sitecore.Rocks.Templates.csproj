@@ -76,7 +76,9 @@
   <ItemGroup>
     <Compile Include="Commands\ContentTreeCommand.cs" />
     <Compile Include="Commands\ItemToTemplateCommand.cs" />
+    <Compile Include="Engine\TagDefinitions\NewGuidTag.cs" />
     <Compile Include="Engine\TagDefinitions\ScopeExtensions.cs" />
+    <Compile Include="Engine\TagDefinitions\WithFirstTag.cs" />
     <Compile Include="IO\TemplateFileService.cs" />
     <Compile Include="IO\ITemplateFileService.cs" />
     <Compile Include="Data\SitecoreDataService.cs" />
@@ -106,7 +108,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\Template Templates\sinj.hbs" />
+    <None Include="Resources\Template Templates\duplicate-sinj.hbs" />
+    <None Include="Resources\Template Templates\copy-sinj.hbs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="UI\SelectTemplateWindow.xaml">

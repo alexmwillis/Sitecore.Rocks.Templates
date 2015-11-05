@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using Sitecore.Rocks.Templates.Data.Items;
+using Sitecore.Rocks.Templates.Utils;
 using Sitecore.VisualStudio.Data;
 
 namespace Sitecore.Rocks.Templates.Data
@@ -28,32 +26,39 @@ namespace Sitecore.Rocks.Templates.Data
                 Id = item.ItemUri.ItemId.ToString(),
                 Name = item.Name,
                 ParentPath = _service.GetParentPath(item.Path),
-                BaseTemplateList = item.BaseTemplates.Aggregate("", (s, a) => s + "|" + a.ItemId.ToString()),
-                Icon = item.Icon.IconPath,
-                Sections = GetSections(itemUri).ToList(),
+                BaseTemplates = GetFieldValue(item, "__Base template"),
+                Icon = GetIconPath(item.Icon),
+                Sections = GetSections(itemUri),
                 StandardValues = GetStandardValues(itemUri)
             };
 
             return template;
         }
-
+        
         private SitecoreItem GetStandardValues(ItemUri itemUri)
         {
             var children = _service.GetChildHeaders(itemUri);
-            var standardValues = children.FirstOrDefault(i => i.Name != "__Standard Values");
+            var standardValues = children.FirstOrDefault(i => i.Name == "__Standard Values");
             return standardValues != null ? _itemBuilder.Build(standardValues.ItemUri) : null;
         }
 
         private IEnumerable<SitecoreTemplateSection> GetSections(ItemUri itemUri)
         {
             var children = _service.GetChildHeaders(itemUri);
-            return children.Where(i => i.Name != "__Standard Values").Select(i => new SitecoreTemplateSection
+            return children
+                .Where(i => i.Name != "__Standard Values")
+                .Select(GetSection);
+        }
+
+        private SitecoreTemplateSection GetSection(ItemHeader itemHeader)
+        {
+            return new SitecoreTemplateSection
             {
-                Id = i.ItemId.ToString(),
-                Name = i.Name,
-                Icon = i.Icon.IconPath,
-                Fields = GetFields(i.ItemUri).ToList()
-            });
+                Id = itemHeader.ItemId.ToString(),
+                Name = itemHeader.Name,
+                Icon = GetIconPath(itemHeader.Icon),
+                Fields = GetFields(itemHeader.ItemUri)
+            };
         }
 
         private IEnumerable<SitecoreTemplateField> GetFields(ItemUri itemUri)
@@ -63,9 +68,22 @@ namespace Sitecore.Rocks.Templates.Data
             {
                 Id = f.ItemUri.ItemId.ToString(),
                 Name = f.Name,
-                SortOrder = f.Fields.First(t => t.Name == "__Sortorder").Value,
-                Type = f.Fields.First(t => t.Name == "Type").Value
+                Type = GetFieldValue(f, "Type"),
+                SortOrder = GetFieldValue(f, "Sortorder"),
+                Fields = f.Fields
+                    .Where(ff => !ff.Name.In("Type", "Sortorder"))
+                    .Select(_itemBuilder.GetField)
             });
+        }
+
+        private static string GetIconPath(Icon icon)
+        {
+            return icon.IconPath.Replace("/temp/IconCache/", "");
+        }
+
+        private static string GetFieldValue(Item item, string fieldName)
+        {
+            return item.Fields.First(f => f.Name == fieldName).Value;
         }
     }
 }

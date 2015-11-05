@@ -11,5 +11,12 @@ public class {{#pascalCase Name}}Model : SitecoreItemModel{{#newline}}
 {{/each}}
 {{/where}}
 {{/with}}
+{{#if Children}}
+{{#withFirst Children}}
+{{#newline}}
+    [SitecoreChildren]{{#newline}}
+    public ICollection<{{#pascalCase TemplateName}}Model> {{#pascalCase TemplateName}}s { get; set; }{{#newline}}
+{{/withFirst}}
+{{/if}}
 }
 {{/if}}

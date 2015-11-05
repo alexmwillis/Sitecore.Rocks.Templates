@@ -75,6 +75,7 @@
     <None Include="Resources\Where-Value.hbs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\sinj-template-no-sections.js" />
     <Content Include="Resources\sinj-template.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

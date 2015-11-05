@@ -17,14 +17,16 @@
                 { 
                     id: "{A6D93073-6EB4-4F43-A117-6CE1DA444371}",
                     name: "Field 1",
-                    type: scFieldTypes.text,
-                    sortorder: 100
+                    type: "Rich Text",
+                    sortorder: 100,
+                    "__Other Field": "Value"
                 },
                 { 
                     id: "{C59E3208-89A0-467A-B066-721EA75F8D34}",
                     name: "Field 2",
-                    type: scFieldTypes.text,
-                    sortorder: 200
+                    type: "Rich Text",
+                    sortorder: 200,
+                    "__Other Field": "Value"
                 }
             ]
         },

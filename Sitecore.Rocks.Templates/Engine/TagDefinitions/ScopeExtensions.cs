@@ -16,7 +16,7 @@ namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
             }
         }
 
-        private static T GetCurrentAsType<T>(Scope contextScope) where T : class
+        public static T GetCurrentAsType<T>(this Scope contextScope) where T : class
         {
             object @this;
             contextScope.TryFind("this", out @this);

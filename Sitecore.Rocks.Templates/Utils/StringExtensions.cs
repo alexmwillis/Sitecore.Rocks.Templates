@@ -1,7 +1,11 @@
 ﻿using System;
+using System.CodeDom;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Sitecore.Rocks.Templates.Utils
 {
@@ -29,6 +33,49 @@ namespace Sitecore.Rocks.Templates.Utils
                 .StringJoin("");
         }
 
+        public static string ToLiteralOld(this string str)
+        {
+            using (var writer = new StringWriter())
+            {
+                using (var provider = CodeDomProvider.CreateProvider("JScript"))
+                {
+                    provider.GenerateCodeFromExpression(new CodePrimitiveExpression(str), writer, null);
+                    return writer.ToString();
+                }
+            }
+        }
+        
+        public static string ToLiteral(this string str)
+        {
+            return Regex.Replace(str, @"[\a\b\f\n\r\t\v\\'\\""]", Match);
+        }
+        
+        private static string Match(Match match)
+        {
+            var map = new[]
+            {
+                new[] {"\a", @"\a"},
+                new[] {"\b", @"\b"},
+                new[] {"\f", @"\f"},
+                new[] {"\n", @"\n"},
+                new[] {"\r", @"\r"},
+                new[] {"\t", @"\t"},
+                new[] {"\v", @"\v"},
+                new[] {"\\", @"\\"},
+                new[] {"\0", @"\0"},
+                new[] {"\"", "\\\""},
+                new[] {"'", @"\'"}
+            }.ToDictionary(i => i[0], j => j[1]);
+
+            string mapped;
+            if (map.TryGetValue(match.ToString(), out mapped))
+            {
+                return mapped;
+            }
+            
+            throw new NotSupportedException();
+        }
+        
         private static IEnumerable<string> TitleCase(string str)
         {
             return CultureInfo.CurrentCulture.TextInfo

@@ -46,5 +46,15 @@ namespace Sitecore.Rocks.Templates.Tests.Utils
 
             Assert.That(stringToFormat.CamelCase(), Is.EqualTo(expectedResult));
         }
+
+        [TestCase("\t\n\r", @"\t\n\r")]
+        [TestCase("\''\\", @"\'\'\\")]
+        [TestCase(@"
+", @"\r\n")]
+        [TestCase("\b\v\f", @"\b\v\f")]
+        public void TestToLiteral(string actualString, string expectedLiteral)
+        {
+            Assert.That(actualString.ToLiteral(), Is.EqualTo(expectedLiteral));
+        }
     }
 }

@@ -77,6 +77,7 @@
     <Compile Include="Commands\ContentTreeCommand.cs" />
     <Compile Include="Commands\ItemToTemplateCommand.cs" />
     <Compile Include="Engine\TagDefinitions\NewGuidTag.cs" />
+    <Compile Include="Engine\TagDefinitions\PartialTag.cs" />
     <Compile Include="Engine\TagDefinitions\ScopeExtensions.cs" />
     <Compile Include="Engine\TagDefinitions\WithFirstTag.cs" />
     <Compile Include="IO\TemplateFileService.cs" />

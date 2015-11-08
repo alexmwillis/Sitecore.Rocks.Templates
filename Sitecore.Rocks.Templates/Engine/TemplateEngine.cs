@@ -13,7 +13,7 @@ namespace Sitecore.Rocks.Templates.Engine
         {
             _compiler = new FormatCompiler
             {
-                RemoveNewLines = false
+                RemoveNewLines = true
             };
 
             _compiler.RegisterTag(new CamelCaseTag(), false);

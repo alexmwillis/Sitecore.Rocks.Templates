@@ -50,6 +50,7 @@ namespace Sitecore.Rocks.Templates.Data
             {
                 Name = field.Name,
                 Value = field.Value,
+                IsStandardValue = field.StandardValue,
                 IsStandardField = field.Name.StartsWith("__")
             };
         }

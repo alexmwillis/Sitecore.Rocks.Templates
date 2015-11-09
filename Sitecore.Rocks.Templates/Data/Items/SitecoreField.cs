@@ -7,5 +7,7 @@
         public string Value { get; set; }
 
         public bool IsStandardField { get; set; }
+
+        public bool IsStandardValue { get; set; }
     }
 }

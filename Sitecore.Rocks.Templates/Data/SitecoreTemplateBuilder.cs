@@ -69,9 +69,9 @@ namespace Sitecore.Rocks.Templates.Data
                 Id = f.ItemUri.ItemId.ToString(),
                 Name = f.Name,
                 Type = GetFieldValue(f, "Type"),
-                SortOrder = GetFieldValue(f, "Sortorder"),
+                SortOrder = GetFieldValue(f, "__Sortorder"),
                 Fields = f.Fields
-                    .Where(ff => !ff.Name.In("Type", "Sortorder"))
+                    .Where(ff => !ff.Name.In("Type", "__Sortorder"))
                     .Select(_itemBuilder.GetField)
             });
         }

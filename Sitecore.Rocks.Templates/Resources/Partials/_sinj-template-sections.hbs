@@ -7,17 +7,7 @@
                 icon: "{{Icon}}"{{#newline}}
             },{{#newline}}
             fields: [
-{{#each Fields}}
-{{#notFirst ','}}{{#newline}}
-                { {{#newline}}
-                    id: "{{Id}}",{{#newline}}
-                    name: "{{Name}}",{{#newline}}
-                    type: "{{Type}}",{{#newline}}
-                    sortorder: {{SortOrder}},
-{{#partial 'sinj-fields' Fields}}{{#newline}}
-                }
-{{/each}}{{#newline}}
+{{#partial 'sinj-template-fields' Fields}}{{#newline}}
             ]{{#newline}}
         }
-{{/each}}
 {{/each}}

@@ -4,6 +4,7 @@ using System.Linq;
 using NUnit.Framework;
 using Sitecore.Rocks.Templates.Data.Items;
 using Sitecore.Rocks.Templates.Engine;
+using Sitecore.Rocks.Templates.IO;
 
 namespace Sitecore.Rocks.Templates.Tests.Templates
 {
@@ -58,8 +59,6 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
         [Test]
         public void TestSubItemsAreCorrectlyFormatted()
         {
-            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//sinj-subitems.hbs");
-
             var expectedResult = $@"var subItem1Template: SinjItemDto = {{ 
     id: ""{_subItem1.Id}"",
     name: ""{_subItem1.Name}"",
@@ -85,7 +84,12 @@ var subItem2Template: SinjItemDto = {{
 }}
 
 ";
-            Assert.That(new TemplateEngine().Render(template, _itemWithSubItems),
+            var template = new TemplateMetaData
+            {
+                FullName = "..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//sinj-subitems.hbs"
+            };
+
+            Assert.That(new TemplateEngineService().Render(template, _itemWithSubItems),
                 Is.EqualTo(expectedResult));
         }
     }

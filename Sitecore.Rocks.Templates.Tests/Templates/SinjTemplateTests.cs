@@ -3,6 +3,7 @@ using System.Linq;
 using NUnit.Framework;
 using Sitecore.Rocks.Templates.Data.Items;
 using Sitecore.Rocks.Templates.Engine;
+using Sitecore.Rocks.Templates.IO;
 
 namespace Sitecore.Rocks.Templates.Tests.Templates
 {
@@ -83,22 +84,28 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
         [Test]
         public void TemplateFormatedCorrectly()
         {
-            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Template Templates//copy-sinj.hbs");
+            var template = new TemplateMetaData
+            {
+                FullName = "..//..//..//Sitecore.Rocks.Templates//Resources//Template Templates//copy-sinj.hbs"
+            };
 
             var expectedResult = File.ReadAllText("..//..//Resources//sinj-template.js");
 
-            Assert.That(new TemplateEngine().Render(template, _template),
+            Assert.That(new TemplateEngineService().Render(template, _template),
                 Is.EqualTo(expectedResult));
         }
 
         [Test]
         public void TemplateWithNoSectionsNorStandardValuesFormatedCorrectly()
         {
-            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Template Templates//copy-sinj.hbs");
+            var template = new TemplateMetaData
+            {
+                FullName = "..//..//..//Sitecore.Rocks.Templates//Resources//Template Templates//copy-sinj.hbs"
+            };
 
             var expectedResult = File.ReadAllText("..//..//Resources//sinj-template-no-sections.js");
 
-            Assert.That(new TemplateEngine().Render(template, _templateNoSectionsNorStandardValues),
+            Assert.That(new TemplateEngineService().Render(template, _templateNoSectionsNorStandardValues),
                 Is.EqualTo(expectedResult));
         }
     }

@@ -35,6 +35,10 @@
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MoreLinq, Version=1.4.18916.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\packages\morelinq.1.4.0\lib\net35\MoreLinq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="mustache-sharp, Version=0.2.8.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\mustache-sharp.0.2.8.1\lib\net40\mustache-sharp.dll</HintPath>
       <Private>True</Private>
@@ -76,10 +80,12 @@
   <ItemGroup>
     <Compile Include="Commands\ContentTreeCommand.cs" />
     <Compile Include="Commands\ItemToTemplateCommand.cs" />
+    <Compile Include="Engine\ITemplateEngineService.cs" />
     <Compile Include="Engine\TagDefinitions\NewGuidTag.cs" />
     <Compile Include="Engine\TagDefinitions\PartialTag.cs" />
     <Compile Include="Engine\TagDefinitions\ScopeExtensions.cs" />
     <Compile Include="Engine\TagDefinitions\WithFirstTag.cs" />
+    <Compile Include="Engine\TemplateEngineService.cs" />
     <Compile Include="IO\TemplateFileService.cs" />
     <Compile Include="IO\ITemplateFileService.cs" />
     <Compile Include="Data\SitecoreDataService.cs" />
@@ -109,6 +115,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\Partials\_sinj-template-fields.hbs" />
+    <None Include="Resources\Partials\_sinj-template-sections.hbs" />
+    <None Include="Resources\Partials\_sinj-fields.hbs" />
+    <None Include="Resources\Partials\_sinj-item.hbs" />
+    <None Include="Resources\Partials\_minq-field-types.hbs" />
     <None Include="Resources\Template Templates\duplicate-sinj.hbs" />
     <None Include="Resources\Template Templates\copy-sinj.hbs" />
   </ItemGroup>

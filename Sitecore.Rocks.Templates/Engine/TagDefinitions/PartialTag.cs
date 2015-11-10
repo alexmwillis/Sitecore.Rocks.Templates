@@ -6,12 +6,12 @@ namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
 {
     public class PartialTag : InlineTagDefinition
     {
-        private readonly IDictionary<string, string> _partials;
+        private readonly TemplateEngine _engine;
 
-        public PartialTag(IDictionary<string, string> partials)
+        public PartialTag(TemplateEngine engine)
             : base("partial")
         {
-            _partials = partials;
+            _engine = engine;
         }
 
         protected override IEnumerable<TagParameter> GetParameters()
@@ -24,13 +24,9 @@ namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
         {
             var partial = (string)arguments["partial"];
             var source = arguments["source"];
-
-            string template;
-            if (_partials.TryGetValue(partial, out template))
-            {
-                var rendered = new TemplateEngine().Render(template, source);
-                writer.Write(rendered);
-            }
+            
+            var rendered = _engine.RenderPartial(partial, source);
+            writer.Write(rendered);
         }
     }
 }

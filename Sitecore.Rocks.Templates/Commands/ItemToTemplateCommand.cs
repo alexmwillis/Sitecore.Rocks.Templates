@@ -9,7 +9,7 @@ namespace Sitecore.Rocks.Templates.Commands
     public class ItemToTemplateCommand : SingleTreeItemCommand
     {
         private readonly ITemplateFileService _fileService;
-        private readonly ITemplateEngine _engineService;
+        private readonly ITemplateEngineService _templateEngineService;
 
         public ItemToTemplateCommand()
         {
@@ -17,7 +17,7 @@ namespace Sitecore.Rocks.Templates.Commands
             SortingValue = 1000;
 
             _fileService = new TemplateFileService();
-            _engineService = new TemplateEngine();
+            _templateEngineService = new TemplateEngineService();
         }
 
         protected override void ExecuteInner(SitecoreTemplate item)
@@ -35,11 +35,11 @@ namespace Sitecore.Rocks.Templates.Commands
         private void CopyToClipboard(TemplateMetaData template, object item)
         {
             if (template == null || item == null) return;
-
-            var content = _fileService.GetTemplateContent(template);
-
-            AppHost.Clipboard.SetText(_engineService.Render(content, item));
+            
+            AppHost.Clipboard.SetText(_templateEngineService.Render(template, item));
         }
+
+        
 
         private TemplateMetaData GetTemplate(TemplateType type)
         {

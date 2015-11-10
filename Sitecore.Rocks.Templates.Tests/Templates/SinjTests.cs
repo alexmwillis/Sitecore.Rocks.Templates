@@ -4,6 +4,7 @@ using System.Linq;
 using NUnit.Framework;
 using Sitecore.Rocks.Templates.Data.Items;
 using Sitecore.Rocks.Templates.Engine;
+using Sitecore.Rocks.Templates.IO;
 
 namespace Sitecore.Rocks.Templates.Tests.Templates
 {
@@ -48,8 +49,6 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
         [Test]
         public void TestNoFieldsItemIsCorrectlyFormatted()
         {
-            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//Sinj.hbs");
-
             var expectedResult = $@"var itemWithNoFieldsTemplate: SinjItemDto = {{ 
     id: ""{_itemWithNoFields.Id}"",
     name: ""{_itemWithNoFields.Name}"",
@@ -59,15 +58,18 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
     fields: {{
     }}
 }}";
-            Assert.That(new TemplateEngine().Render(template, _itemWithNoFields),
+            var template = new TemplateMetaData
+            {
+                FullName = "..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//Sinj.hbs"
+            };
+
+            Assert.That(new TemplateEngineService().Render(template, _itemWithNoFields),
                 Is.EqualTo(expectedResult));
         }
 
         [Test]
-        public void TestItemWithNoFieldsCorrectlyFormatted()
+        public void TestItemWithFieldsCorrectlyFormatted()
         {
-            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//Sinj.hbs");
-
             var expectedResult = $@"var itemWithFieldsTemplate: SinjItemDto = {{ 
     id: ""{_itemWithFields.Id}"",
     name: ""{_itemWithFields.Name}"",
@@ -79,8 +81,12 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
         ""Field Name 2"": ""Field Value 2""
     }}
 }}";
+            var template = new TemplateMetaData
+            {
+                FullName = "..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//Sinj.hbs"
+            };
 
-            Assert.That(new TemplateEngine().Render(template, _itemWithFields),
+            Assert.That(new TemplateEngineService().Render(template, _itemWithFields),
                 Is.EqualTo(expectedResult));
         }
     }

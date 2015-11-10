@@ -1,0 +1,23 @@
+﻿{{#each this}}
+{{#notFirst ','}}{{#newline}}
+        { {{#newline}}
+            name: "{{Name}}",{{#newline}}
+            id: "{{Id}}",{{#newline}}
+            sectionFields: { {{#newline}}
+                icon: "{{Icon}}"{{#newline}}
+            },{{#newline}}
+            fields: [
+{{#each Fields}}
+{{#notFirst ','}}{{#newline}}
+                { {{#newline}}
+                    id: "{{Id}}",{{#newline}}
+                    name: "{{Name}}",{{#newline}}
+                    type: "{{Type}}",{{#newline}}
+                    sortorder: {{SortOrder}},
+{{#partial 'sinj-fields' Fields}}{{#newline}}
+                }
+{{/each}}{{#newline}}
+            ]{{#newline}}
+        }
+{{/each}}
+{{/each}}

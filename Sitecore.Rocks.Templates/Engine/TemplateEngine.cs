@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Mustache;
 using Sitecore.Rocks.Templates.Engine.TagDefinitions;
 
@@ -7,7 +8,7 @@ namespace Sitecore.Rocks.Templates.Engine
     public class TemplateEngine : ITemplateEngine
     {
         private readonly FormatCompiler _compiler;
-        private readonly Dictionary<string,string> _partials = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _partials = new Dictionary<string, string>();
 
         public TemplateEngine()
         {
@@ -22,7 +23,7 @@ namespace Sitecore.Rocks.Templates.Engine
             _compiler.RegisterTag(new WhereTag(), false);
             _compiler.RegisterTag(new WithFirstTag(), false);
             _compiler.RegisterTag(new NewGuidTag(), false);
-            _compiler.RegisterTag(new PartialTag(_partials), false);
+            _compiler.RegisterTag(new PartialTag(this), false);
         }
 
         public string Render(string template, object source)
@@ -35,6 +36,14 @@ namespace Sitecore.Rocks.Templates.Engine
         public void RegisterPartial(string name, string template)
         {
             _partials.Add(name, template);
+        }
+
+        public string RenderPartial(string partial, object source)
+        {
+            string template;
+            return _partials.TryGetValue(partial, out template)
+                ? Render(template, source)
+                : string.Empty;
         }
     }
 }

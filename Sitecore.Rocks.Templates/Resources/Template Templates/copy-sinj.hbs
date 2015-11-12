@@ -16,7 +16,14 @@
         id: "{{Id}}",{{#newline}}
         languages: ["en"],{{#newline}}
         fields: { 
-        {{#partial 'sinj-fields' Fields}}{{#newline}}
+{{#where 'Value'}}
+{{#where 'Name' '^((?!__Owner)(?!__Created)(?!__Updated)(?!__Revision)(?!__Ribbon)(?!__Lock).)*$'}}
+{{#each Fields}}
+{{#notFirst ','}}{{#newline}}
+            "{{Name}}": "{{Value}}"
+{{/each}}
+{{/where}}
+{{/where}}{{#newline}}
         }{{#newline}}
     }{{#newline}}
 {{/with}}

@@ -23,6 +23,8 @@ namespace Sitecore.Rocks.Templates.Engine
             _compiler.RegisterTag(new WhereTag(), false);
             _compiler.RegisterTag(new WithFirstTag(), false);
             _compiler.RegisterTag(new NewGuidTag(), false);
+            _compiler.RegisterTag(new IfEqualTag(), false);
+            _compiler.RegisterTag(new ElseEqualTag(), false);
             _compiler.RegisterTag(new PartialTag(this), false);
         }
 

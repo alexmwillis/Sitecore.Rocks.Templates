@@ -50,11 +50,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tags\IfEqualTagTests.cs" />
     <Compile Include="Tags\PartialTagTests.cs" />
+    <Compile Include="Templates\MinqTemplateTests.cs" />
     <Compile Include="Utils\StringExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Templates\SinjSubItemTests.cs" />
-    <Compile Include="Tags\NotFirstTests.cs" />
+    <Compile Include="Tags\NotFirstTagTests.cs" />
     <Compile Include="Templates\SinjTemplateTests.cs" />
     <Compile Include="Templates\SinjTests.cs" />
     <Compile Include="Templates\MinqTests.cs" />

@@ -1,0 +1,16 @@
+﻿{{#if Sections}}
+[SitecoreTemplate("{{Id}}")]{{#newline}}
+public class {{#pascalCase Name}}Model : SitecoreItemModel{{#newline}}
+{
+{{#with Sections}}
+{{#with Fields}}
+{{#each this}}
+{{#newline}}
+    [SitecoreField("{{Name}}")]{{#newline}}
+    public {{#partial 'minj-field-types' this}} {{#pascalCase Name}} { get; set; }{{#newline}}
+{{/each}}
+{{/with}}
+{{/with}}
+todo
+}
+{{/if}}

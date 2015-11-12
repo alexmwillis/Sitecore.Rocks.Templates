@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using NUnit.Framework;
 using Sitecore.Rocks.Templates.Engine;
 
 namespace Sitecore.Rocks.Templates.Tests.Tags
 {
     [TestFixture]
-    public class NotFirstTests
+    public class NotFirstTagTests
     {
         private KeyValuePair<string, string>[] _collection;
 

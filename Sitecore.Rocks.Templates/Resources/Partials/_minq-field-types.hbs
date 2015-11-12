@@ -1,7 +1,6 @@
-﻿{{#if Type=='single-line text'}}string
-{{#elif Type=='text'}}string
-{{#elif Type=='number'}}int
-{{#elif Type=='general link'}}SLink
-{{#elif Type=='link'}}SLink
-{{#elif Type=='Image'}}SMedia
-{{/if}}
+﻿{{#ifEqual Type 'Single-Line Text'}}string{{/ifEqual}}
+{{#ifEqual Type 'Rich Text'}}string{{/ifEqual}}
+{{#ifEqual Type 'Checkbox'}}bool{{/ifEqual}}
+{{#ifEqual Type 'Number'}}int{{/ifEqual}}
+{{#ifEqual Type 'General Link'}}SLink{{/ifEqual}}
+{{#ifEqual Type 'Image'}}SMedia{{/ifEqual}}

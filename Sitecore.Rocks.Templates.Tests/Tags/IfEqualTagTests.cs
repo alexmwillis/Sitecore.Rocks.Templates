@@ -18,7 +18,7 @@ namespace Sitecore.Rocks.Templates.Tests.Tags
         {
             var expectedResult = "if";
 
-            var template = "{{#ifEqual Context 'sameValue'}}if{{elseEqual}}else{{/ifEqual}}";
+            var template = "{{#ifEqual Context 'sameValue'}}if{{#elseEqual}}else{{/ifEqual}}";
 
             Assert.That(new TemplateEngine().Render(template, new {Context = "sameValue" }),
                 Is.EqualTo(expectedResult));

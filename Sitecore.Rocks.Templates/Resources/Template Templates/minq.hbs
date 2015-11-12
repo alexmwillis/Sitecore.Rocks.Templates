@@ -2,15 +2,13 @@
 [SitecoreTemplate("{{Id}}")]{{#newline}}
 public class {{#pascalCase Name}}Model : SitecoreItemModel{{#newline}}
 {
-{{#with Sections}}
-{{#with Fields}}
-{{#each this}}
+{{#each Sections}}
+{{#each Fields}}
 {{#newline}}
     [SitecoreField("{{Name}}")]{{#newline}}
-    public {{#partial 'minj-field-types' this}} {{#pascalCase Name}} { get; set; }{{#newline}}
+    public {{#partial 'minq-field-types' this}} {{#pascalCase Name}} { get; set; }{{#newline}}
 {{/each}}
-{{/with}}
-{{/with}}
-todo
+{{/each}}
+todo add children
 }
 {{/if}}

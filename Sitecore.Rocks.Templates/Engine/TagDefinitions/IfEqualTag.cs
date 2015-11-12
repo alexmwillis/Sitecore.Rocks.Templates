@@ -24,7 +24,7 @@ namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
 
         protected override IEnumerable<string> GetChildTags()
         {
-            return new[] { "elseEqual" };
+            yield return "elseEqual";
         }
 
         public override bool ShouldGeneratePrimaryGroup(Dictionary<string, object> arguments)
@@ -34,29 +34,15 @@ namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
 
             return IsConditionSatisfied(first, second);
         }
+        
+        public override bool ShouldCreateSecondaryGroup(TagDefinition definition)
+        {
+            return definition.Name == "elseEqual";
+        }
 
         private static bool IsConditionSatisfied(object first, object second)
         {
             return (first as string) == (second as string);
         }
-
-        //public override IEnumerable<NestedContext> GetChildContext(
-        //    TextWriter writer,
-        //    Scope keyScope,
-        //    Dictionary<string, object> arguments,
-        //    Scope contextScope)
-        //{
-            
-
-            
-
-        //    var context = new NestedContext()
-        //    {
-        //        KeyScope = keyScope,
-        //        Writer = writer,
-        //        ContextScope = contextScope
-        //    };
-        //    yield return context;
-        //}
     }
 }

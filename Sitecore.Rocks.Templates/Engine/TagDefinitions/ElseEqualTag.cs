@@ -18,10 +18,5 @@ namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
         {
             return new[] {"ifEqual"};
         }
-
-        public override bool ShouldCreateSecondaryGroup(TagDefinition definition)
-        {
-            return true;
-        }
     }
 }

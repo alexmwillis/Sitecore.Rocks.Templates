@@ -27,16 +27,18 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
                     {
                         Fields = new[]
                         {
-                            new SitecoreTemplateField {Name = "Field 1", Type = "Rich Text"},
-                            new SitecoreTemplateField {Name = "Field 2", Type = "general link"}
+                            new SitecoreTemplateField {Name = "Field 1", Type = "Single-Line Text"},
+                            new SitecoreTemplateField {Name = "Field 2", Type = "Rich Text"},
+                            new SitecoreTemplateField {Name = "Field 3", Type = "Checkbox"}
                         }
                     },
                     new SitecoreTemplateSection
                     {
                         Fields = new[]
                         {
-                            new SitecoreTemplateField {Name = "Field 3", Type = "Rich Text"},
-                            new SitecoreTemplateField {Name = "Field 4", Type = "Rich Text"}
+                            new SitecoreTemplateField {Name = "Field 4", Type = "Number"},
+                            new SitecoreTemplateField {Name = "Field 5", Type = "General Link"},
+                            new SitecoreTemplateField {Name = "Field 6", Type = "Image"}
                         }
                     }
                 }
@@ -48,14 +50,26 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
         {
             var expectedResult =
                 $@"[SitecoreTemplate(""{_template.Id}"")]
-public class ItemWithFieldsModel : SitecoreItemModel
+public class TemplateModel : SitecoreItemModel
 {{
-    [SitecoreField(""Field Name 1"")]
-    public string FieldName1 {{ get; set; }}
+    [SitecoreField(""Field 1"")]
+    public string Field1 {{ get; set; }}
 
-    [SitecoreField(""Field Name 2"")]
-    public string FieldName2 {{ get; set; }}
-}}";
+    [SitecoreField(""Field 2"")]
+    public string Field2 {{ get; set; }}
+
+    [SitecoreField(""Field 3"")]
+    public bool Field3 {{ get; set; }}
+
+    [SitecoreField(""Field 4"")]
+    public int Field4 {{ get; set; }}
+
+    [SitecoreField(""Field 5"")]
+    public SLink Field5 {{ get; set; }}
+
+    [SitecoreField(""Field 6"")]
+    public SMedia Field6 {{ get; set; }}
+todo add children}}";
             var template = new TemplateMetaData
             {
                 FullName = "..//..//..//Sitecore.Rocks.Templates//Resources//Template Templates//minq.hbs"

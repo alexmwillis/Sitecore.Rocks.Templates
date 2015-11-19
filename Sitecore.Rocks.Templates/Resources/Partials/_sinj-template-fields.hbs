@@ -9,7 +9,7 @@
 {{#where 'Value'}}
 {{#where 'Name' '^((?!__Owner)(?!__Created)(?!__Updated)(?!__Revision)(?!__Ribbon)(?!__Lock).)*$'}}
 {{#each this}}
-{{#notFirst ','}}{{#newline}}
+{{#unless @first}},{{/unless}}{{#newline}}
                     "{{Name}}": "{{Value}}"
 {{/each}}
 {{/where}}

@@ -1,0 +1,3 @@
+[submodule "mustache-sharp"]
+	path = mustache-sharp
+	url = https://github.com/jehugaleahsa/mustache-sharp.git

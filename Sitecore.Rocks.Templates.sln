@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Rocks.Templates.Nu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{D5986575-6231-4A4E-92E7-A85CA938863D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mustache-sharp", "..\3rd-party\mustache-sharp\mustache-sharp\mustache-sharp.csproj", "{D71B378F-A4BA-4263-A4F0-07A49A0C528D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mustache-sharp", "mustache-sharp\mustache-sharp\mustache-sharp.csproj", "{D71B378F-A4BA-4263-A4F0-07A49A0C528D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

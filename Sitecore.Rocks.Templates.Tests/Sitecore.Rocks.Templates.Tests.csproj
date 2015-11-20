@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tags\FirstTagTests.cs" />
     <Compile Include="Tags\IfEqualTagTests.cs" />
     <Compile Include="Tags\PartialTagTests.cs" />
     <Compile Include="Templates\MinqTemplateTests.cs" />
@@ -72,11 +73,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <None Include="Resources\Where-Invalid.hbs" />
-    <None Include="Resources\Where-Match-Key.hbs" />
-    <None Include="Resources\Where-Value.hbs" />
-  </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\sinj-template-no-sections.js" />
     <Content Include="Resources\sinj-template.js" />

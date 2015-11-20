@@ -8,7 +8,7 @@ namespace Sitecore.Rocks.Templates.Engine
     public class TemplateEngine : ITemplateEngine
     {
         private readonly FormatCompiler _compiler;
-        private readonly Dictionary<string, string> _partials = new Dictionary<string, string>();
+        private readonly Dictionary<string, Func<string>> _getPartials = new Dictionary<string, Func<string>>();
 
         public TemplateEngine()
         {
@@ -35,16 +35,16 @@ namespace Sitecore.Rocks.Templates.Engine
                 .Render(source);
         }
 
-        public void RegisterPartial(string name, string template)
+        public void RegisterPartial(string name, Func<string> getPartial)
         {
-            _partials.Add(name, template);
+            _getPartials.Add(name, getPartial);
         }
 
         public string RenderPartial(string partial, object source)
         {
-            string template;
-            return _partials.TryGetValue(partial, out template)
-                ? Render(template, source)
+            Func<string> getPartial;
+            return _getPartials.TryGetValue(partial, out getPartial)
+                ? Render(getPartial(), source)
                 : string.Empty;
         }
     }

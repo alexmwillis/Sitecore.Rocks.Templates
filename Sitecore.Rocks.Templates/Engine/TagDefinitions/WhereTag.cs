@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Mustache;
 using System.Text.RegularExpressions;
+using Sitecore.Rocks.Templates.Utils;
 
 namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
 {
@@ -40,9 +41,21 @@ namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
             var filterKey1 = arguments["filterKey1"] as string;
             var filterValue1 = arguments["filterValue1"] as string;
 
-            var regex = filterValue1 != null ? new Regex(filterValue1) : null;
+            Func<object, bool> filter;
+            if (filterValue1.In(bool.FalseString, bool.TrueString))
+            {
+                 filter = BooleanFilter(filterKey1, Convert.ToBoolean(filterValue1));
+            }
+            else if (filterValue1 != null)
+            {
+                filter = RegexFilter(filterKey1, new Regex(filterValue1));
+            }
+            else
+            {
+                filter = IsNotNullOrWhiteSpaceFilter(filterKey1);
+            }
 
-            var filteredCollection = FilterCollectionBy(collection, filterKey1, regex);
+            var filteredCollection = collection.Where(filter);
 
             var context = new NestedContext()
             {
@@ -52,18 +65,16 @@ namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
             };
             yield return context;
         }
-
-        private static IEnumerable<object> FilterCollectionBy(IEnumerable<object> collection, string property,
-            Regex match)
+        
+        private static Func<object, bool> BooleanFilter(string key, bool @bool)
         {
-            return (match != null)
-                ? collection.Where(IsNotNullOrWhiteSpaceFilter(property)).Where(RegexFilter(property, match))
-                : collection.Where(IsNotNullOrWhiteSpaceFilter(property));
+            return o => Convert.ToBoolean(GetPropertyValue(key, o)) == @bool;
         }
 
         private static Func<object, bool> RegexFilter(string key, Regex match)
         {
-            return o => match.IsMatch(GetPropertyValueAsString(key, o));
+            return o => IsNotNullOrWhiteSpaceFilter(key)(o) &&
+                        match.IsMatch(GetPropertyValueAsString(key, o));
         }
 
         private static Func<object, bool> IsNotNullOrWhiteSpaceFilter(string key)
@@ -73,7 +84,12 @@ namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
 
         private static string GetPropertyValueAsString(string key, object o)
         {
-            return o.GetType().GetProperty(key)?.GetValue(o) as string ?? string.Empty;
+            return GetPropertyValue(key, o) as string ?? string.Empty;
+        }
+
+        private static object GetPropertyValue(string key, object o)
+        {
+            return o.GetType().GetProperty(key)?.GetValue(o);
         }
     }
 }

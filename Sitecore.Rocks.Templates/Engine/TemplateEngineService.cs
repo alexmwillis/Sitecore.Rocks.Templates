@@ -25,8 +25,8 @@ namespace Sitecore.Rocks.Templates.Engine
 
         private void RegisterPartials()
         {
-            var partials = _fileService.GetPartials().Select(p => new { p.Name, Content = _fileService.GetTemplateContent(p) });
-            partials.ForEach(p => _templateEngine.RegisterPartial(p.Name, p.Content));
+            var partials = _fileService.GetPartials();
+            partials.ForEach(p => _templateEngine.RegisterPartial(p.Name, () => _fileService.GetTemplateContent(p)));
         }
     }
 }

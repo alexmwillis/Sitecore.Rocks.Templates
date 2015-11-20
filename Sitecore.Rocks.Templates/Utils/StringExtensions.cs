@@ -13,7 +13,7 @@ namespace Sitecore.Rocks.Templates.Utils
     {
         public static bool In(this string str, params string[] args)
         {
-            return args.Contains(str);
+            return args.Contains(str, StringComparer.InvariantCultureIgnoreCase);
         }
 
         public static string PascalCase(this string str)

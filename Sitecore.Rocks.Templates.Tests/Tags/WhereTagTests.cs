@@ -8,49 +8,94 @@ namespace Sitecore.Rocks.Templates.Tests.Tags
     [TestFixture]
     public class WhereTagTests
     {
-        private KeyValuePair<string, string>[] _collection;
-
-        [SetUp]
-        public void SetUp() 
-        {
-            _collection = new[]
-            {
-                new KeyValuePair<string,string>("Key 1","Value 1"),
-                new KeyValuePair<string,string>("Key 2","Value 2"),
-                new KeyValuePair<string,string>("Key 3","")            
-            };
-        }
-
+        
         [Test]
         public void GivenInvalidWhereTagThenReturnsEmpty()
         {
+            var collection = new[]
+            {
+                new {Key = "Key 1", Value = "Value 1"}
+            };
+
             var expectedResult = string.Empty;
 
-            var template = File.ReadAllText("..//..//Resources//Where-Invalid.hbs");
+            var template = "{{#with this}}{{#where 'Invalid'}}{{#each this}}N:{{Key}} V:{{Value}} {{/each}}{{/where}}{{/with}}";
             
-            Assert.That(new TemplateEngine().Render(template, _collection),
+            Assert.That(new TemplateEngine().Render(template, collection),
                 Is.EqualTo(expectedResult));
         }
 
         [Test]
         public void GivenWhereTagFiltersEmptyValuesThenReturnsOnlyNonEmpty()
         {
+            var collection = new[]
+            {
+                new {Key = "Key 1", Value = "Value 1"},
+                new {Key = "Key 2", Value = "Value 2"},
+                new {Key = "Key 3", Value = ""}
+            };
+
             var expectedResult = "N:Key 1 V:Value 1 N:Key 2 V:Value 2 ";
 
-            var template = File.ReadAllText("..//..//Resources//Where-Value.hbs");
-
-            Assert.That(new TemplateEngine().Render(template, _collection),
+            var template = "{{#with this}}{{#where 'Value'}}{{#each this}}N:{{Key}} V:{{Value}} {{/each}}{{/where}}{{/with}}";
+            
+            Assert.That(new TemplateEngine().Render(template, collection),
                 Is.EqualTo(expectedResult));
         }
 
         [Test]
-        public void GivenWhereTagMatches3RdKeyThenReturnsOnly3RdKeyReturned()
+        public void GivenWhereTagMatches2RdKeyThenReturnsOnly3RdKeyReturned()
         {
+            var collection = new[]
+            {
+                new {Key = "Key 1", Value = "Value 1"},
+                new {Key = "Key 2", Value = "Value 2"},
+                new {Key = "Key 3", Value = "Value 3"}
+            };
+
             var expectedResult = "N:Key 2 V:Value 2 ";
 
-            var template = File.ReadAllText("..//..//Resources//Where-Match-Key.hbs");
+            var template = "{{#with this}}{{#where 'Key' '2$'}}{{#each this}}N:{{Key}} V:{{Value}} {{/each}}{{/where}}{{/with}}";
 
-            Assert.That(new TemplateEngine().Render(template, _collection),
+            Assert.That(new TemplateEngine().Render(template, collection),
+                Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void TestWhereValueTruePrinted()
+        {
+            var collection = new[]
+            {
+                new {Key = "Key 1", Value = true},
+                new {Key = "Key 2", Value = false},
+                new {Key = "Key 3", Value = true},
+                new {Key = "Key 4", Value = false}
+            };
+
+            var expectedResult = "N:Key 1 N:Key 3 ";
+
+            var template = "{{#with this}}{{#where 'Value' 'true'}}{{#each this}}N:{{Key}} {{/each}}{{/where}}{{/with}}";
+
+            Assert.That(new TemplateEngine().Render(template, collection),
+                Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void TestWhereValueFalsePrinted()
+        {
+            var collection = new[]
+            {
+                new {Key = "Key 1", Value = true},
+                new {Key = "Key 2", Value = false},
+                new {Key = "Key 3", Value = true},
+                new {Key = "Key 4", Value = false}
+            };
+
+            var expectedResult = "N:Key 2 N:Key 4 ";
+
+            var template = "{{#with this}}{{#where 'Value' 'false'}}{{#each this}}N:{{Key}} {{/each}}{{/where}}{{/with}}";
+
+            Assert.That(new TemplateEngine().Render(template, collection),
                 Is.EqualTo(expectedResult));
         }
     }

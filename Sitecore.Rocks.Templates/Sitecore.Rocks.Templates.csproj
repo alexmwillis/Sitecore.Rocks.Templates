@@ -134,7 +134,7 @@
     <None Include="Resources\Item Templates\sinj.hbs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\3rd-party\mustache-sharp\mustache-sharp\mustache-sharp.csproj">
+    <ProjectReference Include="..\mustache-sharp\mustache-sharp\mustache-sharp.csproj">
       <Project>{d71b378f-a4ba-4263-a4f0-07a49a0c528d}</Project>
       <Name>mustache-sharp</Name>
     </ProjectReference>

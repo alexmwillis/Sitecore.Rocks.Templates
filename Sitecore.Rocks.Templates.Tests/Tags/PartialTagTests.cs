@@ -12,9 +12,9 @@ namespace Sitecore.Rocks.Templates.Tests.Tags
             var engine = new TemplateEngine();
             
             var myPartial = "Hello {{Name}}";
-            var template = "{{#partial 'myPartial' this}}";
+            var template = "{{>myPartial this}}";
 
-            engine.RegisterPartial("myPartial", () => myPartial);
+            engine.RegisterPartial("myPartial", myPartial);
 
             Assert.That(engine.Render(template, new { Name = "World"}),
                 Is.EqualTo("Hello World"));

@@ -1,35 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Mustache;
 using System.Text.RegularExpressions;
 using Sitecore.Rocks.Templates.Utils;
 
 namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
 {
-    public class WhereTag : ContentTagDefinition
+    public class WhereTag
     {
-        public WhereTag()
-            : base("where")
-        {
-        }
 
-        protected override bool GetIsContextSensitive()
-        {
-            return false;
-        }
 
-        protected override IEnumerable<TagParameter> GetParameters()
-        {
-            yield return new TagParameter("filterKey1") {IsRequired = true};
-            yield return new TagParameter("filterValue1") {IsRequired = false};
-        }
-
-        public override IEnumerable<TagParameter> GetChildContextParameters()
-        {
-            yield return new TagParameter("context") {IsRequired = true};
-        }
 
         public override IEnumerable<NestedContext> GetChildContext(
             TextWriter writer,

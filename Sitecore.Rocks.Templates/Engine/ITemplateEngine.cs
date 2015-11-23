@@ -7,6 +7,6 @@ namespace Sitecore.Rocks.Templates.Engine
     {
         string Render(string template, object source);
 
-        void RegisterPartial(string name, Func<string> getPartial);
+        void RegisterPartial(string name, string partialSource);
     }
 }

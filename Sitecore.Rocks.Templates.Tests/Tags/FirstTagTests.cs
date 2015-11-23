@@ -9,10 +9,12 @@ namespace Sitecore.Rocks.Templates.Tests.Tags
         [Test]
         public void Test()
         {
-            var template = "{{#each this}}{{#if @first}}{{#index}}{{/if}}{{/each}}";
+            var data = new[] {"a", "b", "c"};
 
-            Assert.That(new TemplateEngine().Render(template, new[] { 1, 2, 3}),
-                Is.EqualTo("1"));
+            var template = "{{#each this}}{{#if @first}}{{@index}}{{/if}}{{/each}}";
+
+            Assert.That(new TemplateEngine().Render(template, data),
+                Is.EqualTo("0"));
         }
     }
 }

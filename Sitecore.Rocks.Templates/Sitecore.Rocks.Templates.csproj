@@ -35,6 +35,10 @@
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Handlebars, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Handlebars.Net.1.4.5\lib\Handlebars.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MoreLinq, Version=1.4.18916.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
       <HintPath>..\packages\morelinq.1.4.0\lib\net35\MoreLinq.dll</HintPath>
       <Private>True</Private>
@@ -77,12 +81,7 @@
     <Compile Include="Commands\ContentTreeCommand.cs" />
     <Compile Include="Commands\ItemToTemplateCommand.cs" />
     <Compile Include="Engine\ITemplateEngineService.cs" />
-    <Compile Include="Engine\TagDefinitions\ElseEqualTag.cs" />
-    <Compile Include="Engine\TagDefinitions\IfEqualTag.cs" />
-    <Compile Include="Engine\TagDefinitions\NewGuidTag.cs" />
-    <Compile Include="Engine\TagDefinitions\PartialTag.cs" />
-    <Compile Include="Engine\TagDefinitions\ScopeExtensions.cs" />
-    <Compile Include="Engine\TagDefinitions\WithFirstTag.cs" />
+    <Compile Include="Engine\TagDefinitions\WhereTag.cs" />
     <Compile Include="Engine\TemplateEngineService.cs" />
     <Compile Include="IO\TemplateFileService.cs" />
     <Compile Include="IO\ITemplateFileService.cs" />
@@ -95,9 +94,6 @@
     <Compile Include="Data\SitecoreItemBuilder.cs" />
     <Compile Include="Data\Items\SitecoreTemplateField.cs" />
     <Compile Include="Engine\ITemplateEngine.cs" />
-    <Compile Include="Engine\TagDefinitions\PascelCaseTag.cs" />
-    <Compile Include="Engine\TagDefinitions\NotFirstTag.cs" />
-    <Compile Include="Engine\TagDefinitions\WhereTag.cs" />
     <Compile Include="Utils\StringExtensions.cs" />
     <Compile Include="IO\TemplateMetaData.cs" />
     <Compile Include="UI\SelectTemplateViewModel.cs" />
@@ -109,7 +105,6 @@
     <Compile Include="Engine\TemplateEngine.cs" />
     <Compile Include="Commands\SingleTreeItemCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Engine\TagDefinitions\CamelCaseTag.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -132,12 +127,6 @@
     <None Include="Resources\Item Templates\minq.hbs" />
     <None Include="Resources\Item Templates\sinj-subitems.hbs" />
     <None Include="Resources\Item Templates\sinj.hbs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\mustache-sharp\mustache-sharp\mustache-sharp.csproj">
-      <Project>{d71b378f-a4ba-4263-a4f0-07a49a0c528d}</Project>
-      <Name>mustache-sharp</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

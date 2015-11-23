@@ -1,51 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using Mustache;
-using Sitecore.Rocks.Templates.Engine.TagDefinitions;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using HandlebarsDotNet;
+using Sitecore.Rocks.Templates.Utils;
 
 namespace Sitecore.Rocks.Templates.Engine
 {
     public class TemplateEngine : ITemplateEngine
     {
-        private readonly FormatCompiler _compiler;
-        private readonly Dictionary<string, Func<string>> _getPartials = new Dictionary<string, Func<string>>();
-
         public TemplateEngine()
         {
-            _compiler = new FormatCompiler
+            Handlebars.RegisterHelper("camelCase", (writer, context, parameters) => {
+                writer.WriteSafeString((parameters[0] as string).CamelCase());
+            });
+            Handlebars.RegisterHelper("where", (output, options, context, arguments) =>
             {
-                RemoveNewLines = true
-            };
+                var enumerable = arguments[0] as IEnumerable<object>;
+                if (enumerable == null)
+                {
+                    throw new HandlebarsException("{{where}} helper must be called with an enumerable");
+                }
+                options.Template(output, enumerable.Take(3));
+            });
 
-            _compiler.RegisterTag(new CamelCaseTag(), false);
-            _compiler.RegisterTag(new PascelCaseTag(), false);
-            _compiler.RegisterTag(new NotFirstTag(), false);
-            _compiler.RegisterTag(new WhereTag(), false);
-            _compiler.RegisterTag(new WithFirstTag(), false);
-            _compiler.RegisterTag(new NewGuidTag(), false);
-            _compiler.RegisterTag(new IfEqualTag(), false);
-            _compiler.RegisterTag(new ElseEqualTag(), false);
-            _compiler.RegisterTag(new PartialTag(this), false);
+            //_compiler.RegisterTag(new PascelCaseTag(), false);
+            //_compiler.RegisterTag(new WhereTag(), false);
+            //_compiler.RegisterTag(new WithFirstTag(), false);
+            //_compiler.RegisterTag(new NewGuidTag(), false);
+            //_compiler.RegisterTag(new IfEqualTag(), false);
+            //_compiler.RegisterTag(new ElseEqualTag(), false);
         }
 
-        public string Render(string template, object source)
+        public string Render(string source, object data)
         {
-            return _compiler
-                .Compile(template)
-                .Render(source);
+            return Handlebars.Compile(source)(data);
         }
 
-        public void RegisterPartial(string name, Func<string> getPartial)
+        public void RegisterPartial(string name, string partialSource)
         {
-            _getPartials.Add(name, getPartial);
-        }
-
-        public string RenderPartial(string partial, object source)
-        {
-            Func<string> getPartial;
-            return _getPartials.TryGetValue(partial, out getPartial)
-                ? Render(getPartial(), source)
-                : string.Empty;
+            using (var reader = new StringReader(partialSource))
+            {
+                var partialTemplate = Handlebars.Compile(reader);
+                Handlebars.RegisterTemplate(name, partialTemplate);
+            }
         }
     }
 }

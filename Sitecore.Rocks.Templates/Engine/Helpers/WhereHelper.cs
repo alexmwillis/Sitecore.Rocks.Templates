@@ -1,49 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
+using HandlebarsDotNet;
 using Sitecore.Rocks.Templates.Utils;
 
-namespace Sitecore.Rocks.Templates.Engine.TagDefinitions
+namespace Sitecore.Rocks.Templates.Engine.Helpers
 {
-    public class WhereTag
+    public class WhereHelper: Helper
     {
+        public override string Name => "where";
 
-
-
-        public override IEnumerable<NestedContext> GetChildContext(
-            TextWriter writer,
-            Scope keyScope,
-            Dictionary<string, object> arguments,
-            Scope contextScope)
+        public void GetHelper(TextWriter output, HelperOptions options, object context, params object[] arguments)
         {
-            var collection = keyScope.GetCurrentAsEnumerable();
-            var filterKey1 = arguments["filterKey1"] as string;
-            var filterValue1 = arguments["filterValue1"] as string;
+            var enumerable = GetArgumentAs<IEnumerable<object>>(arguments, 0);
+            var filterKey = GetArgumentAs<string>(arguments, 1);
+            var filterValue = GetOptionalArgumentAs<string>(arguments, 2);
+
+            if (enumerable == null)
+            {
+                ThrowHelperException("must be called with an enumerable");
+            }
+
+            if (filterKey == null)
+            {
+                ThrowHelperException("must be called with key");
+            }
 
             Func<object, bool> filter;
-            if (filterValue1.In(bool.FalseString, bool.TrueString))
+            if (filterValue.In(bool.FalseString, bool.TrueString))
             {
-                 filter = BooleanFilter(filterKey1, Convert.ToBoolean(filterValue1));
+                filter = BooleanFilter(filterKey, Convert.ToBoolean(filterValue));
             }
-            else if (filterValue1 != null)
+            else if (filterValue != null)
             {
-                filter = RegexFilter(filterKey1, new Regex(filterValue1));
+                filter = RegexFilter(filterKey, new Regex(filterValue));
             }
             else
             {
-                filter = IsNotNullOrWhiteSpaceFilter(filterKey1);
+                filter = IsNotNullOrWhiteSpaceFilter(filterKey);
             }
-
-            var filteredCollection = collection.Where(filter);
-
-            var context = new NestedContext()
-            {
-                KeyScope = keyScope.CreateChildScope(filteredCollection),
-                Writer = writer,
-                ContextScope = contextScope.CreateChildScope()
-            };
-            yield return context;
+            
+            options.Template(output, enumerable.Where(filter));
         }
         
         private static Func<object, bool> BooleanFilter(string key, bool @bool)

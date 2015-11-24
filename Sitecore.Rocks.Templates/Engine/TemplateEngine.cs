@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using HandlebarsDotNet;
+using Sitecore.Rocks.Templates.Engine.Helpers;
 using Sitecore.Rocks.Templates.Utils;
 
 namespace Sitecore.Rocks.Templates.Engine
@@ -11,17 +10,12 @@ namespace Sitecore.Rocks.Templates.Engine
         public TemplateEngine()
         {
             Handlebars.RegisterHelper("camelCase", (writer, context, parameters) => {
-                writer.WriteSafeString((parameters[0] as string).CamelCase());
+                writer.Write((parameters[0] as string).CamelCase());
             });
-            Handlebars.RegisterHelper("where", (output, options, context, arguments) =>
-            {
-                var enumerable = arguments[0] as IEnumerable<object>;
-                if (enumerable == null)
-                {
-                    throw new HandlebarsException("{{where}} helper must be called with an enumerable");
-                }
-                options.Template(output, enumerable.Take(3));
+            Handlebars.RegisterHelper("pascalCase", (writer, context, parameters) => {
+                writer.Write((parameters[0] as string).PascalCase());
             });
+            Handlebars.RegisterHelper("where", WhereHelper.GetHelper);
 
             //_compiler.RegisterTag(new PascelCaseTag(), false);
             //_compiler.RegisterTag(new WhereTag(), false);

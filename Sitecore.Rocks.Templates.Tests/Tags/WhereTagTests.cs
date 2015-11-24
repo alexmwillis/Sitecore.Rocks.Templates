@@ -19,7 +19,7 @@ namespace Sitecore.Rocks.Templates.Tests.Tags
 
             var expectedResult = string.Empty;
 
-            var template = "{{#with this}}{{#where 'Invalid'}}{{#each this}}N:{{Key}} V:{{Value}} {{/each}}{{/where}}{{/with}}";
+            var template = "{{#where this 'Invalid'}}{{#each this}}N:{{Key}} V:{{Value}} {{/each}}{{/where}}";
             
             Assert.That(new TemplateEngine().Render(template, collection),
                 Is.EqualTo(expectedResult));
@@ -37,7 +37,7 @@ namespace Sitecore.Rocks.Templates.Tests.Tags
 
             var expectedResult = "N:Key 1 V:Value 1 N:Key 2 V:Value 2 ";
 
-            var template = "{{#with this}}{{#where 'Value'}}{{#each this}}N:{{Key}} V:{{Value}} {{/each}}{{/where}}{{/with}}";
+            var template = "{{#where this 'Value'}}{{#each this}}N:{{Key}} V:{{Value}} {{/each}}{{/where}}";
             
             Assert.That(new TemplateEngine().Render(template, collection),
                 Is.EqualTo(expectedResult));
@@ -55,7 +55,7 @@ namespace Sitecore.Rocks.Templates.Tests.Tags
 
             var expectedResult = "N:Key 2 V:Value 2 ";
 
-            var template = "{{#with this}}{{#where 'Key' '2$'}}{{#each this}}N:{{Key}} V:{{Value}} {{/each}}{{/where}}{{/with}}";
+            var template = "{{#where this 'Key' '2$'}}{{#each this}}N:{{Key}} V:{{Value}} {{/each}}{{/where}}";
 
             Assert.That(new TemplateEngine().Render(template, collection),
                 Is.EqualTo(expectedResult));
@@ -74,7 +74,7 @@ namespace Sitecore.Rocks.Templates.Tests.Tags
 
             var expectedResult = "N:Key 1 N:Key 3 ";
 
-            var template = "{{#with this}}{{#where 'Value' 'true'}}{{#each this}}N:{{Key}} {{/each}}{{/where}}{{/with}}";
+            var template = "{{#where this 'Value' 'true'}}{{#each this}}N:{{Key}} {{/each}}{{/where}}";
 
             Assert.That(new TemplateEngine().Render(template, collection),
                 Is.EqualTo(expectedResult));
@@ -93,7 +93,7 @@ namespace Sitecore.Rocks.Templates.Tests.Tags
 
             var expectedResult = "N:Key 2 N:Key 4 ";
 
-            var template = "{{#with this}}{{#where 'Value' 'false'}}{{#each this}}N:{{Key}} {{/each}}{{/where}}{{/with}}";
+            var template = "{{#where this 'Value' 'false'}}{{#each this}}N:{{Key}} {{/each}}{{/where}}";
 
             Assert.That(new TemplateEngine().Render(template, collection),
                 Is.EqualTo(expectedResult));

@@ -7,6 +7,6 @@ public class {{pascalCase Name}}Model : SitecoreItemModel
 {{/unless}}
 {{/each}}{{/where}}
 {{#withFirst Children}}    [SitecoreChildren]
-    public ICollection<{{#pascalCase TemplateName}}Model> {{#pascalCase TemplateName}}s { get; set; }
+    public ICollection<{{pascalCase TemplateName}}Model> {{pascalCase TemplateName}}s { get; set; }
 {{/withFirst}}
 }{{/if}}

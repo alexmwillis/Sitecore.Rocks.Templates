@@ -9,17 +9,17 @@ namespace Sitecore.Rocks.Templates.Engine
     {
         public TemplateEngine()
         {
-            Handlebars.RegisterHelper("camelCase", (writer, context, parameters) => {
-                writer.Write((parameters[0] as string).CamelCase());
-            });
-            Handlebars.RegisterHelper("pascalCase", (writer, context, parameters) => {
-                writer.Write((parameters[0] as string).PascalCase());
-            });
-            Handlebars.RegisterHelper("where", WhereHelper.GetHelper);
+            Handlebars.RegisterHelper("camelCase",
+                new WithFirstArgumentHelper("camelCase", s => s.ToCamelCase()).HelperFunction);
+            Handlebars.RegisterHelper("pascalCase",
+                new WithFirstArgumentHelper("pascalCase", s => s.ToPascalCase()).HelperFunction);
+            Handlebars.RegisterHelper("literal",
+                new WithFirstArgumentHelper("literal", s => s.ToLiteral()).HelperFunction);
+            Handlebars.RegisterHelper("where", 
+                new WhereHelper().BlockHelperFunction);
+            Handlebars.RegisterHelper("withFirst", 
+                new WithFirstHelper().BlockHelperFunction);
 
-            //_compiler.RegisterTag(new PascelCaseTag(), false);
-            //_compiler.RegisterTag(new WhereTag(), false);
-            //_compiler.RegisterTag(new WithFirstTag(), false);
             //_compiler.RegisterTag(new NewGuidTag(), false);
             //_compiler.RegisterTag(new IfEqualTag(), false);
             //_compiler.RegisterTag(new ElseEqualTag(), false);

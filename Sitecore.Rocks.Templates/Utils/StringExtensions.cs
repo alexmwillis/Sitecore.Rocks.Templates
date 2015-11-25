@@ -16,33 +16,21 @@ namespace Sitecore.Rocks.Templates.Utils
             return args.Contains(str, StringComparer.InvariantCultureIgnoreCase);
         }
 
-        public static string PascalCase(this string str)
+        public static string ToPascalCase(this string str)
         {
-            return TitleCase(str)
+            return ToTitleCase(str)
                 .RemoveSpecialCharacters()
                 .WithFirst(RemoveNumber)
                 .StringJoin("");
         }
 
-        public static string CamelCase(this string str)
+        public static string ToCamelCase(this string str)
         {
-            return TitleCase(str)
+            return ToTitleCase(str)
                 .RemoveSpecialCharacters()
                 .WithFirst(RemoveNumber)
                 .WithFirst(LowerCase)
                 .StringJoin("");
-        }
-
-        public static string ToLiteralOld(this string str)
-        {
-            using (var writer = new StringWriter())
-            {
-                using (var provider = CodeDomProvider.CreateProvider("JScript"))
-                {
-                    provider.GenerateCodeFromExpression(new CodePrimitiveExpression(str), writer, null);
-                    return writer.ToString();
-                }
-            }
         }
         
         public static string ToLiteral(this string str)
@@ -76,7 +64,7 @@ namespace Sitecore.Rocks.Templates.Utils
             throw new NotSupportedException();
         }
         
-        private static IEnumerable<string> TitleCase(string str)
+        private static IEnumerable<string> ToTitleCase(string str)
         {
             return CultureInfo.CurrentCulture.TextInfo
                 .ToTitleCase(str)

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using MoreLinq;
+﻿using MoreLinq;
 using Sitecore.Rocks.Templates.IO;
 
 namespace Sitecore.Rocks.Templates.Engine
@@ -17,16 +16,18 @@ namespace Sitecore.Rocks.Templates.Engine
             RegisterPartials();
         }
 
-        public string Render(TemplateMetaData template, object source)
+        public string Render(TemplateMetaData template, object data)
         {
-            var content = _fileService.GetTemplateContent(template);
-            return _templateEngine.Render(content, source);
+            var source = _fileService.GetTemplateContent(template);
+
+            return FSharp.TemplateEngine.render(source)(data);
+            
         }
 
         private void RegisterPartials()
         {
             var partials = _fileService.GetPartials();
-            partials.ForEach(p => _templateEngine.RegisterPartial(p.Name, _fileService.GetTemplateContent(p)));
+            partials.ForEach(p => FSharp.TemplateEngine.registerPartial(p.Name, _fileService.GetTemplateContent(p)));
         }
     }
 }

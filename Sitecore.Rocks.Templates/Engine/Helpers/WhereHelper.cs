@@ -8,42 +8,43 @@ using Sitecore.Rocks.Templates.Utils;
 
 namespace Sitecore.Rocks.Templates.Engine.Helpers
 {
-    public class WhereHelper: Helper
+    public class WhereHelper: BlockHelper
     {
         public override string Name => "where";
 
-        public void GetHelper(TextWriter output, HelperOptions options, object context, params object[] arguments)
-        {
-            var enumerable = GetArgumentAs<IEnumerable<object>>(arguments, 0);
-            var filterKey = GetArgumentAs<string>(arguments, 1);
-            var filterValue = GetOptionalArgumentAs<string>(arguments, 2);
+        public override HandlebarsBlockHelper BlockHelperFunction
+            => (output, options, context, arguments) =>
+            {
+                var enumerable = GetArgumentAs<IEnumerable<object>>(arguments, 0);
+                var filterKey = GetArgumentAs<string>(arguments, 1);
+                var filterValue = GetOptionalArgumentAs<string>(arguments, 2);
 
-            if (enumerable == null)
-            {
-                ThrowHelperException("must be called with an enumerable");
-            }
+                if (enumerable == null)
+                {
+                    throw new HanderbarsHelperException(this, "must be called with an enumerable");
+                }
 
-            if (filterKey == null)
-            {
-                ThrowHelperException("must be called with key");
-            }
+                if (filterKey == null)
+                {
+                    throw new HanderbarsHelperException(this, "must be called with key");
+                }
 
-            Func<object, bool> filter;
-            if (filterValue.In(bool.FalseString, bool.TrueString))
-            {
-                filter = BooleanFilter(filterKey, Convert.ToBoolean(filterValue));
-            }
-            else if (filterValue != null)
-            {
-                filter = RegexFilter(filterKey, new Regex(filterValue));
-            }
-            else
-            {
-                filter = IsNotNullOrWhiteSpaceFilter(filterKey);
-            }
-            
-            options.Template(output, enumerable.Where(filter));
-        }
+                Func<object, bool> filter;
+                if (filterValue.In(bool.FalseString, bool.TrueString))
+                {
+                    filter = BooleanFilter(filterKey, Convert.ToBoolean(filterValue));
+                }
+                else if (filterValue != null)
+                {
+                    filter = RegexFilter(filterKey, new Regex(filterValue));
+                }
+                else
+                {
+                    filter = IsNotNullOrWhiteSpaceFilter(filterKey);
+                }
+
+                options.Template(output, enumerable.Where(filter));
+            };
         
         private static Func<object, bool> BooleanFilter(string key, bool @bool)
         {

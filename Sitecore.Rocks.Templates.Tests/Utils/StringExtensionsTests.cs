@@ -14,7 +14,7 @@ namespace Sitecore.Rocks.Templates.Tests.Utils
         {
             var expectedResult = "PascalCase";
 
-            Assert.That(stringToFormat.PascalCase(), Is.EqualTo(expectedResult));
+            Assert.That(stringToFormat.ToPascalCase(), Is.EqualTo(expectedResult));
         }
 
         [TestCase("1 Test")]
@@ -23,7 +23,7 @@ namespace Sitecore.Rocks.Templates.Tests.Utils
         [TestCase("10Test")]
         public void TestSanitiseNumbers(string stringToFormat)
         {
-            Assert.That(stringToFormat.PascalCase(), Is.EqualTo("Test"));
+            Assert.That(stringToFormat.ToPascalCase(), Is.EqualTo("Test"));
         }
 
         [TestCase("Test-Case")]
@@ -31,7 +31,7 @@ namespace Sitecore.Rocks.Templates.Tests.Utils
         [TestCase("Test - Case")]
         public void TestSanitiseSpecialCharacters(string stringToFormat)
         {
-            Assert.That(stringToFormat.PascalCase(), Is.EqualTo("TestCase"));
+            Assert.That(stringToFormat.ToPascalCase(), Is.EqualTo("TestCase"));
         }
 
         [TestCase("Camel Case")]
@@ -44,7 +44,7 @@ namespace Sitecore.Rocks.Templates.Tests.Utils
         {
             var expectedResult = "camelCase";
 
-            Assert.That(stringToFormat.CamelCase(), Is.EqualTo(expectedResult));
+            Assert.That(stringToFormat.ToCamelCase(), Is.EqualTo(expectedResult));
         }
 
         [TestCase("\t\n\r", @"\t\n\r")]

@@ -3,16 +3,24 @@ using HandlebarsDotNet;
 
 namespace Sitecore.Rocks.Templates.Engine.Helpers
 {
+    public class HanderbarsHelperException : HandlebarsException
+    {
+        public HanderbarsHelperException(Helper helper, string message)
+            : base($"{{{helper.Name}}} helper {{{message}}}")
+        {
+        }
+    }
+
     public abstract class Helper
     {
         public abstract string Name { get; }
-         
-        protected  T GetArgumentAs<T>(IReadOnlyList<object> arguments, int i)
+        
+        protected T GetArgumentAs<T>(IReadOnlyList<object> arguments, int i)
             where T : class
         {
             if (arguments.Count <= i)
             {
-                ThrowHelperException("has to few arguments");
+                throw new HanderbarsHelperException(this, "has to few arguments");
             }
             return arguments[i] as T;
         }
@@ -23,11 +31,6 @@ namespace Sitecore.Rocks.Templates.Engine.Helpers
             return (arguments.Count > i)
                 ? arguments[i] as T
                 : null;
-        }
-
-        public void ThrowHelperException(string message)
-        {
-            throw new HandlebarsException($"{{{Name}}} helper");
         }
     }
 }

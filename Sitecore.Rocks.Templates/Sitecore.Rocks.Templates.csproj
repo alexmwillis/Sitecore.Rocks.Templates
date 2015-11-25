@@ -80,7 +80,11 @@
   <ItemGroup>
     <Compile Include="Commands\ContentTreeCommand.cs" />
     <Compile Include="Commands\ItemToTemplateCommand.cs" />
+    <Compile Include="Engine\Helpers\BlockHelper.cs" />
     <Compile Include="Engine\Helpers\Helper.cs" />
+    <Compile Include="Engine\Helpers\InlineHelper.cs" />
+    <Compile Include="Engine\Helpers\WithFirstArgumentHelper.cs" />
+    <Compile Include="Engine\Helpers\WithFirstHelper.cs" />
     <Compile Include="Engine\ITemplateEngineService.cs" />
     <Compile Include="Engine\Helpers\WhereHelper.cs" />
     <Compile Include="Engine\TemplateEngineService.cs" />
@@ -129,6 +133,12 @@
     <None Include="Resources\Item Templates\minq.hbs" />
     <None Include="Resources\Item Templates\sinj-subitems.hbs" />
     <None Include="Resources\Item Templates\sinj.hbs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sitecore.Rocks.Templates.FSharp\Sitecore.Rocks.Templates.FSharp.fsproj">
+      <Project>{c9776cc5-93fe-4da8-9647-cb6b4b67092e}</Project>
+      <Name>Sitecore.Rocks.Templates.FSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

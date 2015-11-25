@@ -53,7 +53,6 @@
     <Compile Include="Tags\FirstTagTests.cs" />
     <Compile Include="Tags\HandleBarsTest.cs" />
     <Compile Include="Tags\IfEqualTagTests.cs" />
-    <Compile Include="Tags\NotFirstTagTests.cs" />
     <Compile Include="Tags\PartialTagTests.cs" />
     <Compile Include="Tags\WhereTagTests.cs" />
     <Compile Include="Templates\MinqTemplateTests.cs" />

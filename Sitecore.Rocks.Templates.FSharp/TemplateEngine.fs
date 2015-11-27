@@ -2,29 +2,35 @@
 
     open HandlebarsDotNet
     open System.IO
+    open System
 
-    let compile = fun (source:TextReader) ->
-        
-        Handlebars.Compile(source)
+    type CompileSourceParamater = String of string | TextReader of TextReader
+    type CompileOutput<'o> = StringFunction of Func<'o, string> | TextWriterFunction of Action<TextWriter, 'o>
 
-    let compile = fun (source:string) ->
-        
-        Handlebars.Compile(source)
+    let Compile = fun (source:CompileSourceParamater) ->
+            
+            match source with
+                | CompileSourceParamater.String s -> 
+                    let a = Handlebars.Compile(s)
+                    CompileOutput.StringFunction a
+                | TextReader t -> 
+                    let a = Handlebars.Compile(t)
+                    CompileOutput.TextWriterFunction a
+            
+    let Render = fun data -> (fun (source:CompileSourceParamater) -> Compile source)(data)
 
-    let render = fun data -> (fun source -> compile source)(data)
-
-    let registerTemplate = fun name partialTemplate ->
+    let RegisterTemplate = fun name partialTemplate ->
         
         Handlebars.RegisterTemplate(name, partialTemplate)
         |> ignore
 
-    let registerPartial = fun name partialSource ->
+    let RegisterPartial = fun name partialSource ->
         
         use reader = new StringReader (partialSource)
                     
-        let partialTemplate = compile(reader)
+        let partialTemplate = Handlebars.Compile(reader)
 
-        registerTemplate name partialTemplate
+        RegisterTemplate name partialTemplate
         |> ignore
         
         

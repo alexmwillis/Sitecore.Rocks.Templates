@@ -4,33 +4,46 @@
     open System.IO
     open System
 
-    type CompileSourceParamater = String of string | TextReader of TextReader
-    type CompileOutput<'o> = StringFunction of Func<'o, string> | TextWriterFunction of Action<TextWriter, 'o>
-
-    let Compile = fun (source:CompileSourceParamater) ->
+    let Compile = fun (source:string) ->
             
-            match source with
-                | CompileSourceParamater.String s -> 
-                    let a = Handlebars.Compile(s)
-                    CompileOutput.StringFunction a
-                | TextReader t -> 
-                    let a = Handlebars.Compile(t)
-                    CompileOutput.TextWriterFunction a
+        Handlebars.Compile(source)
             
-    let Render = fun data -> (fun (source:CompileSourceParamater) -> Compile source)(data)
+    let Render = fun data -> (fun (source) -> Compile source)(data)
 
-    let RegisterTemplate = fun name partialTemplate ->
+    let private RegisterTemplate = fun name partialTemplate ->
         
         Handlebars.RegisterTemplate(name, partialTemplate)
         |> ignore
 
     let RegisterPartial = fun name partialSource ->
         
-        use reader = new StringReader (partialSource)
+        use reader = new StringReader(partialSource)
                     
         let partialTemplate = Handlebars.Compile(reader)
 
         RegisterTemplate name partialTemplate
         |> ignore
-        
-        
+
+    let HelperError = fun helperName -> fun message ->
+        HandlebarsException(sprintf "{{%s}} helper %s" helperName message)
+
+    let private WithFirstArgument = fun (arguments:obj[]) helperName withFirst ->
+
+        if arguments.Length = 0
+            then raise (HelperError helperName "has to few arguments")
+        withFirst arguments.[0]    
+
+    let private RegisterHelper = fun name (helperFunction:HandlebarsHelper) ->
+
+        Handlebars.RegisterHelper(name, helperFunction)
+        |> ignore         
+
+    let Init =
+    
+        let helper = new HandlebarsHelper(fun output context arguments ->            
+
+            output.Write(WithFirstArgument arguments "camelCase" (fun a -> a)) |> ignore
+        )
+
+        RegisterHelper "camelCase" helper
+    

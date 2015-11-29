@@ -6,12 +6,10 @@ namespace Sitecore.Rocks.Templates.Engine
 {
     public class TemplateEngineService: ITemplateEngineService
     {
-        private readonly ITemplateEngine _templateEngine;
         private readonly TemplateFileService _fileService;
 
         public TemplateEngineService()
         {
-            _templateEngine = new TemplateEngine();
             _fileService = new TemplateFileService();
 
             RegisterPartials();
@@ -21,14 +19,7 @@ namespace Sitecore.Rocks.Templates.Engine
         {
             var source = _fileService.GetTemplateContent(template);
 
-            var compileOutput =
-                FSharp.TemplateEngine.Render(FSharp.TemplateEngine.CompileSourceParamater.NewString(source));
-
-            if (compileOutput is FSharp.TemplateEngine.CompileOutput<object>.StringFunction)
-            {
-                return (compileOutput as FSharp.TemplateEngine.CompileOutput<object>.StringFunction).Item(data);
-            }
-            throw new Exception();
+            return FSharp.TemplateEngine.Render(source)(data);
         }
 
         private void RegisterPartials()

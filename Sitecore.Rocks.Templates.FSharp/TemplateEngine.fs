@@ -3,6 +3,12 @@
     open HandlebarsDotNet
     open System.IO
     open System
+    open Sitecore.Rocks.Templates.Extensions
+
+    let CastAs<'T when 'T : null> (o:obj) = 
+        match o with
+          | :? 'T as res -> res
+          | _ -> null
 
     let Compile = fun (source:string) ->
             
@@ -12,38 +18,36 @@
 
     let private RegisterTemplate = fun name partialTemplate ->
         
-        Handlebars.RegisterTemplate(name, partialTemplate)
-        |> ignore
+        Handlebars.RegisterTemplate(name, partialTemplate)        
+        Handlebars
 
     let RegisterPartial = fun name partialSource ->
         
-        use reader = new StringReader(partialSource)
-                    
+        use reader = new StringReader(partialSource)                    
         let partialTemplate = Handlebars.Compile(reader)
-
-        RegisterTemplate name partialTemplate
-        |> ignore
-
-    let HelperError = fun helperName -> fun message ->
-        HandlebarsException(sprintf "{{%s}} helper %s" helperName message)
-
-    let private WithFirstArgument = fun (arguments:obj[]) helperName withFirst ->
-
-        if arguments.Length = 0
-            then raise (HelperError helperName "has to few arguments")
-        withFirst arguments.[0]    
-
-    let private RegisterHelper = fun name (helperFunction:HandlebarsHelper) ->
-
-        Handlebars.RegisterHelper(name, helperFunction)
-        |> ignore         
+        RegisterTemplate name partialTemplate  
 
     let Init =
     
-        let helper = new HandlebarsHelper(fun output context arguments ->            
+        let helpers = [
+        
+            new Helper("camelCase", fun helperError -> new HandlebarsHelper(fun output context arguments ->            
 
-            output.Write(WithFirstArgument arguments "camelCase" (fun a -> a)) |> ignore
-        )
+                output.Write(WithFirstArgument arguments helperError (fun a -> CastAs<string>(a).ToCamelCase()))
+            ));
 
-        RegisterHelper "camelCase" helper
+            new Helper("pascalCase", fun helperError -> new HandlebarsHelper(fun output context arguments ->            
+
+                output.Write(WithFirstArgument arguments helperError (fun a -> CastAs<string>(a).ToPascalCase()))
+            ));
+
+            new Helper("literal", fun helperError -> new HandlebarsHelper(fun output context arguments ->            
+
+                output.Write(WithFirstArgument arguments helperError (fun a -> CastAs<string>(a).ToLiteral()))
+            ))]      
+
+        for helper in helpers do
+            Handlebars.RegisterHelper(helper.Name, helper.Function)
+
+    Init
     

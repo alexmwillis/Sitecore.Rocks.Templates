@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Rocks.Templates.Data.Items;
-using Sitecore.Rocks.Templates.Utils;
+using Sitecore.Rocks.Templates.Extensions;
 using Sitecore.VisualStudio.Data;
 
 namespace Sitecore.Rocks.Templates.Data

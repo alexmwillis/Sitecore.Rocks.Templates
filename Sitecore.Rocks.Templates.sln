@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "Cons
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Sitecore.Rocks.Templates.FSharp", "Sitecore.Rocks.Templates.FSharp\Sitecore.Rocks.Templates.FSharp.fsproj", "{C9776CC5-93FE-4DA8-9647-CB6B4B67092E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Rocks.Templates.Extensions", "Sitecore.Rocks.Templates.Extensions\Sitecore.Rocks.Templates.Extensions.csproj", "{0C286793-66D3-4855-AEAC-77C73E5809BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C9776CC5-93FE-4DA8-9647-CB6B4B67092E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9776CC5-93FE-4DA8-9647-CB6B4B67092E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9776CC5-93FE-4DA8-9647-CB6B4B67092E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C286793-66D3-4855-AEAC-77C73E5809BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C286793-66D3-4855-AEAC-77C73E5809BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C286793-66D3-4855-AEAC-77C73E5809BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C286793-66D3-4855-AEAC-77C73E5809BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

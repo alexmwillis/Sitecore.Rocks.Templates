@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using HandlebarsDotNet;
 using Sitecore.Rocks.Templates.Engine.Helpers;
-using Sitecore.Rocks.Templates.Utils;
+using Sitecore.Rocks.Templates.Extensions;
 
 namespace Sitecore.Rocks.Templates.Engine
 {

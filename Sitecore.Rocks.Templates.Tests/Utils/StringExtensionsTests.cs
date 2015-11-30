@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Sitecore.Rocks.Templates.Utils;
+using Sitecore.Rocks.Templates.Extensions;
 
 namespace Sitecore.Rocks.Templates.Tests.Utils
 {

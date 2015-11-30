@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Sitecore.Rocks.Templates.Utils
+namespace Sitecore.Rocks.Templates.Extensions
 {
     public static class StringExtensions
     {

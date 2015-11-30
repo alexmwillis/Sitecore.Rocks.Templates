@@ -54,6 +54,7 @@
     <None Include="Script.fsx" />
     <Compile Include="TemplateEngine.fs" />
     <Content Include="packages.config" />
+    <Compile Include="HelperModule.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Handlebars">
@@ -67,6 +68,13 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sitecore.Rocks.Templates.Extensions\Sitecore.Rocks.Templates.Extensions.csproj">
+      <Name>Sitecore.Rocks.Templates.Extensions</Name>
+      <Project>{0c286793-66d3-4855-aeac-77c73e5809bd}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

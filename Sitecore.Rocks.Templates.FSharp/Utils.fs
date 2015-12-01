@@ -1,7 +1,6 @@
 ﻿module Sitecore.Rocks.Templates.FSharp.TemplateEngine.Utils
 
-    let CastAs<'T when 'T : null> (o:obj) = 
+    let CastAs<'T> (o:obj) = 
         match o with
-          | :? 'T as res -> res
-          | _ -> null
-
+          | :? 'T as res -> res 
+          | _ -> failwith (sprintf "unable to cast objec to type %s" (typeof<'T>.ToString()))

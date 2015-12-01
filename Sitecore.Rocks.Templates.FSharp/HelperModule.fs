@@ -1,41 +1,66 @@
 ﻿module Sitecore.Rocks.Templates.FSharp.TemplateEngine.Helper
 
     open HandlebarsDotNet
-    
-    let HelperError = fun helperName -> fun message ->
+    open System.Text.RegularExpressions
 
-        HandlebarsException(sprintf "{{%s}} helper %s" helperName message)
-
-    type Helper(helperName:string, fn: (string -> HandlebarsException) -> HandlebarsHelper) = 
+    type Helper(helperName:string, fn:HandlebarsHelper) = 
         member this.Name = helperName
-        member this.Function = fn (HelperError helperName)
+        member this.Function = fn
 
-    type BlockHelper(helperName:string, fn: (string -> HandlebarsException) -> HandlebarsBlockHelper) =
+    type BlockHelper(helperName:string, fn:HandlebarsBlockHelper) =
         member this.Name = helperName
-        member this.Function = fn (HelperError helperName)
+        member this.Function = fn
 
     let WithFirstArgument = fun (arguments:obj[]) helperError (withFirst:obj -> string) ->
 
-        if arguments.Length = 0
-            then raise (helperError "has to few arguments")
         withFirst arguments.[0]
 
-    let GetArgumentAs<'T when 'T : null> = fun (arguments:obj[]) index ->
+    let GetArgumentAs<'T> = fun (arguments:obj[]) index ->
         
-        let Utils.CastAs<'T>(arguments.[index])
+        Utils.CastAs<'T>(arguments.[index])
 
-    let WhereHelper = new BlockHelper("where", fun helperError -> new HandlebarsBlockHelper(fun output options context arguments ->            
+    let BooleanFilter = fun filterKey bool o ->
 
-        let list = GetArgumentAs<list<obj>>(arguments, 0)
-        let filterKey = GetArgumentAs<list>(arguments, 1, helperError)
-        let filterValue = GetOptionalArgumentAs<list>(arguments, 2)
-    
+        let filterItem = o.GetType().GetProperty(filterKey).GetValue(o)
+        match filterItem with
+            | :? bool as res -> res = bool
+            | _ -> failwith "filter item is not a boolean"
+
+    let IsNotNullOrWhiteSpaceFilter = fun filterKey o ->
+        
+        let filterItem = o.GetType().GetProperty(filterKey).GetValue(o)
+        match filterItem with
+            | :? string as res -> res.Length > 0
+            | null -> false 
+            | _ -> true
+
+    let RegexFilter = fun filterKey regex o ->
+
+        let (|Match|_|) input =
+            let m = Regex.Match(input, regex)
+            if (m.Success) then Some input else None
+
+        let filterItem = o.GetType().GetProperty(filterKey).GetValue(o)
+        match filterItem with
+            | :? string as res -> 
+            match res with
+                | Match regex -> true
+                | _ -> false
+            | _ -> failwith "filter item is not a string, so can't be matched to a regular expressions"
+
+    let WhereHelper = new BlockHelper("where", new HandlebarsBlockHelper(fun output options context arguments ->            
+
+        let list = GetArgumentAs<list<obj>> arguments  0
+        let filterKey = GetArgumentAs<string> arguments 1
+        let filterValue = GetArgumentAs<string> arguments 2
+            
         let filter = match filterValue with
-                        | "False" -> BooleanFilter(filterKey, false)
-                        | "True" -> BooleanFilter(filterKey, true)
-                        | "" -> IsNotNullOrWhiteSpaceFilter(filterKey)
-                        | _ as str -> RegexFilter(list, new Regex(str))
-                        
+                        | "False" -> BooleanFilter filterKey false
+                        | "True" -> BooleanFilter filterKey true
+                        | "" -> IsNotNullOrWhiteSpaceFilter filterKey
+                        | _ as str -> RegexFilter filterKey str
+              
+        let templateFn = options.Template
 
-        options.Template(output, List.filter(filter))
+        templateFn(output, List.filter(filter))
         ))

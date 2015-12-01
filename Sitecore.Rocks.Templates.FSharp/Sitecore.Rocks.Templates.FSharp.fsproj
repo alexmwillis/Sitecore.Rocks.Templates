@@ -52,9 +52,10 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <None Include="Script.fsx" />
-    <Compile Include="TemplateEngine.fs" />
-    <Content Include="packages.config" />
+	<Compile Include="Utils.fs" />
     <Compile Include="HelperModule.fs" />
+    <Compile Include="TemplateEngine.fs" />
+    <Content Include="packages.config" />    
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Handlebars">

@@ -4,11 +4,8 @@
     open System.IO
     open System
     open Sitecore.Rocks.Templates.Extensions
-
-    let CastAs<'T when 'T : null> (o:obj) = 
-        match o with
-          | :? 'T as res -> res
-          | _ -> null
+    module Helper = Sitecore.Rocks.Templates.FSharp.TemplateEngine.Helper
+    module Utils = Sitecore.Rocks.Templates.FSharp.TemplateEngine.Utils
 
     let Compile = fun (source:string) ->
             
@@ -31,19 +28,19 @@
     
         let helpers = [
         
-            new Helper("camelCase", fun helperError -> new HandlebarsHelper(fun output context arguments ->            
+            new Helper.Helper("camelCase", fun helperError -> new HandlebarsHelper(fun output context arguments ->            
 
-                output.Write(WithFirstArgument arguments helperError (fun a -> CastAs<string>(a).ToCamelCase()))
+                output.Write(Helper.WithFirstArgument arguments helperError (fun a -> Utils.CastAs<string>(a).ToCamelCase()))
             ));
 
-            new Helper("pascalCase", fun helperError -> new HandlebarsHelper(fun output context arguments ->            
+            new Helper.Helper("pascalCase", fun helperError -> new HandlebarsHelper(fun output context arguments ->            
 
-                output.Write(WithFirstArgument arguments helperError (fun a -> CastAs<string>(a).ToPascalCase()))
+                output.Write(Helper.WithFirstArgument arguments helperError (fun a -> Utils.CastAs<string>(a).ToPascalCase()))
             ));
 
-            new Helper("literal", fun helperError -> new HandlebarsHelper(fun output context arguments ->            
+            new Helper.Helper("literal", fun helperError -> new HandlebarsHelper(fun output context arguments ->            
 
-                output.Write(WithFirstArgument arguments helperError (fun a -> CastAs<string>(a).ToLiteral()))
+                output.Write(Helper.WithFirstArgument arguments helperError (fun a -> Utils.CastAs<string>(a).ToLiteral()))
             ))]      
 
         for helper in helpers do

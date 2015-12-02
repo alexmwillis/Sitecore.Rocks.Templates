@@ -1,10 +1,10 @@
-﻿var {{#camelCase Name}}{{#pascalCase TemplateName}}: SinjItemDto = { {{#newline}}
-    id: "{{Id}}",{{#newline}}
-    name: "{{Name}}",{{#newline}}
-    template: "{{TemplatePath}}",{{#newline}}
-    parent: "{{ParentPath}}",{{#newline}}
-    language: "en",{{#newline}}
+﻿var {{camelCase Name}}{{pascalCase TemplateName}}: SinjItemDto = { 
+    id: "{{Id}}",
+    name: "{{Name}}",
+    template: "{{TemplatePath}}",
+    parent: "{{ParentPath}}",
+    language: "en",
     fields: {
-{{#partial 'sinj-fields' Fields}}{{#newline}}
-    }{{#newline}}
+{{> sinj-fields Fields}}
+    }
 }

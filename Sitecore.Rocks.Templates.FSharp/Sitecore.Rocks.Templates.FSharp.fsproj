@@ -52,14 +52,14 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <None Include="Script.fsx" />
-	<Compile Include="Utils.fs" />
-    <Compile Include="HelperModule.fs" />
+    <Compile Include="Utils.fs" />
+    <Compile Include="Helpers.fs" />
     <Compile Include="TemplateEngine.fs" />
-    <Content Include="packages.config" />    
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Handlebars">
-      <HintPath>..\packages\Handlebars.Net.1.4.6\lib\Handlebars.dll</HintPath>
+      <HintPath>..\packages\Handlebars.Net.1.4.8\lib\Handlebars.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
@@ -69,8 +69,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Sitecore.Rocks.Templates.Extensions\Sitecore.Rocks.Templates.Extensions.csproj">
       <Name>Sitecore.Rocks.Templates.Extensions</Name>
       <Project>{0c286793-66d3-4855-aeac-77c73e5809bd}</Project>

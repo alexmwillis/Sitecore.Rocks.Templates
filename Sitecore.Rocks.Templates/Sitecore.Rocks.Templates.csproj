@@ -35,8 +35,8 @@
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Handlebars, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Handlebars.Net.1.4.5\lib\Handlebars.dll</HintPath>
+    <Reference Include="Handlebars, Version=1.0.0.0, Culture=neutral, PublicKeyToken=22225d0bf33cd661, processorArchitecture=MSIL">
+      <HintPath>..\packages\Handlebars.Net.1.4.8\lib\Handlebars.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MoreLinq, Version=1.4.18916.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
@@ -113,11 +113,13 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\Item Templates\minq-old.hbs" />
-    <None Include="Resources\Partials\_sinj-template-fields.hbs" />
-    <None Include="Resources\Partials\_sinj-template-sections.hbs" />
     <None Include="Resources\Partials\_sinj-fields.hbs" />
     <None Include="Resources\Partials\_sinj-item.hbs" />
-    <None Include="Resources\Partials\_minq-field-types.hbs" />
+    <None Include="Resources\todo-partials\_sinj-template-fields.hbs" />
+    <None Include="Resources\todo-partials\_sinj-template-sections.hbs" />
+    <None Include="Resources\todo-partials\_sinj-fields.hbs" />
+    <None Include="Resources\todo-partials\_sinj-item-old.hbs" />
+    <None Include="Resources\todo-partials\_minq-field-types.hbs" />
     <None Include="Resources\Template Templates\minq.hbs" />
     <None Include="Resources\Template Templates\duplicate-sinj.hbs" />
     <None Include="Resources\Template Templates\copy-sinj.hbs" />
@@ -143,6 +145,7 @@
       <Name>Sitecore.Rocks.Templates.FSharp</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y "$(TargetDir)*" "%25localappdata%25\Sitecore\Sitecore.Rocks\Plugins\"

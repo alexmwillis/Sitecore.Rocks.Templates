@@ -1,4 +1,4 @@
-﻿module Sitecore.Rocks.Templates.FSharp.TemplateEngine.Utils
+﻿module Sitecore.Rocks.Templates.FSharp.Utils
 
     let CastAs<'T> (o:obj) = 
         match o with

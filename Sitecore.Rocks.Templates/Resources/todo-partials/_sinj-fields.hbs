@@ -1,0 +1,12 @@
+﻿{{#with this}}
+{{#where 'Value'}}
+{{#where 'IsStandardField' 'false'}}
+{{#where 'Name' '^((?!__Owner)(?!__Created)(?!__Updated)(?!__Revision)(?!__Ribbon)(?!__Lock).)*$'}}
+{{#each this}}
+{{#notFirst ','}}{{#newline}}
+        "{{Name}}": "{{Value}}"
+{{/each}}
+{{/where}}
+{{/where}}
+{{/where}}
+{{/with}}

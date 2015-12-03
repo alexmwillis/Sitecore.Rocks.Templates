@@ -3,14 +3,24 @@
     open HandlebarsDotNet
     open Sitecore.Rocks.Templates.Extensions
     open System.Text.RegularExpressions
+      
+    let TryHelperFunction helperName helperFunction =
 
-    type Helper(helperName:string, fn:HandlebarsHelper) = 
-        member this.Name = helperName
-        member this.Function = fn
+        fun output context arguments ->
+            try
+                helperFunction output context arguments
+            with
+                | _ -> failwith (sprintf "unable to parse {{%s}}" helperName)        
 
-    type BlockHelper(helperName:string, fn:HandlebarsBlockHelper) =
+    type Helper(helperName, helperFunction) = 
         member this.Name = helperName
-        member this.Function = fn
+        member this.HandlebarsHelper = 
+            new HandlebarsHelper(TryHelperFunction helperName helperFunction)
+
+    type BlockHelper(helperName, helperFunction) =
+        member this.Name = helperName
+        member this.HandlebarsBlockHelper =
+            new HandlebarsBlockHelper(TryHelperFunction helperName helperFunction)
 
     let WithFirstArgument (arguments:obj[]) (withFirst:obj -> string) =
 
@@ -76,33 +86,33 @@
                     | _ -> false
                 | _ -> failwith "filter item is not a string, so can't be matched to a regular expressions"
 
-        Filter filterFunction filterKey o 
+        Filter filterFunction filterKey o        
 
     let Init () =
     
         let helpers = [
-        
-            new Helper("camelCase", new HandlebarsHelper(fun output context arguments ->            
+            
+            new Helper("camelCase", fun output context arguments ->            
 
-                output.Write(WithFirstArgument arguments (fun a -> Utils.CastAs<string>(a).ToCamelCase()))
-            ));
+                output.Write(WithFirstArgument arguments (fun a -> Utils.CastAs<string>(a).ToCamelCase()))                
+            );
 
-            new Helper("pascalCase", new HandlebarsHelper(fun output context arguments ->            
+            new Helper("pascalCase", fun output context arguments ->            
 
                 output.Write(WithFirstArgument arguments (fun a -> Utils.CastAs<string>(a).ToPascalCase()))
-            ));
+            );
 
-            new Helper("literal", new HandlebarsHelper(fun output context arguments ->            
+            new Helper("literal", fun output context arguments ->            
 
                 output.Write(WithFirstArgument arguments (fun a -> Utils.CastAs<string>(a).ToLiteral()))
-            ))
+            )
         ]
 
         for helper in helpers do
-            Handlebars.RegisterHelper(helper.Name, helper.Function)
+            Handlebars.RegisterHelper(helper.Name, helper.HandlebarsHelper)
 
         let blockHelpers = [            
-            new BlockHelper("where", new HandlebarsBlockHelper(fun output options context arguments ->            
+            new BlockHelper("where", fun output options context arguments ->            
 
                 let seq = GetArgumentAs<seq<obj>> arguments  0
                 let filterKey = GetArgumentAs<string> arguments 1
@@ -115,9 +125,9 @@
                                 | Some str -> RegexFilter filterKey str
               
                 options.Template.Invoke(output, Seq.filter filter seq)
-            ))
+            )
                         
-            new BlockHelper("equal", new HandlebarsBlockHelper(fun output options context arguments ->            
+            new BlockHelper("equal", fun output options context arguments ->            
 
                 let obj1 = GetArgumentAs<obj> arguments 0
                 let obj2 = GetArgumentAs<obj> arguments 1
@@ -126,17 +136,17 @@
                     options.Template.Invoke(output, arguments)
                 else
                     options.Inverse.Invoke(output, arguments)
-            ));
+            );
 
-            new BlockHelper("withFirst", new HandlebarsBlockHelper(fun output options context arguments ->            
+            new BlockHelper("withFirst", fun output options context arguments ->            
 
                 let seq = GetArgumentAs<seq<obj>> arguments 0
 
                 options.Template.Invoke(output, Seq.head seq)
-            ))
+            )
         ]
 
         for blockHelper in blockHelpers do
-            Handlebars.RegisterHelper(blockHelper.Name, blockHelper.Function)
+            Handlebars.RegisterHelper(blockHelper.Name, blockHelper.HandlebarsBlockHelper)
     
     Init()

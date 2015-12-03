@@ -1,12 +1,19 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 
 namespace Sitecore.Rocks.Templates.Tests.Helpers
 {
     [TestFixture]
     public class WithFirstTests
     {
+        [SetUp]
+        public void SetUp()
+        {
+            FSharp.Helpers.Init();
+        }
+
         [Test]
-        public void GivenWhereTagFiltersEmptyValuesThenReturnsOnlyNonEmpty()
+        public void GivenCollectionFirstItemIsOutput()
         {
             var collection = new[]
             {
@@ -21,6 +28,24 @@ namespace Sitecore.Rocks.Templates.Tests.Helpers
 
             Assert.That(FSharp.TemplateEngine.Compile(template)(collection),
                 Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        public void GivenEmptyCollectionNothingIsOutput()
+        {
+            var template = "{{#withFirst this}}N:{{Key}} V:{{Value}}{{/withFirst}}";
+
+            Assert.That(FSharp.TemplateEngine.Compile(template)(Enumerable.Empty<object>()),
+                Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public void GivenNullSourceNothingIsOutput()
+        {
+            var template = "{{#withFirst this}}N:{{Key}} V:{{Value}}{{/withFirst}}";
+
+            Assert.That(FSharp.TemplateEngine.Compile(template)(null),
+                Is.EqualTo(string.Empty));
         }
     }
 }

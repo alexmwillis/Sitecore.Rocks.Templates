@@ -78,21 +78,6 @@
 
         Filter filterFunction filterKey o 
 
-    let WhereHelper = new BlockHelper("where", new HandlebarsBlockHelper(fun output options context arguments ->            
-
-            let list = GetArgumentAs<seq<obj>> arguments  0
-            let filterKey = GetArgumentAs<string> arguments 1
-            let filterValue = GetArgumentAsOptional<string> arguments 2
-            
-            let filter = match filterValue with
-                            | Some "false" -> BooleanFilter filterKey false
-                            | Some "true" -> BooleanFilter filterKey true
-                            | None -> IsNotNullOrWhiteSpaceFilter filterKey
-                            | Some str -> RegexFilter filterKey str
-              
-            options.Template.Invoke(output, Seq.filter filter list)
-        ))
-
     let Init () =
     
         let helpers = [
@@ -110,13 +95,45 @@
             new Helper("literal", new HandlebarsHelper(fun output context arguments ->            
 
                 output.Write(WithFirstArgument arguments (fun a -> Utils.CastAs<string>(a).ToLiteral()))
-            ))]      
+            ))
+        ]
 
         for helper in helpers do
             Handlebars.RegisterHelper(helper.Name, helper.Function)
 
         let blockHelpers = [            
-            WhereHelper
+            new BlockHelper("where", new HandlebarsBlockHelper(fun output options context arguments ->            
+
+                let seq = GetArgumentAs<seq<obj>> arguments  0
+                let filterKey = GetArgumentAs<string> arguments 1
+                let filterValue = GetArgumentAsOptional<string> arguments 2
+            
+                let filter = match filterValue with
+                                | Some "false" -> BooleanFilter filterKey false
+                                | Some "true" -> BooleanFilter filterKey true
+                                | None -> IsNotNullOrWhiteSpaceFilter filterKey
+                                | Some str -> RegexFilter filterKey str
+              
+                options.Template.Invoke(output, Seq.filter filter seq)
+            ))
+                        
+            new BlockHelper("equal", new HandlebarsBlockHelper(fun output options context arguments ->            
+
+                let obj1 = GetArgumentAs<obj> arguments 0
+                let obj2 = GetArgumentAs<obj> arguments 1
+
+                if obj1 = obj2 then 
+                    options.Template.Invoke(output, arguments)
+                else
+                    options.Inverse.Invoke(output, arguments)
+            ));
+
+            new BlockHelper("withFirst", new HandlebarsBlockHelper(fun output options context arguments ->            
+
+                let seq = GetArgumentAs<seq<obj>> arguments 0
+
+                options.Template.Invoke(output, Seq.head seq)
+            ))
         ]
 
         for blockHelper in blockHelpers do

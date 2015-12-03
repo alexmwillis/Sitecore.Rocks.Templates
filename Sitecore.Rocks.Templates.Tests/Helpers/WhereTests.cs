@@ -5,9 +5,14 @@ using NUnit.Framework;
 namespace Sitecore.Rocks.Templates.Tests.Helpers
 {
     [TestFixture]
-    public class WhereTagTests
+    public class WhereTests
     {
-        
+        [SetUp]
+        public void SetUp()
+        {
+            FSharp.Helpers.Init();
+        }
+
         [Test]
         public void GivenInvalidWhereTagThenReturnsEmpty()
         {
@@ -20,7 +25,6 @@ namespace Sitecore.Rocks.Templates.Tests.Helpers
 
             var template = "{{#where this 'Invalid'}}{{#each this}}N:{{Key}} V:{{Value}} {{/each}}{{/where}}";
 
-            FSharp.Helpers.Init();
             Assert.That(FSharp.TemplateEngine.Compile(template)(collection),
                 Is.EqualTo(expectedResult));
         }
@@ -40,7 +44,6 @@ namespace Sitecore.Rocks.Templates.Tests.Helpers
 
             var template = "{{#where this 'Value'}}{{#each this}}N:{{Key}} V:{{Value}} {{/each}}{{/where}}";
 
-            FSharp.Helpers.Init();
             Assert.That(FSharp.TemplateEngine.Compile(template)(collection),
                 Is.EqualTo(expectedResult));
         }
@@ -59,7 +62,6 @@ namespace Sitecore.Rocks.Templates.Tests.Helpers
 
             var template = "{{#where this 'Key' '2$'}}{{#each this}}N:{{Key}} V:{{Value}} {{/each}}{{/where}}";
 
-            FSharp.Helpers.Init();
             Assert.That(FSharp.TemplateEngine.Compile(template)(collection),
                 Is.EqualTo(expectedResult));
         }
@@ -79,7 +81,6 @@ namespace Sitecore.Rocks.Templates.Tests.Helpers
 
             var template = "{{#where this 'Value' 'true'}}{{#each this}}N:{{Key}} {{/each}}{{/where}}";
 
-            FSharp.Helpers.Init();
             Assert.That(FSharp.TemplateEngine.Compile(template)(collection),
                 Is.EqualTo(expectedResult));
         }
@@ -99,7 +100,6 @@ namespace Sitecore.Rocks.Templates.Tests.Helpers
 
             var template = "{{#where this 'Value' 'false'}}{{#each this}}N:{{Key}} {{/each}}{{/where}}";
 
-            FSharp.Helpers.Init();
             Assert.That(FSharp.TemplateEngine.Compile(template)(collection),
                 Is.EqualTo(expectedResult));
         }
@@ -116,8 +116,7 @@ namespace Sitecore.Rocks.Templates.Tests.Helpers
             var expectedResult = "N:Key 1 V:Value 1 N:Key 2 V:Value 2 ";
 
             var template = "{{#where this 'Value'}}{{#each this}}N:{{Key}} V:{{Value}} {{/each}}{{/where}}";
-
-            FSharp.Helpers.Init();
+            
             Assert.That(FSharp.TemplateEngine.Compile(template)(collection),
                 Is.EqualTo(expectedResult));
 

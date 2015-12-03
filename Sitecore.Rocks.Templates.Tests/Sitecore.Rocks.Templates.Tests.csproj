@@ -50,11 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\FirstTagTests.cs" />
     <Compile Include="Helpers\HandleBarsTest.cs" />
-    <Compile Include="Helpers\IfEqualTagTests.cs" />
-    <Compile Include="Helpers\PartialTagTests.cs" />
-    <Compile Include="Helpers\WhereTagTests.cs" />
+    <Compile Include="Helpers\EqualTests.cs" />
+    <Compile Include="Helpers\WhereTests.cs" />
+    <Compile Include="Helpers\WithFirstTests.cs" />
     <Compile Include="Templates\MinqTemplateTests.cs" />
     <Compile Include="Utils\StringExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

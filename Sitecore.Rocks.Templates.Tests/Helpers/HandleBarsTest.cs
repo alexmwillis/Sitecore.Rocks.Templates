@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Sitecore.Rocks.Templates.Engine;
 
-namespace Sitecore.Rocks.Templates.Tests.Tags
+namespace Sitecore.Rocks.Templates.Tests.Helpers
 {
     [TestFixture]
     public class HandleBarsTest

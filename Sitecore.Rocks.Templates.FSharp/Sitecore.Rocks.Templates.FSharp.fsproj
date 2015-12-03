@@ -55,13 +55,8 @@
     <Compile Include="Utils.fs" />
     <Compile Include="Helpers.fs" />
     <Compile Include="TemplateEngine.fs" />
-    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Handlebars">
-      <HintPath>..\packages\Handlebars.Net.1.4.8\lib\Handlebars.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
@@ -69,6 +64,11 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+    <ProjectReference Include="..\Handlebars.Net\source\Handlebars\Handlebars.csproj">
+      <Name>Handlebars</Name>
+      <Project>{a09cff95-b671-48fe-96a8-d3cbdc110b75}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\Sitecore.Rocks.Templates.Extensions\Sitecore.Rocks.Templates.Extensions.csproj">
       <Name>Sitecore.Rocks.Templates.Extensions</Name>
       <Project>{0c286793-66d3-4855-aeac-77c73e5809bd}</Project>

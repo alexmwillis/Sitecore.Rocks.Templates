@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Rocks.Templates", "Sitecore.Rocks.Templates\Sitecore.Rocks.Templates.csproj", "{D60D5C62-4637-4E03-8239-4AC4698DF8A2}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Sitecore.Rocks.Templates.FSharp", "Sitecore.Rocks.Templates.FSharp\Sitecore.Rocks.Templates.FSharp.fsproj", "{C9776CC5-93FE-4DA8-9647-CB6B4B67092E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Rocks.Templates.Extensions", "Sitecore.Rocks.Templates.Extensions\Sitecore.Rocks.Templates.Extensions.csproj", "{0C286793-66D3-4855-AEAC-77C73E5809BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handlebars", "Handlebars.Net\source\Handlebars\Handlebars.csproj", "{A09CFF95-B671-48FE-96A8-D3CBDC110B75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{0C286793-66D3-4855-AEAC-77C73E5809BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C286793-66D3-4855-AEAC-77C73E5809BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C286793-66D3-4855-AEAC-77C73E5809BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A09CFF95-B671-48FE-96A8-D3CBDC110B75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A09CFF95-B671-48FE-96A8-D3CBDC110B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A09CFF95-B671-48FE-96A8-D3CBDC110B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A09CFF95-B671-48FE-96A8-D3CBDC110B75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

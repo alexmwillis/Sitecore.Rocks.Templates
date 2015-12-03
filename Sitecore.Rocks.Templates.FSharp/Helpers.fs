@@ -1,5 +1,4 @@
-﻿
-module Sitecore.Rocks.Templates.FSharp.Helpers
+﻿module Sitecore.Rocks.Templates.FSharp.Helpers
 
     open HandlebarsDotNet
     open Sitecore.Rocks.Templates.Extensions
@@ -19,22 +18,49 @@ module Sitecore.Rocks.Templates.FSharp.Helpers
 
     let GetArgumentAs<'T> = fun (arguments:obj[]) index ->
         
-        Utils.CastAs<'T>(arguments.[index])
+        if index < arguments.Length then 
+            Utils.CastAs<'T>(arguments.[index])
+        else failwith (sprintf "only %i arguments, but %i required" arguments.Length (index + 1))
+
+    let GetArgumentAsOptional<'T> = fun (arguments:obj[]) index ->
+        
+        if index < arguments.Length then 
+            Some (Utils.CastAs<'T>(arguments.[index]))
+        else 
+            None        
+
+    let GetPropertyValue propertyName o =
+
+        let filterProperty = o.GetType().GetProperty(propertyName)
+        if filterProperty <> null then 
+            Some (filterProperty.GetValue(o))
+        else
+            None
+
+    let Filter filterFunction filterKey o =
+        match GetPropertyValue filterKey o with
+            | Some x -> filterFunction x
+            | None -> false
 
     let BooleanFilter = fun filterKey bool o ->
 
-        let filterItem = o.GetType().GetProperty(filterKey).GetValue(o)
-        match filterItem with
-            | :? bool as res -> res = bool
-            | _ -> failwith "filter item is not a boolean"
+        let filterFunction (x:obj) =
+            match x with            
+                | :? bool as res -> res = bool
+                | _ -> failwith "filter item is not a boolean"
+
+        Filter filterFunction filterKey o 
 
     let IsNotNullOrWhiteSpaceFilter = fun filterKey o ->
+                 
+        let filterFunction (x:obj) =
+            match x with
+                | :? string as str -> str.Length > 0
+                | null -> false 
+                | _ -> true
+
+        Filter filterFunction filterKey o 
         
-        let filterItem = o.GetType().GetProperty(filterKey).GetValue(o)
-        match filterItem with
-            | :? string as res -> res.Length > 0
-            | null -> false 
-            | _ -> true
 
     let RegexFilter = fun filterKey regex o ->
 
@@ -42,27 +68,29 @@ module Sitecore.Rocks.Templates.FSharp.Helpers
             let m = Regex.Match(input, regex)
             if (m.Success) then Some input else None
 
-        let filterItem = o.GetType().GetProperty(filterKey).GetValue(o)
-        match filterItem with
-            | :? string as res -> 
-            match res with
-                | Match regex -> true
-                | _ -> false
-            | _ -> failwith "filter item is not a string, so can't be matched to a regular expressions"
+        let filterFunction (x:obj) =
+            match x with
+                | :? string as res -> 
+                match res with
+                    | Match regex -> true
+                    | _ -> false
+                | _ -> failwith "filter item is not a string, so can't be matched to a regular expressions"
+
+        Filter filterFunction filterKey o 
 
     let WhereHelper = new BlockHelper("where", new HandlebarsBlockHelper(fun output options context arguments ->            
 
-            let list = GetArgumentAs<list<obj>> arguments  0
+            let list = GetArgumentAs<seq<obj>> arguments  0
             let filterKey = GetArgumentAs<string> arguments 1
-            let filterValue = GetArgumentAs<string> arguments 2
+            let filterValue = GetArgumentAsOptional<string> arguments 2
             
             let filter = match filterValue with
-                            | "False" -> BooleanFilter filterKey false
-                            | "True" -> BooleanFilter filterKey true
-                            | "" -> IsNotNullOrWhiteSpaceFilter filterKey
-                            | _ as str -> RegexFilter filterKey str
+                            | Some "false" -> BooleanFilter filterKey false
+                            | Some "true" -> BooleanFilter filterKey true
+                            | None -> IsNotNullOrWhiteSpaceFilter filterKey
+                            | Some str -> RegexFilter filterKey str
               
-            options.Template.Invoke(output, List.filter(filter))
+            options.Template.Invoke(output, Seq.filter filter list)
         ))
 
     let Init () =

@@ -35,10 +35,6 @@
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Handlebars, Version=1.0.0.0, Culture=neutral, PublicKeyToken=22225d0bf33cd661, processorArchitecture=MSIL">
-      <HintPath>..\packages\Handlebars.Net.1.4.8\lib\Handlebars.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="MoreLinq, Version=1.4.18916.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
       <HintPath>..\packages\morelinq.1.4.0\lib\net35\MoreLinq.dll</HintPath>
       <Private>True</Private>
@@ -136,6 +132,10 @@
     <None Include="Resources\Item Templates\sinj.hbs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Handlebars.Net\source\Handlebars\Handlebars.csproj">
+      <Project>{A09CFF95-B671-48FE-96A8-D3CBDC110B75}</Project>
+      <Name>Handlebars</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sitecore.Rocks.Templates.Extensions\Sitecore.Rocks.Templates.Extensions.csproj">
       <Project>{0C286793-66D3-4855-AEAC-77C73E5809BD}</Project>
       <Name>Sitecore.Rocks.Templates.Extensions</Name>

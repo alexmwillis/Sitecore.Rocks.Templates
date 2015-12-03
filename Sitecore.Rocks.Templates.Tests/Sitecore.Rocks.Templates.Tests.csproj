@@ -32,10 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Handlebars, Version=1.0.0.0, Culture=neutral, PublicKeyToken=22225d0bf33cd661, processorArchitecture=MSIL">
-      <HintPath>..\packages\Handlebars.Net.1.4.8\lib\Handlebars.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Moq, Version=4.2.1507.118, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
@@ -54,11 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tags\FirstTagTests.cs" />
-    <Compile Include="Tags\HandleBarsTest.cs" />
-    <Compile Include="Tags\IfEqualTagTests.cs" />
-    <Compile Include="Tags\PartialTagTests.cs" />
-    <Compile Include="Tags\WhereTagTests.cs" />
+    <Compile Include="Helpers\FirstTagTests.cs" />
+    <Compile Include="Helpers\HandleBarsTest.cs" />
+    <Compile Include="Helpers\IfEqualTagTests.cs" />
+    <Compile Include="Helpers\PartialTagTests.cs" />
+    <Compile Include="Helpers\WhereTagTests.cs" />
     <Compile Include="Templates\MinqTemplateTests.cs" />
     <Compile Include="Utils\StringExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,6 +70,10 @@
     <ProjectReference Include="..\Sitecore.Rocks.Templates.Extensions\Sitecore.Rocks.Templates.Extensions.csproj">
       <Project>{0C286793-66D3-4855-AEAC-77C73E5809BD}</Project>
       <Name>Sitecore.Rocks.Templates.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sitecore.Rocks.Templates.FSharp\Sitecore.Rocks.Templates.FSharp.fsproj">
+      <Project>{c9776cc5-93fe-4da8-9647-cb6b4b67092e}</Project>
+      <Name>Sitecore.Rocks.Templates.FSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sitecore.Rocks.Templates\Sitecore.Rocks.Templates.csproj">
       <Project>{d60d5c62-4637-4e03-8239-4ac4698df8a2}</Project>

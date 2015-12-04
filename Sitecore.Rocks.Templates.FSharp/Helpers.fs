@@ -2,40 +2,54 @@
 
     open HandlebarsDotNet
     open Sitecore.Rocks.Templates.Extensions
-    open System.Text.RegularExpressions
-      
-    let TryHelperFunction helperName helperFunction =
+    open System.Text.RegularExpressions      
+    open System
 
-        fun output context arguments ->
+    type HelperException(helperName, innerException:Exception) =
+        inherit Exception(sprintf "unable to parse helper {{%s}}" helperName, innerException)
+
+    let TryHelperFunction helperName (helperFunction:HandlebarsHelper) =
+
+        new HandlebarsHelper(fun output context arguments ->
             try
-                helperFunction output context arguments
+                helperFunction.Invoke(output, context, arguments)
             with
-                | _ -> failwith (sprintf "unable to parse {{%s}}" helperName)        
+                | ex -> raise (new HelperException(helperName, ex))
+        )   
+
+    let TryBlockHelperFunction helperName (helperFunction:HandlebarsBlockHelper) =
+
+        new HandlebarsBlockHelper(fun output options context arguments ->
+            try
+                helperFunction.Invoke(output, options, context, arguments)
+            with
+                | ex -> raise (new HelperException(helperName, ex))
+        )
 
     type Helper(helperName, helperFunction) = 
         member this.Name = helperName
         member this.HandlebarsHelper = 
-            new HandlebarsHelper(TryHelperFunction helperName helperFunction)
+            TryHelperFunction helperName helperFunction
 
     type BlockHelper(helperName, helperFunction) =
         member this.Name = helperName
         member this.HandlebarsBlockHelper =
-            new HandlebarsBlockHelper(TryHelperFunction helperName helperFunction)
+            TryBlockHelperFunction helperName helperFunction
 
     let WithFirstArgument (arguments:obj[]) (withFirst:obj -> string) =
 
         withFirst arguments.[0]
 
     let GetArgumentAs<'T> = fun (arguments:obj[]) index ->
-        
+                
         if index < arguments.Length then 
-            Utils.CastAs<'T>(arguments.[index])
+            Utils.CastAsOptional<'T>(arguments.[index])
         else failwith (sprintf "only %i arguments, but %i required" arguments.Length (index + 1))
 
     let GetArgumentAsOptional<'T> = fun (arguments:obj[]) index ->
         
         if index < arguments.Length then 
-            Some (Utils.CastAs<'T>(arguments.[index]))
+            Utils.CastAsOptional<'T>(arguments.[index])
         else 
             None        
 
@@ -86,25 +100,24 @@
                     | _ -> false
                 | _ -> failwith "filter item is not a string, so can't be matched to a regular expressions"
 
-        Filter filterFunction filterKey o        
+        Filter filterFunction filterKey o                   
 
-    let Init () =
-    
+    let Init() =    
         let helpers = [
             
             new Helper("camelCase", fun output context arguments ->            
-
-                output.Write(WithFirstArgument arguments (fun a -> Utils.CastAs<string>(a).ToCamelCase()))                
+                            
+                output.Write(WithFirstArgument arguments (fun a -> Utils.CastAs<string>(a, String.Empty).ToCamelCase()))                
             );
 
             new Helper("pascalCase", fun output context arguments ->            
 
-                output.Write(WithFirstArgument arguments (fun a -> Utils.CastAs<string>(a).ToPascalCase()))
+                output.Write(WithFirstArgument arguments (fun a -> Utils.CastAs<string>(a, String.Empty).ToPascalCase()))
             );
 
             new Helper("literal", fun output context arguments ->            
 
-                output.Write(WithFirstArgument arguments (fun a -> Utils.CastAs<string>(a).ToLiteral()))
+                output.Write(WithFirstArgument arguments (fun a -> Utils.CastAs<string>(a, String.Empty).ToLiteral()))
             )
         ]
 
@@ -114,11 +127,15 @@
         let blockHelpers = [            
             new BlockHelper("where", fun output options context arguments ->            
 
-                let seq = GetArgumentAs<seq<obj>> arguments  0
+                let seq = 
+                    match GetArgumentAs<seq<obj>> arguments  0 with
+                        | Some x -> x
+                        | None -> Seq.empty
+
                 let filterKey = GetArgumentAs<string> arguments 1
                 let filterValue = GetArgumentAsOptional<string> arguments 2
             
-                let filter = match filterValue with
+                let filter = match (filterKey, filterValue) with
                                 | Some "false" -> BooleanFilter filterKey false
                                 | Some "true" -> BooleanFilter filterKey true
                                 | None -> IsNotNullOrWhiteSpaceFilter filterKey
@@ -139,14 +156,19 @@
             );
 
             new BlockHelper("withFirst", fun output options context arguments ->            
-
+               
                 let seq = GetArgumentAs<seq<obj>> arguments 0
-
-                options.Template.Invoke(output, Seq.head seq)
+                
+                match seq with                    
+                    | Some x -> 
+                    match Seq.tryHead x with
+                        | Some x -> options.Template.Invoke(output, x)
+                        | None -> ()
+                    | None -> ()
             )
         ]
 
         for blockHelper in blockHelpers do
             Handlebars.RegisterHelper(blockHelper.Name, blockHelper.HandlebarsBlockHelper)
+
     
-    Init()

@@ -3,6 +3,7 @@ using System.IO;
 using NUnit.Framework;
 using Sitecore.Rocks.Templates.Data.Items;
 using Sitecore.Rocks.Templates.Engine;
+using Sitecore.Rocks.Templates.IO;
 
 namespace Sitecore.Rocks.Templates.Tests.Templates
 {
@@ -38,7 +39,10 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
         [Test]
         public void TestModelIsCorrectlyFormatted()
         {
-            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//Minq.hbs");
+            var template = new TemplateMetaData
+            {
+                FullName = "..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//minq.hbs"
+            };
 
             var expectedResult = $@"
 [SitecoreTemplate(""{_itemWithFields.TemplateId}"")]
@@ -52,16 +56,19 @@ public class ItemWithFieldsModel : SitecoreItemModel
 
 }}";
 
-            Assert.That(new TemplateEngine().Render(template, _itemWithFields),
+            Assert.That(new TemplateEngineService().Render(template, _itemWithFields),
                 Is.EqualTo(expectedResult));
         }
 
         [Test]
         public void TestNothingIsReturnedWhenTheItemHasNoFields()
         {
-            var template = File.ReadAllText("..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//Minq.hbs");
-            
-            Assert.That(new TemplateEngine().Render(template, _itemWithNoFields),
+            var template = new TemplateMetaData
+            {
+                FullName = "..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//minq.hbs"
+            };
+
+            Assert.That(new TemplateEngineService().Render(template, _itemWithNoFields),
                 Is.EqualTo(string.Empty));
         }
     }

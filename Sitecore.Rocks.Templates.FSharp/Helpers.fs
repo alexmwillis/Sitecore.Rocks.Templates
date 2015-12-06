@@ -40,16 +40,16 @@
 
         withFirst arguments.[0]
 
-    let GetArgumentAs<'T> = fun (arguments:obj[]) index ->
+    let GetArgumentAs<'T when 'T: null> = fun (arguments:obj[]) index ->
                 
         if index < arguments.Length then 
-            Utils.CastAsOptional<'T>(arguments.[index])
+            Utils.CastAs<'T> arguments.[index]
         else failwith (sprintf "only %i arguments, but %i required" arguments.Length (index + 1))
 
-    let GetArgumentAsOptional<'T> = fun (arguments:obj[]) index ->
+    let GetArgumentAsOptional<'T when 'T: null> = fun (arguments:obj[]) index ->
         
         if index < arguments.Length then 
-            Utils.CastAsOptional<'T>(arguments.[index])
+            (Utils.CastAs<'T> arguments.[index])
         else 
             None        
 
@@ -107,17 +107,20 @@
             
             new Helper("camelCase", fun output context arguments ->            
                             
-                output.Write(WithFirstArgument arguments (fun a -> Utils.CastAs<string>(a, String.Empty).ToCamelCase()))                
+                output.Write(WithFirstArgument arguments (fun a -> 
+                    (defaultArg (Utils.CastAs<string> a) String.Empty).ToCamelCase()))                
             );
 
             new Helper("pascalCase", fun output context arguments ->            
 
-                output.Write(WithFirstArgument arguments (fun a -> Utils.CastAs<string>(a, String.Empty).ToPascalCase()))
+                output.Write(WithFirstArgument arguments (fun a -> 
+                    (defaultArg (Utils.CastAs<string> a) String.Empty).ToPascalCase()))                
             );
 
             new Helper("literal", fun output context arguments ->            
 
-                output.Write(WithFirstArgument arguments (fun a -> Utils.CastAs<string>(a, String.Empty).ToLiteral()))
+                output.Write(WithFirstArgument arguments (fun a -> 
+                    (defaultArg (Utils.CastAs<string> a) String.Empty).ToLiteral()))                
             )
         ]
 
@@ -127,21 +130,21 @@
         let blockHelpers = [            
             new BlockHelper("where", fun output options context arguments ->            
 
-                let seq = 
-                    match GetArgumentAs<seq<obj>> arguments  0 with
-                        | Some x -> x
-                        | None -> Seq.empty
+                let seq = GetArgumentAs<seq<obj>> arguments  0
 
                 let filterKey = GetArgumentAs<string> arguments 1
                 let filterValue = GetArgumentAsOptional<string> arguments 2
             
                 let filter = match (filterKey, filterValue) with
-                                | Some "false" -> BooleanFilter filterKey false
-                                | Some "true" -> BooleanFilter filterKey true
-                                | None -> IsNotNullOrWhiteSpaceFilter filterKey
-                                | Some str -> RegexFilter filterKey str
+                                | (Some key, Some "false") -> BooleanFilter key false
+                                | (Some key, Some "true") -> BooleanFilter key true
+                                | (Some key, None) -> IsNotNullOrWhiteSpaceFilter key
+                                | (Some key, Some value) -> RegexFilter key value
+                                | _ -> fun a -> false
               
-                options.Template.Invoke(output, Seq.filter filter seq)
+                match seq with
+                    | Some s -> options.Template.Invoke(output, Seq.filter filter s)
+                    | None -> ()
             )
                         
             new BlockHelper("equal", fun output options context arguments ->            
@@ -159,12 +162,10 @@
                
                 let seq = GetArgumentAs<seq<obj>> arguments 0
                 
-                match seq with                    
-                    | Some x -> 
-                    match Seq.tryHead x with
+                if seq.IsSome then
+                    match Seq.tryHead seq.Value with
                         | Some x -> options.Template.Invoke(output, x)
                         | None -> ()
-                    | None -> ()
             )
         ]
 

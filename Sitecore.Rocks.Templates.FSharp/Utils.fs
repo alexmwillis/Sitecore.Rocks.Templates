@@ -2,12 +2,7 @@
 
     open HandlebarsDotNet
 
-    let CastAsOptional<'T> (o:obj) = 
+    let CastAs<'T> (o:obj) = 
         match o with
           | :? 'T as res -> Some res 
-          | _ -> None
-
-    let CastAs<'T> (o:obj) (def:'T) = 
-        match o with
-          | :? 'T as res -> res 
-          | _ -> def
+          | _ ->  None

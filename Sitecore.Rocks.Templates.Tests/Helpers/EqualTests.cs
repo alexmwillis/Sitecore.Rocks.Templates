@@ -5,11 +5,11 @@ namespace Sitecore.Rocks.Templates.Tests.Helpers
     [TestFixture]
     public class EqualTests
     {
-        //[SetUp]
-        //public void SetUp()
-        //{
-        //    FSharp.Helpers.Init();
-        //}
+        [SetUp]
+        public void SetUp()
+        {
+            FSharp.Helpers.Init();
+        }
 
         [Test]
         public void TestOutputIfStringsMatch()

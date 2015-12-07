@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseTemplateTest.cs" />
     <Compile Include="Helpers\HandleBarsTest.cs" />
     <Compile Include="Helpers\EqualTests.cs" />
     <Compile Include="Helpers\WhereTests.cs" />

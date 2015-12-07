@@ -8,7 +8,7 @@ using Sitecore.Rocks.Templates.IO;
 namespace Sitecore.Rocks.Templates.Tests.Templates
 {
     [TestFixture]
-    public class MinqTests
+    public class MinqTests: BaseTemplateTest
     {
         private SitecoreItem _itemWithFields;
         private SitecoreItem _itemWithNoFields;
@@ -56,8 +56,9 @@ public class ItemWithFieldsModel : SitecoreItemModel
 
 }}";
 
-            Assert.That(new TemplateEngineService().Render(template, _itemWithFields),
-                Is.EqualTo(expectedResult));
+            AssertThatTemplatesMatch(
+                new TemplateEngineService().Render(template, _itemWithFields),
+                expectedResult);
         }
 
         [Test]
@@ -67,9 +68,10 @@ public class ItemWithFieldsModel : SitecoreItemModel
             {
                 FullName = "..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//minq.hbs"
             };
-
-            Assert.That(new TemplateEngineService().Render(template, _itemWithNoFields),
-                Is.EqualTo(string.Empty));
+            
+            AssertThatTemplatesMatch(
+                new TemplateEngineService().Render(template, _itemWithNoFields),
+                string.Empty);
         }
     }
 }

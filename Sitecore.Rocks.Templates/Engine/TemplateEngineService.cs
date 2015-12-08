@@ -9,6 +9,8 @@ namespace Sitecore.Rocks.Templates.Engine
 
         public TemplateEngineService()
         {
+            FSharp.Helpers.Init(); // todo find better way to initialise this
+
             _fileService = new TemplateFileService();
 
             RegisterPartials();
@@ -17,8 +19,7 @@ namespace Sitecore.Rocks.Templates.Engine
         public string Render(TemplateMetaData template, object data)
         {
             var source = _fileService.GetTemplateContent(template);
-
-            FSharp.Helpers.Init(); // todo find better way to initialise this
+            
             return FSharp.TemplateEngine.Compile(source)(data);
         }
 

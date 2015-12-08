@@ -1,0 +1,33 @@
+﻿var {{#camelCase Name}}Template: SinjTemplateDto = { {{#newline}}
+    id: "{{Id}}",{{#newline}}
+    name: "{{Name}}",{{#newline}}
+    parent: "{{ParentPath}}",{{#newline}}
+    fields: { {{#newline}}
+        icon: "{{Icon}}",{{#newline}}
+        "Base template": "{{BaseTemplates}}"{{#newline}}
+    },{{#newline}}
+    sections: [
+{{#partial 'sinj-template-sections' Sections}}
+{{#newline}}
+    ]
+{{#if StandardValues}},{{#newline}}
+{{#with StandardValues}}
+    standardValues: { {{#newline}}
+        id: "{{Id}}",{{#newline}}
+        languages: ["en"],{{#newline}}
+        fields: { 
+{{#where 'Value'}}
+{{#where 'Name' '^((?!__Owner)(?!__Created)(?!__Updated)(?!__Revision)(?!__Ribbon)(?!__Lock).)*$'}}
+{{#each Fields}}
+{{#notFirst ','}}{{#newline}}
+            "{{Name}}": "{{Value}}"
+{{/each}}
+{{/where}}
+{{/where}}{{#newline}}
+        }{{#newline}}
+    }{{#newline}}
+{{/with}}
+{{#else}}
+{{#newline}}
+{{/if}}
+}

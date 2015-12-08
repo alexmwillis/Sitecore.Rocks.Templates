@@ -9,7 +9,7 @@ using Sitecore.Rocks.Templates.IO;
 namespace Sitecore.Rocks.Templates.Tests.Templates
 {
     [TestFixture]
-    public class SinjTests
+    public class SinjTests: BaseTemplateTest
     {
         private SitecoreItem _itemWithFields;
         private SitecoreItem _itemWithNoFields;
@@ -17,6 +17,8 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
         [SetUp]
         public void SetUp()
         {
+            FSharp.Helpers.Init();
+
             var itemId = Guid.NewGuid().ToString();
 
             _itemWithFields = new SitecoreItem
@@ -63,8 +65,9 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
                 FullName = "..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//Sinj.hbs"
             };
 
-            Assert.That(new TemplateEngineService().Render(template, _itemWithNoFields),
-                Is.EqualTo(expectedResult));
+            AssertThatTemplatesMatch(
+                new TemplateEngineService().Render(template, _itemWithNoFields),
+                expectedResult);
         }
 
         [Test]
@@ -86,8 +89,9 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
                 FullName = "..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//Sinj.hbs"
             };
 
-            Assert.That(new TemplateEngineService().Render(template, _itemWithFields),
-                Is.EqualTo(expectedResult));
+            AssertThatTemplatesMatch(
+                new TemplateEngineService().Render(template, _itemWithFields),
+                expectedResult);
         }
     }
 }

@@ -8,7 +8,7 @@ using Sitecore.Rocks.Templates.IO;
 namespace Sitecore.Rocks.Templates.Tests.Templates
 {
     [TestFixture]
-    public class SinjTemplateTests
+    public class SinjTemplateTests: BaseTemplateTest
     {
         private SitecoreTemplate _template;
         private SitecoreTemplate _templateNoSectionsNorStandardValues;
@@ -91,8 +91,9 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
 
             var expectedResult = File.ReadAllText("..//..//Resources//sinj-template.js");
 
-            Assert.That(new TemplateEngineService().Render(template, _template),
-                Is.EqualTo(expectedResult));
+            AssertThatTemplatesMatch(
+                new TemplateEngineService().Render(template, _template),
+                expectedResult);
         }
 
         [Test]
@@ -105,8 +106,9 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
 
             var expectedResult = File.ReadAllText("..//..//Resources//sinj-template-no-sections.js");
 
-            Assert.That(new TemplateEngineService().Render(template, _templateNoSectionsNorStandardValues),
-                Is.EqualTo(expectedResult));
+            AssertThatTemplatesMatch(
+                new TemplateEngineService().Render(template, _templateNoSectionsNorStandardValues),
+                expectedResult);
         }
     }
 }

@@ -7,10 +7,10 @@
         "Base template": ""
     },
     sections: [
-        { 
+        {
             name: "Section 1",
             id: "{0A4ED1F8-BC5C-4761-B712-F5D109BF84D1}",
-            sectionFields: { 
+            sectionFields: {
                 icon: "icon"
             },
             fields: [
@@ -30,10 +30,10 @@
                 }
             ]
         },
-        { 
+        {
             name: "Section 2",
             id: "{25004c23-1056-420b-a97d-7e95241dfcf5}",
-            sectionFields: { 
+            sectionFields: {
                 icon: ""
             },
             fields: [

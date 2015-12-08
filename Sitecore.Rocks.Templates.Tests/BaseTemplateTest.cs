@@ -24,7 +24,12 @@ namespace Sitecore.Rocks.Templates.Tests
         {
             if (!Directory.Exists(fileName))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+                var dir = Path.GetDirectoryName(fileName);
+                if (dir == null)
+                {
+                    throw new ArgumentException("Invalid file name");
+                }
+                Directory.CreateDirectory(dir);
             }
             using (var writer = File.CreateText(fileName))
             {

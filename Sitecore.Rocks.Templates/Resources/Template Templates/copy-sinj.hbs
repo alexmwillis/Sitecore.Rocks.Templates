@@ -1,33 +1,19 @@
-﻿var {{#camelCase Name}}Template: SinjTemplateDto = { {{#newline}}
-    id: "{{Id}}",{{#newline}}
-    name: "{{Name}}",{{#newline}}
-    parent: "{{ParentPath}}",{{#newline}}
-    fields: { {{#newline}}
-        icon: "{{Icon}}",{{#newline}}
-        "Base template": "{{BaseTemplates}}"{{#newline}}
-    },{{#newline}}
+﻿var {{camelCase Name}}Template: SinjTemplateDto = { 
+    id: "{{Id}}",
+    name: "{{Name}}",
+    parent: "{{ParentPath}}",
+    fields: { 
+        icon: "{{Icon}}",
+        "Base template": "{{BaseTemplates}}"
+    },
     sections: [
-{{#partial 'sinj-template-sections' Sections}}
-{{#newline}}
-    ]
-{{#if StandardValues}},{{#newline}}
-{{#with StandardValues}}
-    standardValues: { {{#newline}}
-        id: "{{Id}}",{{#newline}}
-        languages: ["en"],{{#newline}}
+{{> sinj-template-sections Sections}}    ]{{#if StandardValues}},{{#with StandardValues}}
+    standardValues: { 
+        id: "{{Id}}",
+        languages: ["en"],
         fields: { 
-{{#where 'Value'}}
-{{#where 'Name' '^((?!__Owner)(?!__Created)(?!__Updated)(?!__Revision)(?!__Ribbon)(?!__Lock).)*$'}}
-{{#each Fields}}
-{{#notFirst ','}}{{#newline}}
-            "{{Name}}": "{{Value}}"
-{{/each}}
-{{/where}}
-{{/where}}{{#newline}}
-        }{{#newline}}
-    }{{#newline}}
-{{/with}}
-{{#else}}
-{{#newline}}
-{{/if}}
+{{#where Fields 'Value'}}{{#where this 'Name' '^((?!__Owner)(?!__Created)(?!__Updated)(?!__Revision)(?!__Ribbon)(?!__Lock).)*$'}}{{#each this}}            "{{Name}}": "{{Value}}"{{#unless @last}},
+{{/unless}}{{/each}}{{/where}}{{/where}}
+        }
+    }{{/with}}{{else}}{{/if}}
 }

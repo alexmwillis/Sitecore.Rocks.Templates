@@ -1,0 +1,10 @@
+﻿{{#each this}}        {
+            name: "{{Name}}",
+            id: "{{Id}}",
+            sectionFields: {
+                icon: "{{Icon}}"
+            },
+            fields: [
+{{> sinj-template-fields Fields}}            ]
+        }{{#unless @last}},{{/unless}}
+{{/each}}

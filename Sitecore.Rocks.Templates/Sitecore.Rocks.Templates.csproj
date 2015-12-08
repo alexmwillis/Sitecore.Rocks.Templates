@@ -111,6 +111,9 @@
     <None Include="Resources\Item Templates\minq-old.hbs" />
     <None Include="Resources\Partials\_sinj-fields.hbs" />
     <None Include="Resources\Partials\_sinj-item.hbs" />
+    <None Include="Resources\Partials\_sinj-template-fields.hbs" />
+    <None Include="Resources\Partials\_sinj-template-sections.hbs" />
+    <None Include="Resources\todo-partials\copy-sinj.hbs" />
     <None Include="Resources\todo-partials\_sinj-template-fields.hbs" />
     <None Include="Resources\todo-partials\_sinj-template-sections.hbs" />
     <None Include="Resources\todo-partials\_sinj-fields.hbs" />

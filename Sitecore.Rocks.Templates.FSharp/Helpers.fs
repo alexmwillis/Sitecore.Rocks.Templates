@@ -119,7 +119,7 @@
 
             new Helper("literal", fun output context arguments ->            
 
-                output.Write(WithFirstArgument arguments (fun a -> 
+                output.WriteSafeString(WithFirstArgument arguments (fun a -> 
                     (defaultArg (Utils.CastAs<string> a) String.Empty).ToLiteral()))                
             )
         ]

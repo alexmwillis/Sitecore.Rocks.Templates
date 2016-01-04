@@ -53,6 +53,7 @@
     <Compile Include="BaseTemplateTest.cs" />
     <Compile Include="Helpers\HandleBarsTest.cs" />
     <Compile Include="Helpers\EqualTests.cs" />
+    <Compile Include="Helpers\LiteralTests.cs" />
     <Compile Include="Helpers\WhereTests.cs" />
     <Compile Include="Helpers\WithFirstTests.cs" />
     <Compile Include="Templates\MinqTemplateTests.cs" />

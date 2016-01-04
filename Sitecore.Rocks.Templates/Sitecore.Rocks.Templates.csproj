@@ -94,7 +94,6 @@
     <Compile Include="Data\Items\SitecoreTemplate.cs" />
     <Compile Include="Data\SitecoreItemBuilder.cs" />
     <Compile Include="Data\Items\SitecoreTemplateField.cs" />
-    <Compile Include="Engine\ITemplateEngine.cs" />
     <Compile Include="IO\TemplateMetaData.cs" />
     <Compile Include="UI\SelectTemplateViewModel.cs" />
     <Compile Include="UI\SelectTemplateWindow.xaml.cs">
@@ -102,7 +101,6 @@
     </Compile>
     <Compile Include="UI\TemplateViewModel.cs" />
     <Compile Include="Commands\ContentTreeContextExtensions.cs" />
-    <Compile Include="Engine\TemplateEngine.cs" />
     <Compile Include="Commands\SingleTreeItemCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

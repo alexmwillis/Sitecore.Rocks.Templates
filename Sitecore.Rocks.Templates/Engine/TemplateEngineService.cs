@@ -1,4 +1,5 @@
 ﻿using MoreLinq;
+using Sitecore.Rocks.Templates.FSharp;
 using Sitecore.Rocks.Templates.IO;
 
 namespace Sitecore.Rocks.Templates.Engine
@@ -20,13 +21,13 @@ namespace Sitecore.Rocks.Templates.Engine
         {
             var source = _fileService.GetTemplateContent(template);
             
-            return FSharp.TemplateEngine.Compile(source)(data);
+            return TemplateEngine.Compile(source)(data);
         }
 
         private void RegisterPartials()
         {
             var partials = _fileService.GetPartials();
-            partials.ForEach(p => FSharp.TemplateEngine.RegisterPartial(p.Name, _fileService.GetTemplateContent(p)));
+            partials.ForEach(p => TemplateEngine.RegisterPartial(p.Name, _fileService.GetTemplateContent(p)));
         }
     }
 }

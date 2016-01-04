@@ -3,6 +3,6 @@
                     name: "{{Name}}",
                     type: "{{Type}}",
                     sortorder: {{SortOrder}},
-{{#where Fields 'Value'}}{{#where this 'Name' '^((?!__Owner)(?!__Created)(?!__Updated)(?!__Revision)(?!__Ribbon)(?!__Lock).)*$'}}{{#each this}}                    "{{Name}}": "{{Value}}"{{#unless @last}},{{/unless}}
+{{#where Fields 'Value'}}{{#where this 'Name' '^((?!__Owner)(?!__Created)(?!__Updated)(?!__Revision)(?!__Ribbon)(?!__Lock).)*$'}}{{#each this}}                    "{{Name}}": "{{literal Value}}"{{#unless @last}},{{/unless}}
 {{/each}}{{/where}}{{/where}}                }{{#unless @last}},{{/unless}}
 {{/each}}

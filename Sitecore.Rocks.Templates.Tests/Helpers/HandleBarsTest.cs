@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Sitecore.Rocks.Templates.Engine;
+using Sitecore.Rocks.Templates.FSharp;
 
 namespace Sitecore.Rocks.Templates.Tests.Helpers
 {
@@ -29,7 +29,8 @@ namespace Sitecore.Rocks.Templates.Tests.Helpers
                 body = "This is my first post!"
             };
 
-            var result = new TemplateEngine().Render(source, data);
+            FSharp.Helpers.Init();
+            var result = TemplateEngine.Compile(source)(data);
 
             Assert.That(result, Is.EqualTo(expected));
         }

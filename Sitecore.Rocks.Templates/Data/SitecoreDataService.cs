@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
+using Sitecore.Rocks.Templates.Extensions;
 using Sitecore.VisualStudio.Data;
+using Version = Sitecore.VisualStudio.Data.Version;
 
 namespace Sitecore.Rocks.Templates.Data
 {
@@ -27,24 +29,81 @@ namespace Sitecore.Rocks.Templates.Data
                 .Reverse()
                 .Aggregate("", (s, a) => s + "/" + a.Name);
         }
-
+        
         public IEnumerable<ItemHeader> GetChildHeaders(ItemUri uri)
         {
-            AutoResetEvent stopWaitHandle = new AutoResetEvent(false);
+            try
+            {
+                return Task.Run(() => GetChildHeadersAsync(uri)).WaitResult();
+            }
+            catch (TimeoutException)
+            {
+                throw new TimeoutException("unabled to retrieve children");
+            }
+            
+        }
 
-            IEnumerable<ItemHeader> result = null;
+        private Task<IEnumerable<ItemHeader>> GetChildHeadersAsync(ItemUri uri)
+        {
+            var t = new TaskCompletionSource<IEnumerable<ItemHeader>>();
 
             GetItemsCompleted<ItemHeader> getChildrenCallback = (headers) =>
             {
-                result = headers;
-                stopWaitHandle.Set();
+                t.TrySetResult(headers);
             };
 
-            new Task(() => _dataService.GetChildrenAsync(uri, getChildrenCallback)).Start();
+            _dataService.GetChildrenAsync(uri, getChildrenCallback);
 
-            stopWaitHandle.WaitOne();
+            return t.Task;
+        }
 
-            return result;
+        private bool IsMediaItem(ItemUri itemUri)
+        {
+            return IsMediaItem(GetItem(itemUri));
+        }
+
+        public bool IsMediaItem(Item item)
+        {
+            var field = item.Fields.FirstOrDefault(f => f.Name == "Blob");
+            return field != null && HasBlobStream(field);
+        }
+
+        public Task<string> GetMediaAsBase64Async(ItemUri itemUri)
+        {
+            var t = new TaskCompletionSource<string>();
+
+            if (!IsMediaItem(itemUri))
+            {
+                t.SetResult(null);
+                return t.Task;
+            }
+            
+            ExecuteCompleted executeCompleted = ((response, result) =>
+            {
+                if (!DataService.HandleExecute(response, result))
+                {
+                    t.SetException(new DataServiceException("failed to download media"));
+                }
+                t.SetResult(response);
+            });
+
+            _dataService.ExecuteAsync(
+                "Media.DownloadAttachment",
+                executeCompleted,
+                itemUri.DatabaseName.Name,
+                itemUri.ItemId.ToString());
+
+            return t.Task;
+        }
+
+        public string GetMediaAsBase64(ItemUri itemUri)
+        {
+            return Task.Run(() => GetMediaAsBase64Async(itemUri)).WaitResult();
+        }
+
+        private bool HasBlobStream(Field field)
+        {
+            return field.IsBlob && field.HasValue && GuidExtensions.CanParse(field.Value);
         }
     }
 }

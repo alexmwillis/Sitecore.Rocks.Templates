@@ -1,6 +1,6 @@
-﻿using MoreLinq;
-using Sitecore.Rocks.Templates.FSharp;
+﻿using Sitecore.Rocks.Templates.FSharp;
 using Sitecore.Rocks.Templates.IO;
+using Sitecore.VisualStudio.Extensions.IEnumerableExtensions;
 
 namespace Sitecore.Rocks.Templates.Engine
 {

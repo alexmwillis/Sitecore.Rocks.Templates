@@ -21,5 +21,9 @@ namespace Sitecore.Rocks.Templates.Data.Items
         public IEnumerable<SitecoreField> Fields { get; set; }
 
         public IEnumerable<SitecoreItem> Children { get; set; }
+
+        public bool IsMediaItem { get; set; }
+
+        public string Media64 { get; set; }
     }
 }

@@ -35,10 +35,6 @@
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MoreLinq, Version=1.4.18916.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
-      <HintPath>..\packages\morelinq.1.4.0\lib\net35\MoreLinq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Sitecore.Rocks">
@@ -84,6 +80,9 @@
     <Compile Include="Engine\ITemplateEngineService.cs" />
     <Compile Include="Engine\Helpers\WhereHelper.cs" />
     <Compile Include="Engine\TemplateEngineService.cs" />
+    <Compile Include="Extensions\GuidExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="IO\TemplateFileService.cs" />
     <Compile Include="IO\ITemplateFileService.cs" />
     <Compile Include="Data\SitecoreDataService.cs" />
@@ -136,10 +135,6 @@
     <ProjectReference Include="..\Handlebars.Net\source\Handlebars\Handlebars.csproj">
       <Project>{A09CFF95-B671-48FE-96A8-D3CBDC110B75}</Project>
       <Name>Handlebars</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sitecore.Rocks.Templates.Extensions\Sitecore.Rocks.Templates.Extensions.csproj">
-      <Project>{0C286793-66D3-4855-AEAC-77C73E5809BD}</Project>
-      <Name>Sitecore.Rocks.Templates.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sitecore.Rocks.Templates.FSharp\Sitecore.Rocks.Templates.FSharp.fsproj">
       <Project>{c9776cc5-93fe-4da8-9647-cb6b4b67092e}</Project>

@@ -43,7 +43,7 @@ namespace Sitecore.Rocks.Templates.Data
             
         }
 
-        private Task<IEnumerable<ItemHeader>> GetChildHeadersAsync(ItemUri uri)
+        private async Task<IEnumerable<ItemHeader>> GetChildHeadersAsync(ItemUri uri)
         {
             var t = new TaskCompletionSource<IEnumerable<ItemHeader>>();
 
@@ -54,7 +54,7 @@ namespace Sitecore.Rocks.Templates.Data
 
             _dataService.GetChildrenAsync(uri, getChildrenCallback);
 
-            return t.Task;
+            return await t.Task;
         }
 
         private bool IsMediaItem(ItemUri itemUri)
@@ -68,14 +68,14 @@ namespace Sitecore.Rocks.Templates.Data
             return field != null && HasBlobStream(field);
         }
 
-        public Task<string> GetMediaAsBase64Async(ItemUri itemUri)
+        public async Task<string> GetMediaAsBase64Async(ItemUri itemUri)
         {
             var t = new TaskCompletionSource<string>();
 
             if (!IsMediaItem(itemUri))
             {
                 t.SetResult(null);
-                return t.Task;
+                return await t.Task;
             }
             
             ExecuteCompleted executeCompleted = ((response, result) =>
@@ -93,7 +93,7 @@ namespace Sitecore.Rocks.Templates.Data
                 itemUri.DatabaseName.Name,
                 itemUri.ItemId.ToString());
 
-            return t.Task;
+            return await t.Task;
         }
 
         public string GetMediaAsBase64(ItemUri itemUri)

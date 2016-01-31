@@ -10,6 +10,7 @@ namespace Sitecore.Rocks.Templates.IO
         private static readonly string LocalAppData =
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
+        //TODO does this need to be local app data?
         private static readonly string ItemTemplateLocation =
             $"{LocalAppData}\\Sitecore\\Sitecore.Rocks\\Plugins\\Item Templates";
 

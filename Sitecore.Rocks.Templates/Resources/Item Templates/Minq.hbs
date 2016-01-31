@@ -2,10 +2,18 @@
 [SitecoreTemplate("{{TemplateId}}")]
 public class {{pascalCase Name}}Model : SitecoreItemModel
 {
-{{#where Fields 'Name' '^(?!__).+'}}{{#each this}}    [SitecoreField("{{Name}}")]
-    public string {{pascalCase Name}} { get; set; }{{#unless @last}}
+{{#where Fields 'Name' '^(?!__).+'}}
+{{#each this}}
+    [SitecoreField("{{Name}}")]
+    public string {{pascalCase Name}} { get; set; }
+{{#unless @last}}
+
 {{/unless}}
-{{/each}}{{/where}}{{#withFirst Children}}    [SitecoreChildren]
+{{/each}}
+{{/where}}
+{{#withFirst Children}}
+    [SitecoreChildren]
     public ICollection<{{pascalCase TemplateName}}Model> {{pascalCase TemplateName}}s { get; set; }
 {{/withFirst}}
-}{{/if}}
+}
+{{/if}}

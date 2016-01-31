@@ -44,8 +44,7 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
                 FullName = "..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//minq.hbs"
             };
 
-            var expectedResult = $@"
-[SitecoreTemplate(""{_itemWithFields.TemplateId}"")]
+            var expectedResult = $@"[SitecoreTemplate(""{_itemWithFields.TemplateId}"")]
 public class ItemWithFieldsModel : SitecoreItemModel
 {{
     [SitecoreField(""Field Name 1"")]
@@ -53,8 +52,8 @@ public class ItemWithFieldsModel : SitecoreItemModel
 
     [SitecoreField(""Field Name 2"")]
     public string FieldName2 {{ get; set; }}
-
-}}";
+}}
+";
 
             AssertThatTemplatesMatch(
                 new TemplateEngineService().Render(template, _itemWithFields),

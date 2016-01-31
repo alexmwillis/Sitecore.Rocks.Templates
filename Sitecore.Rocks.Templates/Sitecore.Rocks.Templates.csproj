@@ -39,7 +39,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="Sitecore.Rocks">
       <HintPath>..\packages\Sitecore.Rocks.Client.1.5.1.8\lib\net40\Sitecore.Rocks.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.Rocks.Plugins">
       <HintPath>..\packages\Sitecore.Rocks.Client.1.5.1.8\lib\net40\Sitecore.Rocks.Plugins.dll</HintPath>

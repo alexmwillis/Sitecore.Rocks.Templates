@@ -16,4 +16,13 @@ public class {{pascalCase Name}}Model : SitecoreItemModel
     public ICollection<{{pascalCase TemplateName}}Model> {{pascalCase TemplateName}}s { get; set; }
 {{/withFirst}}
 }
+{{else}}
+{{#withFirst Children}}
+[SitecoreTemplate("{{../TemplateId}}")]
+public class {{pascalCase ../Name}}Model : SitecoreItemModel
+{
+    [SitecoreChildren]
+    public ICollection<{{pascalCase TemplateName}}Model> {{pascalCase TemplateName}}s { get; set; }
+}
+{{/withFirst}}
 {{/if}}

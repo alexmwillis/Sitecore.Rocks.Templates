@@ -12,6 +12,7 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
     {
         private SitecoreItem _itemWithFields;
         private SitecoreItem _itemWithNoFields;
+        private SitecoreItem _itemWithChildren;
 
         [SetUp]
         public void SetUp()
@@ -33,6 +34,23 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
             {
                 Name = "Item With No Fields",
                 TemplateId = templateId
+            };
+
+            _itemWithChildren = new SitecoreItem
+            {
+                Name = "Item With Children",
+                TemplateId = templateId,
+                Children = new[]
+                {
+                    new SitecoreItem
+                    {
+                        TemplateName = "first child"
+                    },
+                    new SitecoreItem
+                    {
+                        TemplateName = "second child"
+                    }
+                }
             };
         }
 
@@ -71,6 +89,27 @@ public class ItemWithFieldsModel : SitecoreItemModel
             AssertThatTemplatesMatch(
                 new TemplateEngineService().Render(template, _itemWithNoFields),
                 string.Empty);
+        }
+
+        [Test]
+        public void TestModelWithChildrenIsCorrectlyFormatted()
+        {
+            var template = new TemplateMetaData
+            {
+                FullName = "..//..//..//Sitecore.Rocks.Templates//Resources//Item Templates//minq.hbs"
+            };
+
+            var expectedResult = $@"[SitecoreTemplate(""{_itemWithChildren.TemplateId}"")]
+public class ItemWithChildrenModel : SitecoreItemModel
+{{
+    [SitecoreChildren]
+    public ICollection<FirstChildModel> FirstChilds {{ get; set; }}
+}}
+";
+
+            AssertThatTemplatesMatch(
+                new TemplateEngineService().Render(template, _itemWithChildren),
+                expectedResult);
         }
     }
 }

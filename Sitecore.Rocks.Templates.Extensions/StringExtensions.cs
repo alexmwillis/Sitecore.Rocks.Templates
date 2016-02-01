@@ -10,21 +10,25 @@ namespace Sitecore.Rocks.Templates.Extensions
     {
         public static string ToPascalCase(this string str)
         {
-            return ToTitleCase(str)
-                .RemoveSpecialCharacters()
-                .WithFirst(RemoveNumber)
-                .StringJoin("");
+            return string.IsNullOrWhiteSpace(str)
+                ? string.Empty
+                : ToTitleCase(str)
+                    .RemoveSpecialCharacters()
+                    .WithFirst(RemoveNumber)
+                    .StringJoin("");
         }
 
         public static string ToCamelCase(this string str)
         {
-            return ToTitleCase(str)
-                .RemoveSpecialCharacters()
-                .WithFirst(RemoveNumber)
-                .WithFirst(LowerCase)
-                .StringJoin("");
+            return string.IsNullOrWhiteSpace(str)
+                ? string.Empty
+                : ToTitleCase(str)
+                    .RemoveSpecialCharacters()
+                    .WithFirst(RemoveNumber)
+                    .WithFirst(LowerCase)
+                    .StringJoin("");
         }
-        
+
         public static string ToLiteral(this string str)
         {
             return Regex.Replace(str, @"[\a\b\f\n\r\t\v\\'\\""]", Match);

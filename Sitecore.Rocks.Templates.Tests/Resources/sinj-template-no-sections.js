@@ -6,6 +6,5 @@
         icon: "icon",
         "Base template": ""
     },
-    sections: [
-    ]
+    sections: []
 }

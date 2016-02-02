@@ -1,14 +1,18 @@
 ﻿{{#if Sections}}
-[SitecoreTemplate("{{Id}}")]{{#newline}}
-public class {{#pascalCase Name}}Model : SitecoreItemModel{{#newline}}
+[SitecoreTemplate("{{Id}}")]
+public class {{pascalCase Name}}Model : SitecoreItemModel
 {
 {{#each Sections}}
 {{#each Fields}}
-{{#newline}}
-    [SitecoreField("{{Name}}")]{{#newline}}
-    public {{#partial 'minq-field-types' this}} {{#pascalCase Name}} { get; set; }{{#newline}}
+    [SitecoreField("{{Name}}")]
+    public {{> minq-field-types this}} {{pascalCase Name}} { get; set; }
+{{#unless @last}}
+
+{{/unless}}
 {{/each}}
+{{#unless @last}}
+
+{{/unless}}
 {{/each}}
-todo add children
 }
 {{/if}}

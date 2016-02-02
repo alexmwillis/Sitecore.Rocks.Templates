@@ -115,9 +115,8 @@
     <None Include="Resources\todo-partials\_sinj-template-sections.hbs" />
     <None Include="Resources\todo-partials\_sinj-fields.hbs" />
     <None Include="Resources\todo-partials\_sinj-item-old.hbs" />
-    <None Include="Resources\todo-partials\_minq-field-types.hbs" />
+    <None Include="Resources\Partials\_minq-field-types.hbs" />
     <None Include="Resources\Template Templates\minq.hbs" />
-    <None Include="Resources\Template Templates\duplicate-sinj.hbs" />
     <None Include="Resources\Template Templates\copy-sinj.hbs" />
   </ItemGroup>
   <ItemGroup>

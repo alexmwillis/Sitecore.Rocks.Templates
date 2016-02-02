@@ -36,8 +36,7 @@
             sectionFields: {
                 icon: ""
             },
-            fields: [
-            ]
+            fields: []
         }
     ],
     standardValues: { 

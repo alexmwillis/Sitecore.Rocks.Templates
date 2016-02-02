@@ -153,9 +153,9 @@
                 let obj2 = GetArgumentAs<obj> arguments 1
 
                 if obj1 = obj2 then 
-                    options.Template.Invoke(output, arguments)
+                    options.Template.Invoke(output, context)
                 else
-                    options.Inverse.Invoke(output, arguments)
+                    options.Inverse.Invoke(output, context)
             );
 
             new BlockHelper("withFirst", fun output options context arguments ->            

@@ -7,19 +7,6 @@ namespace Sitecore.Rocks.Templates.IO
 {
     public class TemplateFileService : ITemplateFileService
     {
-        private static readonly string LocalAppData =
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-
-        //TODO does this need to be local app data?
-        private static readonly string ItemTemplateLocation =
-            $"{LocalAppData}\\Sitecore\\Sitecore.Rocks\\Plugins\\Item Templates";
-
-        private static readonly string TemplateTemplateLocation =
-            $"{LocalAppData}\\Sitecore\\Sitecore.Rocks\\Plugins\\Template Templates";
-
-        private static readonly string PartialTemplateLocation =
-            $"{LocalAppData}\\Sitecore\\Sitecore.Rocks\\Plugins\\Partials";
-
         public IEnumerable<TemplateMetaData> GetTemplates(TemplateType type)
         {
             return GetFileInfos(type).Select(GetTemplateMetaData);
@@ -43,19 +30,19 @@ namespace Sitecore.Rocks.Templates.IO
                 Name = Path.GetFileNameWithoutExtension(fileInfo.Name).TrimStart('_')
             };
         }
-
+        
         private static IEnumerable<FileInfo> GetFileInfos(TemplateType type)
         {
             switch (type)
             {
                 case TemplateType.SitecoreItem:
-                    return TryGetFiles(ItemTemplateLocation);
+                    return TryGetFiles(".\\Resources\\Item Templates");
 
                 case TemplateType.SitecoreTemplate:
-                    return TryGetFiles(TemplateTemplateLocation);
+                    return TryGetFiles(".\\Resources\\Template Templates");
 
                 case TemplateType.Partial:
-                    return TryGetFiles(PartialTemplateLocation);
+                    return TryGetFiles(".\\Resources\\Partials");
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

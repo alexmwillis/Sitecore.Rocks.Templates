@@ -105,19 +105,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\Item Templates\minq-old.hbs" />
-    <None Include="Resources\Partials\_sinj-fields.hbs" />
-    <None Include="Resources\Partials\_sinj-item.hbs" />
-    <None Include="Resources\Partials\_sinj-template-fields.hbs" />
-    <None Include="Resources\Partials\_sinj-template-sections.hbs" />
-    <None Include="Resources\todo-partials\copy-sinj.hbs" />
-    <None Include="Resources\todo-partials\_sinj-template-fields.hbs" />
-    <None Include="Resources\todo-partials\_sinj-template-sections.hbs" />
-    <None Include="Resources\todo-partials\_sinj-fields.hbs" />
-    <None Include="Resources\todo-partials\_sinj-item-old.hbs" />
-    <None Include="Resources\Partials\_minq-field-types.hbs" />
-    <None Include="Resources\Template Templates\minq.hbs" />
-    <None Include="Resources\Template Templates\copy-sinj.hbs" />
+    <Content Include="Resources\Partials\_sinj-fields.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Partials\_sinj-item.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Partials\_sinj-template-fields.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Partials\_sinj-template-sections.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Partials\_minq-field-types.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Template Templates\minq.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Template Templates\copy-sinj.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Page Include="UI\SelectTemplateWindow.xaml">
@@ -126,9 +134,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Item Templates\minq.hbs" />
-    <None Include="Resources\Item Templates\sinj-subitems.hbs" />
-    <None Include="Resources\Item Templates\sinj.hbs" />
+    <Content Include="Resources\Item Templates\minq.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Item Templates\sinj-subitems.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Item Templates\sinj.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Handlebars.Net\source\Handlebars\Handlebars.csproj">
@@ -143,8 +157,9 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetDir)*" "%25localappdata%25\Sitecore\Sitecore.Rocks\Plugins\"
-xcopy /Y /s "$(ProjectDir)Resources\*" "%25localappdata%25\Sitecore\Sitecore.Rocks\Plugins\"</PostBuildEvent>
+    <PostBuildEvent>echo .xml &gt; ../exclude.txt &amp;&amp; echo .pdb &gt;&gt; ../exclude.txt
+xcopy /Y /S /exclude:..\exclude.txt "$(TargetDir)*" "%25localappdata%25\Sitecore\Sitecore.Rocks\Plugins\"
+rm ../exclude.txt</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

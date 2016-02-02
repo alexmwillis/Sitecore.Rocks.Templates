@@ -6,16 +6,28 @@ namespace Sitecore.Rocks.Templates.Tests
 {
     public class BaseTemplateTest
     {
+        protected void ClearFailedTestLogs()
+        {
+            foreach (var file in new DirectoryInfo("./failed-tests").GetFiles())
+            {
+                file.Delete();
+            }
+        }
+
         protected void AssertThatTemplatesMatch(string actual, string expected)
         {
+            var fileNameActual = $"./failed-tests/{GetType().Name.ToLower()}-actual.txt";
+            var fileNameExpected = $"./failed-tests/{GetType().Name.ToLower()}-expected.txt";
+            File.Delete(fileNameActual);
+            File.Delete(fileNameExpected);
             try
             {
                 Assert.That(actual, Is.EqualTo(expected));
             }
             catch (Exception)
             {
-                CreatOutput(actual, $"./failed-tests/{GetType().Name.ToLower()}-actual.txt");
-                CreatOutput(expected, $"./failed-tests/{GetType().Name.ToLower()}-expected.txt");
+                CreatOutput(actual, fileNameActual);
+                CreatOutput(expected, fileNameExpected);
                 throw;
             }
         }

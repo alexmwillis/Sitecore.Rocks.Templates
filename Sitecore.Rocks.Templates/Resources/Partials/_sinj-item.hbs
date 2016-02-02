@@ -4,6 +4,11 @@
     template: "{{TemplatePath}}",
     parent: "{{ParentPath}}",
     language: "en",
+{{#if Fields}}
     fields: {
-{{> sinj-fields Fields}}    }
+        {{> sinj-fields Fields}}
+    }
+{{else}}
+    fields: {}
+{{/if}}
 }

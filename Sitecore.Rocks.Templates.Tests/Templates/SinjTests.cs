@@ -57,8 +57,7 @@ namespace Sitecore.Rocks.Templates.Tests.Templates
     template: ""{_itemWithNoFields.TemplatePath}"",
     parent: ""{_itemWithNoFields.ParentPath}"",
     language: ""{_itemWithNoFields.Language}"",
-    fields: {{
-    }}
+    fields: {{}}
 }}";
             var template = new TemplateMetaData
             {

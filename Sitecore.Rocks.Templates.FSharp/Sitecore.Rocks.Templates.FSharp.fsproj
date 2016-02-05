@@ -55,6 +55,7 @@
     <Compile Include="Utils.fs" />
     <Compile Include="Helpers.fs" />
     <Compile Include="TemplateEngine.fs" />
+    <Compile Include="stringFunctions.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

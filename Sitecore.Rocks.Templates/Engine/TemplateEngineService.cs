@@ -10,7 +10,7 @@ namespace Sitecore.Rocks.Templates.Engine
 
         public TemplateEngineService()
         {
-            FSharp.Helpers.Init(); // todo find better way to initialise this
+            FSharp.Helpers.Init();
 
             _fileService = new TemplateFileService();
 

@@ -14,16 +14,22 @@ namespace Sitecore.Rocks.Templates.Tests.Utils
         {
             var expectedResult = "PascalCase";
 
-            Assert.That(stringToFormat.ToPascalCase(), Is.EqualTo(expectedResult));
+            Assert.That(ToPascalCase(stringToFormat), Is.EqualTo(expectedResult));
         }
 
+        [Test]
+        public void TestPascalCaseEmpty()
+        {
+            Assert.That(ToPascalCase(string.Empty), Is.EqualTo(string.Empty));
+        }
+        
         [TestCase("1 Test")]
         [TestCase("1Test")]
         [TestCase("2Test")]
         [TestCase("10Test")]
         public void TestSanitiseNumbers(string stringToFormat)
         {
-            Assert.That(stringToFormat.ToPascalCase(), Is.EqualTo("Test"));
+            Assert.That(ToPascalCase(stringToFormat), Is.EqualTo("Test"));
         }
 
         [TestCase("Test-Case")]
@@ -31,7 +37,7 @@ namespace Sitecore.Rocks.Templates.Tests.Utils
         [TestCase("Test - Case")]
         public void TestSanitiseSpecialCharacters(string stringToFormat)
         {
-            Assert.That(stringToFormat.ToPascalCase(), Is.EqualTo("TestCase"));
+            Assert.That(ToPascalCase(stringToFormat), Is.EqualTo("TestCase"));
         }
 
         [TestCase("Camel Case")]
@@ -44,7 +50,7 @@ namespace Sitecore.Rocks.Templates.Tests.Utils
         {
             var expectedResult = "camelCase";
 
-            Assert.That(stringToFormat.ToCamelCase(), Is.EqualTo(expectedResult));
+            Assert.That(ToCamelCase(stringToFormat), Is.EqualTo(expectedResult));
         }
 
         [TestCase("\t\n\r", @"\t\n\r")]
@@ -56,5 +62,17 @@ namespace Sitecore.Rocks.Templates.Tests.Utils
         {
             Assert.That(actualString.ToLiteral(), Is.EqualTo(expectedLiteral));
         }
+
+        private string ToPascalCase(string str)
+        {
+            return FSharp.StringFunctions.ToPascalCase.Invoke(str);
+        }
+
+        private string ToCamelCase(string str)
+        {
+            return FSharp.StringFunctions.ToCamelCase.Invoke(str);
+        }
+
+
     }
 }

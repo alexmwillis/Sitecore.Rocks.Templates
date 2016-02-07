@@ -1,7 +1,7 @@
 ﻿module Sitecore.Rocks.Templates.FSharp.Helpers
 
     open HandlebarsDotNet
-    open Sitecore.Rocks.Templates.Extensions
+    open Sitecore.Rocks.Templates.FSharp.StringFunctions
     open System.Text.RegularExpressions      
     open System
 
@@ -108,19 +108,19 @@
             new Helper("camelCase", fun output context arguments ->            
                             
                 output.Write(WithFirstArgument arguments (fun a -> 
-                    (defaultArg (Utils.CastAs<string> a) String.Empty).ToCamelCase()))                
+                    (defaultArg (Utils.CastAs<string> a) String.Empty) |> ToCamelCase))                
             );
 
             new Helper("pascalCase", fun output context arguments ->            
 
                 output.Write(WithFirstArgument arguments (fun a -> 
-                    (defaultArg (Utils.CastAs<string> a) String.Empty).ToPascalCase()))                
+                    (defaultArg (Utils.CastAs<string> a) String.Empty) |> ToPascalCase))                
             );
 
             new Helper("literal", fun output context arguments ->            
 
                 output.WriteSafeString(WithFirstArgument arguments (fun a -> 
-                    (defaultArg (Utils.CastAs<string> a) String.Empty).ToLiteral()))                
+                    (defaultArg (Utils.CastAs<string> a) String.Empty) |> ToLiteral))                
             )
         ]
 

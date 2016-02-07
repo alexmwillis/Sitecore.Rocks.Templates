@@ -70,10 +70,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sitecore.Rocks.Templates.Extensions\Sitecore.Rocks.Templates.Extensions.csproj">
-      <Project>{0C286793-66D3-4855-AEAC-77C73E5809BD}</Project>
-      <Name>Sitecore.Rocks.Templates.Extensions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sitecore.Rocks.Templates.FSharp\Sitecore.Rocks.Templates.FSharp.fsproj">
       <Project>{c9776cc5-93fe-4da8-9647-cb6b4b67092e}</Project>
       <Name>Sitecore.Rocks.Templates.FSharp</Name>

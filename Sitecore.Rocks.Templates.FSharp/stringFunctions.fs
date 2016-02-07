@@ -37,3 +37,23 @@
     let ToCamelCase = 
         ToPascalCase >>
         LowerCaseFirstChar
+
+    let CharToLiteral char =
+        match char with
+            | '\a' -> @"\a"
+            | '\b' -> @"\b"
+            | '\f' -> @"\f"
+            | '\n' -> @"\n"
+            | '\r' -> @"\r"
+            | '\t' -> @"\t"
+            | '\v' -> @"\v"
+            | '\\' -> @"\\"
+            | '\"' -> @"\"""
+            | '\'' -> @"\'"
+            | _ as other -> other.ToString()
+
+    let ToLiteral string = 
+        [for c in string -> c] |> Seq.fold (fun acc c -> acc + CharToLiteral c) String.Empty
+
+
+        

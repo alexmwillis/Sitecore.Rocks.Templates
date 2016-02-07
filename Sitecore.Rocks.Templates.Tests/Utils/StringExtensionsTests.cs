@@ -58,21 +58,27 @@ namespace Sitecore.Rocks.Templates.Tests.Utils
         [TestCase(@"
 ", @"\r\n")]
         [TestCase("\b\v\f", @"\b\v\f")]
+        [TestCase("\"\'\"", "\\\"\\\'\\\"")]
+        [TestCase("", "")]
+        [TestCase("a", "a")]
         public void TestToLiteral(string actualString, string expectedLiteral)
         {
-            Assert.That(actualString.ToLiteral(), Is.EqualTo(expectedLiteral));
+            Assert.That(ToLiteral(actualString), Is.EqualTo(expectedLiteral));
         }
 
-        private string ToPascalCase(string str)
+        private static string ToPascalCase(string str)
         {
             return FSharp.StringFunctions.ToPascalCase.Invoke(str);
         }
 
-        private string ToCamelCase(string str)
+        private static string ToCamelCase(string str)
         {
             return FSharp.StringFunctions.ToCamelCase.Invoke(str);
         }
 
-
+        private static string ToLiteral(string str)
+        {
+            return FSharp.StringFunctions.ToLiteral(str);
+        }
     }
 }

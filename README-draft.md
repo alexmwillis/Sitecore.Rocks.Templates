@@ -1,134 +1,78 @@
 Sitecore.Rocks.Templates
 ==============
 
-[Sitecore.Rocks](http://vsplugins.sitecore.net/) plugin for generating text
+A [Sitecore.Rocks](http://vsplugins.sitecore.net/) plugin for generating text from Sitecore items. 
 
-Check out the [handlebars.js documentation](http://handlebarsjs.com) for how to write Handlebars templates.
+The plugin is aimed at generating source code for Sitecore projects [Minq](https://github.com/tcuk/minq) and [Sinj](https://github.com/tcuk/sinj). Text is generated using a [fork](https://github.com/alexmwillis/Handlebars.Net) of the [Handlebars.Net](https://github.com/rexm/Handlebars.Net) templating engine, so templates are fully configurable. See Handlebars.Net project for templating documentation.
 
-Handlebars.Net doesn't use a scripting engine to run a Javascript library - it **compiles Handlebars templates directly to IL bytecode**. It also mimics the JS library's API as closely as possible.
+
+##Prerequisites
+
+	Sitecore.Rocks
 
 ##Install
 
-    nuget install Handlebars.Net
+* Build project. 
+* The plugin will installed to %localappdata%\Sitecore\Sitecore.Rocks\Plugins.
 
 ##Usage
 
-```c#
-string source =
-@"<div class=""entry"">
-  <h1>{{title}}</h1>
-  <div class=""body"">
-    {{body}}
-  </div>
-</div>";
+* In the Visual Studio Sitecore Explorer, right click an item or template and select 'Copy to template...'
+* Select a template from drop-down list.
+* The clipboard will be populated with the formatted text.
 
-var template = Handlebars.Compile(source);
+####Creating new templates
 
-var data = new {
-    title = "My new post",
-    body = "This is my first post!"
-};
+The project comes with templates for generating JSON objects (Sinj) and C# MVC models (Minq). However the text that is generated is fully configurable. To add a new template, simply create a .hbs file and add it to one of the following locations under the Sitecore.Rocks plugin folder.
 
-var result = template(data);
+* Resources\Item Templates - any templates added here will appear in the drop-down menu when a Sitecore item is selected.
+* Resources\Template Templates - any templates added here will appear in the drop-down menu when a Sitecore template is selected.
+* Resources\Partials - any templates added here will be registered as partials. See Handlebars.Net documentation on partials.
 
-/* Would render:
-<div class="entry">
-  <h1>My New Post</h1>
-  <div class="body">
-    This is my first post!
-  </div>
-</div>
-*/
-```
+A simple template example is given below
 
-###Registering Partials
-```c#
-string source =
-@"<h2>Names</h2>
-{{#names}}
-  {{> user}}
-{{/names}}";
-
-string partialSource =
-@"<strong>{{name}}</strong>";
-
-using (var reader = new StringReader(partialSource))
-{
-  var partialTemplate = Handlebars.Compile(reader);
-  Handlebars.RegisterTemplate("user", partialTemplate);
-}
-
-var template = Handlebars.Compile(source);
-
-var data = new {
-  names = new [] {
-    new {
-        name = "Karen"
-    },
-    new {
-        name = "Jon"
+```js
+var {{camelCase Name}}{{pascalCase TemplateName}} = { 
+    id: "{{Id}}",
+    name: "{{Name}}",
+    template: "{{TemplatePath}}",
+    parent: "{{ParentPath}}",
+    language: "en",
+{{#if Fields}}
+    fields: {
+        "{{Name}}": "{{literal Value}}"{{#unless @last}},
+		 {{/unless}}
     }
-  }
+{{else}}
+    fields: {}
+{{/if}}
 };
 
-var result = template(data);
+/* Given a Sitecore item called 'Red' with template 'Circle', would render:
 
-/* Would render:
-<h2>Names</h2>
-  <strong>Karen</strong>
-  <strong>Jon</strong>
+var redCircle = { 
+    id: "00000000-0000-0000-0000-000000000000",
+    name: "Red",
+    template: "/template/path",
+    parent: "/parent/path",
+    language: "en",
+    fields: {
+        "Field Name 1": "Field Value 1",
+		 "Field Name 2": "Field Value 2"
+    }
+}
 */
 ```
 
-###Registering Helpers
-```c#
-Handlebars.RegisterHelper("link_to", (writer, context, parameters) => {
-  writer.WriteSafeString("<a href='" + context.url + "'>" + context.text + "</a>");
-});
+The template in this example makes use of the following built in helpers
 
-string source = @"Click here: {{link_to}}";
+* pascalCase - takes a string as parameter then outputs the string with capitalised words, with spaces and special characters removed. 
+* camelCase - like pascalCase, but with a lowercase first letter.
+* literal - takes a string as parameter then outputs the string with escaped special characters.
 
-var template = Handlebars.Compile(source);
+See Handlebars.Net documentation for following helpers
 
-var data = new {
-    url = "https://github.com/rexm/handlebars.net",
-    text = "Handlebars.Net"
-};
+* #unless
+* #if
 
-var result = template(data);
-
-/* Would render:
-Click here: <a href='https://github.com/rexm/handlebars.net'>Handlebars.Net</a>
-*/
-```
- 
-This will expect your views to be in the /Views folder like so:
-
-```
-Views\layout.hbs                |<--shared as in \Views            
-Views\partials\somepartial.hbs   <--shared as in  \Views\partials
-Views\{Controller}\{Action}.hbs 
-Views\{Controller}\{Action}\partials\somepartial.hbs 
-```
-
-##Performance
-Compared to rendering, compiling is a fairly intensive process. While both are still measured in millseconds, compilation accounts for the most of that time by far. So, it is generally ideal to compile once and cache the resulting function to be re-used for the life of your process.
-
-##Future roadmap
-
-- [ ] **Add unit tests!**
-- [x] [Support for sub-expressions](https://github.com/rexm/Handlebars.Net/issues/48)
-- [ ] `lookup`, `log`, and `helperMissing` helpers
-- [x] [Support for whitespace control](https://github.com/rexm/Handlebars.Net/issues/52)
-- [ ] Set delimiters
-- [ ] Mustache(5) Lambdas
-- [ ] MVC view engine
-- [ ] Nancy view engine
-
-##Contributing
-
-Pull requests are welcome! The guidelines are pretty straightforward:
-- Only add capabilities that are already in the Mustache / Handlebars specs
-- Avoid dependencies outside of the .NET BCL
-- Maintain cross-platform compatibility (.NET/Mono; Windows/OSX/Linux/etc)
-- Follow the established code format
+See unit tests for template examples and expected output.

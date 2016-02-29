@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Rocks.Templates", "Sitecore.Rocks.Templates\Sitecore.Rocks.Templates.csproj", "{D60D5C62-4637-4E03-8239-4AC4698DF8A2}"
 EndProject
@@ -10,6 +10,11 @@ EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Sitecore.Rocks.Templates.FSharp", "Sitecore.Rocks.Templates.FSharp\Sitecore.Rocks.Templates.FSharp.fsproj", "{C9776CC5-93FE-4DA8-9647-CB6B4B67092E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handlebars", "Handlebars.Net\source\Handlebars\Handlebars.csproj", "{A09CFF95-B671-48FE-96A8-D3CBDC110B75}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AEA9570E-F512-46D0-A87F-B10515C032B4}"
+	ProjectSection(SolutionItems) = preProject
+		README-draft.md = README-draft.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -51,7 +51,6 @@
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <None Include="Script.fsx" />
     <Compile Include="Utils.fs" />
     <Compile Include="StringFunctions.fs" />
     <Compile Include="Helpers.fs" />
